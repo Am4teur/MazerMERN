@@ -1,0 +1,11 @@
+.logo_image {
+  width: 32px;
+  height: 32px;
+  margin: 5px 15px 5px 0px;
+}
+
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
