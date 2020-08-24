@@ -18,8 +18,8 @@ function Navbar() {
 		</div>
 
 		<div className="login">
-			<div className="p-1"><button className="btn btn-dark" onClick={gotoAuthHTML}>Sign Up</button></div>
 			<div className="p-1"><button className="btn btn-dark">Login</button></div>
+			<div className="p-1"><button className="btn btn-dark" onClick={gotoAuthHTML}>Register</button></div>
 		</div>
 		</nav>
 

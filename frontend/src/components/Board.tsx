@@ -14,6 +14,7 @@ let ENDPOINT = 'localhost:5000';
 interface Board {
   rows: number;
   cols: number;
+  f: boolean;
 }
 
 interface BoardState {
@@ -48,6 +49,7 @@ class Board extends Component<Board, BoardState, {}> {
     this.keyHandler = this.keyHandler.bind(this);
     this.move = this.move.bind(this);
     this.createSquares = this.createSquares.bind(this);
+    this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
     document.body.addEventListener("keydown", this.keyHandler);
   }
 
@@ -69,12 +71,14 @@ class Board extends Component<Board, BoardState, {}> {
           }
         });
         
+        console.log(icons);
+        
         if(username !== "") {
           this.setState((state) => ({
+            iconId: id,
             squares: this.createSquares(this.rows, this.cols, state.seed, icons)[0],
             board: this.createSquares(this.rows, this.cols, state.seed, icons)[1],
             icons: icons,
-            iconId: id,
           }));
         }
         
@@ -84,18 +88,8 @@ class Board extends Component<Board, BoardState, {}> {
 
   componentDidMount() {
     socket = io(ENDPOINT);
+    socket.on('move', this.updateBoardAndSquares);
     this.updateBoardAndSquares();
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-  }
-
-  componentWillUnmount() {
-    socket.on('move', (userId: string) => {
-      console.log(userId);
-      this.updateBoardAndSquares();
-    });
   }
 
   /********************************************
@@ -306,14 +300,16 @@ class Board extends Component<Board, BoardState, {}> {
       }
 
       //update
-      axios.post('http://localhost:5000/users/update/' + newIcons[this.state.iconId].id, user);
-      socket.emit('move', { userId: this.state.iconId });
+      axios.post('http://localhost:5000/users/update/' + newIcons[this.state.iconId].id, user)
+        .then(response => {
+          socket.emit('move', { userId: this.state.iconId });
 
-      this.setState((state) => ({
-        squares: this.createSquares(this.rows, this.cols, state.seed, newIcons)[0],
-        board: this.createSquares(this.rows, this.cols, state.seed, newIcons)[1],
-        icons: newIcons,
-      }));
+          this.setState((state) => ({
+            icons: newIcons,
+            squares: this.createSquares(this.rows, this.cols, state.seed, newIcons)[0],
+            board: this.createSquares(this.rows, this.cols, state.seed, newIcons)[1],
+          }));
+        });
     }
   }
 
