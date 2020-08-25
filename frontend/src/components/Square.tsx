@@ -1,32 +1,20 @@
-import React, { Component } from 'react';
-import Icon from './Icon';
+import React, { /* useState */ } from 'react';
+import CSS from 'csstype';
+import IconComponent from './IconComponent';
 
 
 interface SquareProps {
-  style: any;
-  icons: Icon[];
+  style: CSS.Properties;
+  icons: IconComponent[];
 }
 
-class Square extends Component<SquareProps, {}> {
-  /*let style = {
-    N: X,
-    S: X,
-    E: X,
-    W: X,
-    pieces: [],
-    exit/end: boolean,
-    bonus/extra/price: typeOfPrice,
+const Square = ({style, icons}: SquareProps) => {
 
-  }*/
-
-  render() {
-    return (
-      <div className="square" style={this.props.style}>
-
-        {(this.props.icons.length > 0 ? this.props.icons.length : '')}
-      </div>
-    );
-  }
+  return (
+    <div className="square" style={style}>
+      {icons.length > 0 ? icons : null}
+    </div>
+  );
 }
 
 

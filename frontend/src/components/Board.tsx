@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Square from './Square';
 import '../App.css';
-import Icon from './Icon'
+import CSS from 'csstype';
+import Icon from './Icon';
+import IconComponent from './IconComponent';
 import axios from 'axios';
 
 import io from 'socket.io-client';
@@ -51,39 +53,6 @@ class Board extends Component<Board, BoardState, {}> {
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
     document.body.addEventListener("keydown", this.keyHandler);
-  }
-
-  updateBoardAndSquares() {
-    axios.get('http://localhost:5000/users/')
-    .then(response => {
-      if(response.data.length > 0) {
-        let icons: { [id: string] : Icon } = {};
-        let users = response.data;
-        const { username } = queryString.parse(window.location.search);
-        for(let i = 0; i < users.length; i++) {
-          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(), users[i].y, users[i].x); //TODO cannot create Icons everytime, maybe put object Icon on MongoDB
-        }
-
-        let id: string = "";
-        users.forEach((element: any) => {
-          if(element.username === username) {
-            id = element._id;
-          }
-        });
-        
-        console.log(icons);
-        
-        if(username !== "") {
-          this.setState((state) => ({
-            iconId: id,
-            squares: this.createSquares(this.rows, this.cols, state.seed, icons)[0],
-            board: this.createSquares(this.rows, this.cols, state.seed, icons)[1],
-            icons: icons,
-          }));
-        }
-        
-      }
-    });
   }
 
   componentDidMount() {
@@ -196,11 +165,12 @@ class Board extends Component<Board, BoardState, {}> {
    * @name createSquares
    * 
    ********************************************/
-  createSquares(rows: number, cols: number, seed: number, icons: { [id: string] : Icon }): any[][] {
+  createSquares(rows: number, cols: number, icons: { [id: string] : Icon }): any[][] {
     let squares: any[][] = [];
     let iconsInSquare: Icon[] = [];
+    let iconComps: IconComponent[] = [];
 
-    let positions: any[] = this.initMaze(rows, cols, seed);
+    let positions: any[] = this.initMaze(rows, cols, this.state.seed);
 
     let squareStyle: any[][] = this.removeSide(rows, cols, positions);
 
@@ -214,10 +184,12 @@ class Board extends Component<Board, BoardState, {}> {
           }
         }
 
-        squares[i].push(<Square
-          key={i + ":" + j}
-          style={squareStyle[j][i]}
-          icons={iconsInSquare} />);
+        iconComps = [];
+        iconsInSquare.forEach(e => {
+          iconComps.push(e.component);
+        });
+
+        squares[i].push(<Square key={i + ":" + j} style={squareStyle[j][i]} icons={iconComps}/>);
 
         iconsInSquare = [];
       }
@@ -227,26 +199,58 @@ class Board extends Component<Board, BoardState, {}> {
   }
 
   /********************************************
+   * @name updateBoardAndSquares
+   * 
+   ********************************************/
+  updateBoardAndSquares() {
+    axios.get('http://localhost:5000/users/')
+    .then(response => {
+      if(response.data.length > 0) {
+        let icons: { [id: string] : Icon } = {};
+        let users = response.data;
+        const { username } = queryString.parse(window.location.search);
+        for(let i = 0; i < users.length; i++) {
+          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(), users[i].y, users[i].x, <IconComponent key={users[i]._id.toString()} order={1} size={16}/>);
+        }
+
+        let id: string = "";
+        users.forEach((element: any) => {
+          if(element.username === username) {
+            id = element._id;
+          }
+        });
+        
+        if(username !== "") {
+          this.setState((state) => ({
+            iconId: id,
+            squares: this.createSquares(this.rows, this.cols, icons)[0],
+            board: this.createSquares(this.rows, this.cols, icons)[1],
+            icons: icons,
+          }));
+        }
+        
+      }
+    });
+  }
+
+  /********************************************
    * @name removeSide
    * 
    ********************************************/
   removeSide(rows: number, cols: number, positions: any[]): any[][] {
-    let squareStyles: any[][] = [];
+    let squareStyles: CSS.Properties[][] = [];
 
     for (let i = 0; i < positions.length; i++) {
       squareStyles.push([]);
       for (let j = 0; j < positions[i].length; j++) {
         squareStyles[i].push({
+          display: "inline-flex",
+          flexWrap: "wrap",
+
           border: "2px solid black",
           background: "#61dafb",
           width: "50px",
           height: "50px",
-    
-          lineHeight: "40px",
-          color: "black",
-          fontWeight: "bold",
-          fontSize: "3em",
-          textAlign: "center",
         });
 
         if (positions[i][j]["N"] === 1) {
@@ -279,6 +283,8 @@ class Board extends Component<Board, BoardState, {}> {
    * 
    ********************************************/
   move(type: string) {
+
+    
     let oppx: { [id: string]: number; } = { "W": 0, "N": -1, "S": 1, "E": 0 };
     let oppy: { [id: string]: number; } = { "W": -1, "N": 0, "S": 0, "E": 1 };
     let newIcons = {...this.state.icons};
@@ -306,8 +312,8 @@ class Board extends Component<Board, BoardState, {}> {
 
           this.setState((state) => ({
             icons: newIcons,
-            squares: this.createSquares(this.rows, this.cols, state.seed, newIcons)[0],
-            board: this.createSquares(this.rows, this.cols, state.seed, newIcons)[1],
+            squares: this.createSquares(this.rows, this.cols, newIcons)[0],
+            board: this.createSquares(this.rows, this.cols, newIcons)[1],
           }));
         });
     }
@@ -342,7 +348,7 @@ class Board extends Component<Board, BoardState, {}> {
    * 
    ********************************************/
   render() {
-    const boardStyle: any = {
+    const boardStyle: CSS.Properties = {
       display: "inline-grid",
       gridTemplateRows: "repeat(" + this.rows + ", 1fr)",
       gridTemplateColumns: "repeat(" + this.cols + ", 1fr)",

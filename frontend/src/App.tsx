@@ -15,7 +15,7 @@ function App() {
       <Navbar />
 
       <Info />
-      <Route path="/" component={UserCreate} />
+      <Route path="/" exact component={UserCreate} />
       <div className="Maze">
       <Route path="/mazer" component={Board} />
       </div>
