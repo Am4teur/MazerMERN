@@ -1,6 +1,6 @@
 # Mazer
 
-Mazer is a web application developed using the MERN stack + socket.io. MERN stack stands for MongoDB, Express, React and Node.js.
+Mazer is a web application game developed using the MERN stack + socket.io for real time updates. MERN stack stands for MongoDB, Express, React and Node.js.
 
 ## How to run locally/dev
 
