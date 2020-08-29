@@ -52,6 +52,7 @@ class Board extends Component<Board, BoardState, {}> {
     this.move = this.move.bind(this);
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
+    this.checkWinner = this.checkWinner.bind(this);
     document.body.addEventListener("keydown", this.keyHandler);
   }
 
@@ -317,6 +318,14 @@ class Board extends Component<Board, BoardState, {}> {
           }));
         });
     }
+  }
+
+  /********************************************
+   * @name checkWinner
+   * 
+   ********************************************/
+  checkWinner() {
+
   }
 
   /********************************************
