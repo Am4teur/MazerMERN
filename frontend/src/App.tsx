@@ -13,8 +13,8 @@ function App() {
   return (
     <Router>
       <Navbar />
-
       <Info />
+      
       <Route path="/" exact component={UserCreate} />
       <div className="Maze">
       <Route path="/mazer" component={Board} />

@@ -67,12 +67,12 @@ class Board extends Component<Board, BoardState, {}> {
    * @namespace initGroup
    * 
    ********************************************/
-  initMaze(rows: number, cols: number, mazeSeed: number): any[] {
+  initMaze(mazeSeed: number): any[] {
     /* using the x,y major order (or Column major order) != from memory and C (Row major order) */
-    let positions: any[][]= this.initPositions(rows, cols);
+    let positions: any[][]= this.initPositions();
     
     /* put this variable set inside of kruskal algorithm method because thats the only place that this variable is used */
-    let set: Tree[][] = this.initSet(rows, cols);
+    let set: Tree[][] = this.initSet();
 
     let edges: Edge[] = this.initEdges(positions, mazeSeed);
 
@@ -86,11 +86,11 @@ class Board extends Component<Board, BoardState, {}> {
    * @namespace initGroup
    * 
    ********************************************/
-  initPositions(rows: number, cols: number): any[][] {
+  initPositions(): any[][] {
     let positions: { N: number; E: number; S: number; W: number; }[][] = [];
-    for (let i = 0; i < rows; ++i) {
+    for (let i = 0; i < this.rows; ++i) {
       positions.push([]);
-      for (let j = 0; j < cols; ++j) {
+      for (let j = 0; j < this.cols; ++j) {
         positions[i].push({ "N": 0, "E": 0, "S": 0, "W": 0 });
       }
     }
@@ -102,11 +102,11 @@ class Board extends Component<Board, BoardState, {}> {
    * @namespace initGroup
    * 
    ********************************************/
-  initSet(rows: number, cols: number): Tree[][] {
+  initSet(): Tree[][] {
     let set: Tree[][] = [];
-    for (var i = 0; i < rows; ++i) {
+    for (var i = 0; i < this.rows; ++i) {
       set.push([]);
-      for (var j = 0; j < cols; ++j) {
+      for (var j = 0; j < this.cols; ++j) {
         set[i].push(new Tree());
       }
     }
@@ -166,21 +166,22 @@ class Board extends Component<Board, BoardState, {}> {
    * @name createSquares
    * 
    ********************************************/
-  createSquares(rows: number, cols: number, icons: { [id: string] : Icon }): any[][] {
+  createSquares(icons: { [id: string] : Icon }): any[][] {
     let squares: any[][] = [];
     let iconsInSquare: Icon[] = [];
     let iconComps: IconComponent[] = [];
+    let isEnd: boolean = false;
 
-    let positions: any[] = this.initMaze(rows, cols, this.state.seed);
+    let positions: any[] = this.initMaze(this.state.seed);
 
-    let squareStyle: any[][] = this.removeSide(rows, cols, positions);
+    let squareStyle: any[][] = this.removeSide(positions);
 
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < this.rows; i++) {
       squares.push([]);
-      for (let j = 0; j < cols; j++) {
+      for (let j = 0; j < this.cols; j++) {
         for (var key in icons) {
           // check if the property/key is defined in the object itself, not in parent
-          if (icons.hasOwnProperty(key) && icons[key].x === i && icons[key].y === j) {           
+          if (icons.hasOwnProperty(key) && icons[key].x === i && icons[key].y === j) {
             iconsInSquare.push(icons[key]);
           }
         }
@@ -189,8 +190,11 @@ class Board extends Component<Board, BoardState, {}> {
         iconsInSquare.forEach(e => {
           iconComps.push(e.component);
         });
+        if(i === this.rows-1 && j === this.cols-1) {
+          isEnd = true;
+        }
 
-        squares[i].push(<Square key={i + ":" + j} style={squareStyle[j][i]} icons={iconComps}/>);
+        squares[i].push(<Square key={i + ":" + j} style={squareStyle[j][i]} icons={iconComps} isEnd={isEnd}/>);
 
         iconsInSquare = [];
       }
@@ -224,8 +228,8 @@ class Board extends Component<Board, BoardState, {}> {
         if(username !== "") {
           this.setState((state) => ({
             iconId: id,
-            squares: this.createSquares(this.rows, this.cols, icons)[0],
-            board: this.createSquares(this.rows, this.cols, icons)[1],
+            squares: this.createSquares(icons)[0],
+            board: this.createSquares(icons)[1],
             icons: icons,
           }));
         }
@@ -238,14 +242,17 @@ class Board extends Component<Board, BoardState, {}> {
    * @name removeSide
    * 
    ********************************************/
-  removeSide(rows: number, cols: number, positions: any[]): any[][] {
+  removeSide(positions: any[]): any[][] {
     let squareStyles: CSS.Properties[][] = [];
 
     for (let i = 0; i < positions.length; i++) {
       squareStyles.push([]);
       for (let j = 0; j < positions[i].length; j++) {
+
         squareStyles[i].push({
-          display: "inline-flex",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexWrap: "wrap",
 
           border: "2px solid black",
@@ -272,7 +279,7 @@ class Board extends Component<Board, BoardState, {}> {
     for (let i = 0; i < positions.length; i++) {
       squareStyles[i][0]["borderTop"] = "4px solid black";
       squareStyles[0][i]["borderLeft"] = "4px solid black";
-      squareStyles[i][rows-1]["borderBottom"] = "4px solid black";
+      squareStyles[i][squareStyles[i].length-1]["borderBottom"] = "4px solid black";
       squareStyles[squareStyles.length-1][i]["borderRight"] = "4px solid black";
     }
 
@@ -284,8 +291,6 @@ class Board extends Component<Board, BoardState, {}> {
    * 
    ********************************************/
   move(type: string) {
-
-    
     let oppx: { [id: string]: number; } = { "W": 0, "N": -1, "S": 1, "E": 0 };
     let oppy: { [id: string]: number; } = { "W": -1, "N": 0, "S": 0, "E": 1 };
     let newIcons = {...this.state.icons};
@@ -301,9 +306,16 @@ class Board extends Component<Board, BoardState, {}> {
         newIcons[this.state.iconId].y = newIcons[this.state.iconId].y + oppy[type];
       }
 
-      const user = {
+      let user: {y:number, x:number} = {
         y: newIcons[this.state.iconId].x,
         x: newIcons[this.state.iconId].y,
+      }
+      //check if won
+      if(newIcons[this.state.iconId].x === this.rows-1 && newIcons[this.state.iconId].y === this.cols-1) {
+        user = {
+          y: 0,
+          x: 0,
+        }
       }
 
       //update
@@ -313,8 +325,8 @@ class Board extends Component<Board, BoardState, {}> {
 
           this.setState((state) => ({
             icons: newIcons,
-            squares: this.createSquares(this.rows, this.cols, newIcons)[0],
-            board: this.createSquares(this.rows, this.cols, newIcons)[1],
+            squares: this.createSquares(newIcons)[0],
+            board: this.createSquares(newIcons)[1],
           }));
         });
     }

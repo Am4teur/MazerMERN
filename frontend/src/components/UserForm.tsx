@@ -42,7 +42,7 @@ class UserForm extends Component<{}, UserFormState> {
       .then(res => console.log(res.data));
 
     
-    window.location.href = '/mazer';
+    window.location.href = `/mazer?username=${this.state.username}`;
   }
 
 
@@ -54,11 +54,11 @@ class UserForm extends Component<{}, UserFormState> {
           <div className="form-group">
             <label>Username</label>
             <input type="text" required className="form-control" placeholder="Enter Username" onChange={this.onChangeUsername}/>
-            <small id="emailHelp" className="form-text text-muted">This username is temporary.</small>
+            <small className="form-text text-muted">This username is temporary.</small>
           </div>
           <div className="form-group">
-          <Link onClick={event => (!this.state.username) ? event.preventDefault(): null} to={`/mazer?username=${this.state.username}`}>
-            <input type="submit" value="Create User" className='btn btn-primary'/>
+          <Link onClick={event => (!this.state.username) ? event.preventDefault(): this.onSubmit(event)} to={`/mazer?username=${this.state.username}`}>
+          <input type="submit" value="Create User" className='btn btn-primary'/>
           </Link>
           </div>
         </form>
