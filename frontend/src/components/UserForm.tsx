@@ -52,9 +52,8 @@ class UserForm extends Component<{}, UserFormState> {
         <h3>Choose your username to play online</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Username</label>
             <input type="text" required className="form-control" placeholder="Enter Username" onChange={this.onChangeUsername}/>
-            <small className="form-text text-muted">This username is temporary.</small>
+            <small className="form-text text-muted">This username is temporary. {/*If you disconnect, you lose your position.*/}</small>
           </div>
           <div className="form-group">
           <Link onClick={event => (!this.state.username) ? event.preventDefault(): this.onSubmit(event)} to={`/mazer?username=${this.state.username}`}>

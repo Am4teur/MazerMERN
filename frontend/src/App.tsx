@@ -1,11 +1,11 @@
-import React/*, { Component }*/ from 'react';
+import React, { /* Component */ } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 
 import Navbar from './components/Navbar';
 import Info from './components/Info';
-import UserCreate from './components/UserCreate';
-import Board from './components/Board';
+import UserForm from './components/UserForm';
+import Maze from './components/Maze';
 
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
       <Navbar />
       <Info />
       
-      <Route path="/" exact component={UserCreate} />
+      <Route path="/" exact component={UserForm} />
       <div className="Maze">
-      <Route path="/mazer" component={Board} />
+      <Route path="/mazer" component={Maze} />
       </div>
     </Router>
   );

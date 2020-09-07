@@ -11,12 +11,12 @@ const queryString = require('query-string');
 
 let socket: any;
 let ENDPOINT = 'localhost:5000';
+let iconNm = "blue-simple-icon";
 
 
 interface Board {
   rows: number;
   cols: number;
-  f: boolean;
 }
 
 interface BoardState {
@@ -27,8 +27,13 @@ interface BoardState {
   seed: number;
 }
 
+interface BoardProps {
+  onIconChange(v: string): void;
+  onUsernameChange(v: string): void;
+}
 
-class Board extends Component<Board, BoardState, {}> {
+
+class Board extends Component<BoardProps, BoardState, Board> {
 
   /********************************************
    * @constructor
@@ -52,7 +57,6 @@ class Board extends Component<Board, BoardState, {}> {
     this.move = this.move.bind(this);
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
-    this.checkWinner = this.checkWinner.bind(this);
     document.body.addEventListener("keydown", this.keyHandler);
   }
 
@@ -60,6 +64,9 @@ class Board extends Component<Board, BoardState, {}> {
     socket = io(ENDPOINT);
     socket.on('move', this.updateBoardAndSquares);
     this.updateBoardAndSquares();
+    const { username } = queryString.parse(window.location.search);
+    this.props.onUsernameChange(username);
+    this.props.onIconChange(iconNm);
   }
 
   /********************************************
@@ -215,7 +222,7 @@ class Board extends Component<Board, BoardState, {}> {
         let users = response.data;
         const { username } = queryString.parse(window.location.search);
         for(let i = 0; i < users.length; i++) {
-          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(), users[i].y, users[i].x, <IconComponent key={users[i]._id.toString()} order={1} size={16}/>);
+          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(), users[i].y, users[i].x, <IconComponent key={users[i]._id.toString()} size={16} iconName={iconNm}/>);
         }
 
         let id: string = "";
@@ -310,7 +317,8 @@ class Board extends Component<Board, BoardState, {}> {
         y: newIcons[this.state.iconId].x,
         x: newIcons[this.state.iconId].y,
       }
-      //check if won
+
+      //check if won aka checkWinner()
       if(newIcons[this.state.iconId].x === this.rows-1 && newIcons[this.state.iconId].y === this.cols-1) {
         user = {
           y: 0,
@@ -330,14 +338,6 @@ class Board extends Component<Board, BoardState, {}> {
           }));
         });
     }
-  }
-
-  /********************************************
-   * @name checkWinner
-   * 
-   ********************************************/
-  checkWinner() {
-
   }
 
   /********************************************
