@@ -345,6 +345,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
    * 
    ********************************************/
   keyHandler(e: any): void {
+    e.preventDefault();
     switch (e.keyCode) {
       case 37: //left
         this.move("W");

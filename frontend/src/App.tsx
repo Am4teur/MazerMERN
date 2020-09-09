@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Info from './components/Info';
 import UserForm from './components/UserForm';
 import Maze from './components/Maze';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
       <div className="Maze">
       <Route path="/mazer" component={Maze} />
       </div>
+
+      <Footer />
+      
     </Router>
   );
 }
