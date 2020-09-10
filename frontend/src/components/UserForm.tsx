@@ -3,6 +3,7 @@ import axios from 'axios';
 import "../App.css";
 import { Link } from 'react-router-dom';
 
+let ENDPOINT = 'localhost:5000';
 
 interface UserFormState {
   username: string;
@@ -38,7 +39,7 @@ class UserForm extends Component<{}, UserFormState> {
 
     console.log(user);
 
-    axios.post('http://localhost:5000/users/add', user)
+    axios.post(ENDPOINT + '/users/add', user)
       .then(res => console.log(res.data));
 
     

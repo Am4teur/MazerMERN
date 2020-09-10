@@ -9,9 +9,9 @@ const Footer = () => {
       <div className="footer-left">
         <img className="logo_footer" src={logo} alt="logo"/>
         <p className="footer-links">
-          <a href="#">Home</a>
+          Home {/*<a href="#">Home</a>*/}
           <br/>
-          <a href="#">About</a>
+          About {/*<a href="#">About</a>*/}
         </p>
         <p className="footer-company-name">Daniel Castro © 2020</p>
       </div>
