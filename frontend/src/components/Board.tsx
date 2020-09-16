@@ -10,7 +10,7 @@ import io from 'socket.io-client';
 const queryString = require('query-string');
 
 let socket: any;
-let ENDPOINT = 'localhost:5000'; //'https://mazer-backend.herokuapp.com';
+let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';
 let iconNm = "blue-simple-icon";
 
 
@@ -215,7 +215,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
    * 
    ********************************************/
   updateBoardAndSquares() {
-    axios.get(ENDPOINT + '/users/')
+    axios.get(ENDPOINT + 'users/')
     .then(response => {
       if(response.data.length > 0) {
         let icons: { [id: string] : Icon } = {};
@@ -327,7 +327,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       }
 
       //update
-      axios.post(ENDPOINT + '/users/update/' + newIcons[this.state.iconId].id, user)
+      axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.iconId].id, user)
         .then(response => {
           socket.emit('move', { userId: this.state.iconId });
 
