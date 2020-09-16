@@ -26,6 +26,7 @@ yarn-error.log*
 
 #VSCode workspace
 *.code-workspace
+.vscode
 
 #Deployment folder
 /deployment
