@@ -9,9 +9,9 @@ const Footer = () => {
       <div className="footer-left">
         <img className="logo_footer" src={logo} alt="logo"/>
         <p className="footer-links">
-          Home {/*<a href="#">Home</a>*/}
-          <br/>
-          About {/*<a href="#">About</a>*/}
+          <a href="#">Home</a>
+          |
+          <a href="#">About</a>
         </p>
         <p className="footer-company-name">Daniel Castro © 2020</p>
       </div>
@@ -30,9 +30,9 @@ const Footer = () => {
       <div className="footer-right">
         <p className="footer-company-about">
           <span>About this project</span>
-          Mazer is a simple maze game with the objective of learning react using
+          Mazer is a simple maze game with the goal of learning the
            MERN (MongoDB, Express, React, Node.js) + socket.io to have MongoDB with real-time updates.
-          It also gave me the opportunity to practice the core search concepts and algorithms that I have learned.
+          {/*It also gave me the opportunity to practice the core search concepts and algorithms that I have learned.*/}
         </p>
         <div className="footer-icons">
           <a href="https://github.com/Am4teur">                 <i className="fa fa-github"></i></a>

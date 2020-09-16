@@ -5,6 +5,9 @@
 	width: 100%;
 	text-align: left;
 	font: bold 16px sans-serif;
+	
+	position: absolute;
+	bottom: 0px;
 
 	padding: 55px 50px;
 	margin-top: 80px;
@@ -20,19 +23,7 @@
 /* Footer left */
 
 .footer-distributed .footer-left{
-	width: 40%;
-}
-
-/* The company logo */
-
-.footer-distributed h3{
-	color:  #ffffff;
-	font: normal 36px 'Cookie', cursive;
-	margin: 0;
-}
-
-.footer-distributed h3 span{
-	color:  #5383d3;
+	width: 30%;
 }
 
 /* Footer links */
@@ -60,7 +51,7 @@
 /* Footer Center */
 
 .footer-distributed .footer-center{
-	width: 35%;
+	width: 30%;
 }
 
 .footer-distributed .footer-center i{
@@ -96,15 +87,15 @@
 }
 
 .footer-distributed .footer-center p a{
-	color:  #ffffff;
-	text-decoration: none;;
+	color:  grey;
+	text-decoration: none;
 }
 
 
 /* Footer Right */
 
 .footer-distributed .footer-right{
-	width: 20%;
+	width: 40%;
 }
 
 .footer-distributed .footer-company-about{
