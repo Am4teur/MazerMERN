@@ -345,18 +345,22 @@ class Board extends Component<BoardProps, BoardState, Board> {
    * 
    ********************************************/
   keyHandler(e: any): void {
-    e.preventDefault();
+    
     switch (e.keyCode) {
       case 37: //left
+      e.preventDefault();
         this.move("W");
         break;
       case 38: //up
+      e.preventDefault();
         this.move("N");
         break;
       case 39: //right
+      e.preventDefault();
         this.move("E");
         break;
       case 40: //down
+      e.preventDefault();
         this.move("S");
         break;
       default:

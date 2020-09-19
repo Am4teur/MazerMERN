@@ -42,7 +42,6 @@ class UserForm extends Component<{}, UserFormState> {
     axios.post((ENDPOINT + 'users/add'), user)
       .then(res => console.log(res.data));
 
-    
     window.location.href = `/mazer?username=${this.state.username}`;
   }
 
