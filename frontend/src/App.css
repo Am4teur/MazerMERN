@@ -1,5 +1,9 @@
 body {
-  background-color: #282c34;
+	background-color: #282c34;
+	position: relative;                       /*footer*/
+	padding-bottom: 280px;                    /*footer*/
+	min-height: 100vh;                        /*footer*/
+	/* min-height: calc(100vh - 200px - 255px)/*footer*/
 }
 
 .Maze {
