@@ -3,18 +3,22 @@ import logo from '../imgs/maze.png';
 import './Navbar.css';
 
 
-function gotoAuthHTML() {
+function gotoAuthHTML(): void {
 	console.log("auth");
+}
+
+function gotoHome(): void {
+	window.location.href = `/`;
 }
 
 function Navbar() {
 	return (
 		<nav className="navbar navbar-dark sticky-top bg-primary">
 		<div className="logo">
-		<a href="/">
-			<img className="logo_image" src={logo} alt="logo"/>
-		</a>
-		<button className="btn btn-dark">Stuff...</button>
+			<a href="/">
+				<img className="logo_image" src={logo} alt="logo"/>
+			</a>
+			<button className="btn btn-dark" onClick={gotoHome}>Home</button>
 		</div>
 
 		<div className="login">
