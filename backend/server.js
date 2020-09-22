@@ -7,11 +7,7 @@ const socketio = require('socket.io');
 //Connect with dotenv to have variables in the file .env
 require('dotenv').config();
 
-/*
-MongoDB user credentials:
-user: dbMazerAdmin
-pass: dbMazerAdmin
-*/
+
 
 const app = express();
 const port = process.env.PORT || 5000;
