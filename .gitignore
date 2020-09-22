@@ -30,3 +30,6 @@ yarn-error.log*
 
 #Deployment folder
 /deployment
+
+#backend
+backend/.env
