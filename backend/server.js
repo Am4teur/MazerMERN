@@ -7,8 +7,6 @@ const socketio = require('socket.io');
 //Connect with dotenv to have variables in the file .env
 require('dotenv').config();
 
-
-
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -17,7 +15,7 @@ app.use(express.json());
 
 //Connect with MongoDB Atlas DB
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
