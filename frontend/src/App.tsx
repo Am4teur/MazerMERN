@@ -1,48 +1,61 @@
-import React, { /* Component */ } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import axios from 'axios';
 import './App.css';
 
 import Navbar from './components/Navbar';
-import Info from './components/Info';
-import UserForm from './components/UserForm';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
 import Maze from './components/Maze';
 import Footer from './components/Footer';
+import UserContext from './context/UserContext'
+import User from './objects/User';
 
 
-function App() {
+
+const ENDPOINT = 'http://localhost:5000/';
+
+
+export default function App() {
+  const [userData, setUserData] = useState({
+    token: "",
+    user: new User("", "", 0, 0)
+  });
+
+  useEffect(() => {
+    const checkedLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
+      if(token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      const tokenRes = await axios.post(ENDPOINT + "users/tokenIsValid", null, { headers: { "x-auth-token": token } });
+      if(tokenRes.data) {
+        const userRes = await axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } });
+        setUserData({
+          token,
+          user: new User(userRes.data.id, userRes.data.username, userRes.data.x, userRes.data.y)
+        });
+      }
+    }
+    checkedLoggedIn();
+  }, []);
 
   return (
     <Router>
-      <Navbar />
-      <Info />
-      
-      <Route path="/" exact component={UserForm} />
-      <div className="Maze">
-      <Route path="/mazer" component={Maze} />
-      </div>
+      <UserContext.Provider value={ { userData: userData, setUserData: setUserData } }>
+        <Navbar />
 
-      <Footer />
-      
+        <Switch>
+          <Route path="/" exact component={Home} /> {/*Home*/}
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/mazer" component={Maze} />
+        </Switch>
+
+        <Footer />
+      </UserContext.Provider>
     </Router>
   );
 }
-
-export default App;
-
-/*function stepByStep() {
-  console.log("stepByStep");
-}
-
-function redraw() {
-  console.log("redraw");
-}*/
-
-/*       <div className="maze">
-        <canvas id="myCanvas"></canvas>
-
-        <br></br>
-        <button className="btn btn-dark" onClick={stepByStep}> Step-by-step </button>
-        <button className="btn btn-dark" onClick={redraw}> Redraw </button>
-
-        <h1 id="win"></h1>
-      </div> */

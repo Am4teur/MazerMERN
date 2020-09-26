@@ -1,56 +1,62 @@
-import React/*, { Component }*/ from 'react';
+import React, { /*useState*/ useContext } from 'react';
+import { useHistory } from "react-router-dom";
 import logo from '../imgs/maze.png';
 import './Navbar.css';
+import UserContext from '../context/UserContext';
+import User from '../objects/User';
 
 
-function gotoAuthHTML(): void {
-	console.log("auth");
-}
+const Navbar = () => {
+	const history = useHistory();
+	const { userData, setUserData } = useContext(UserContext);
 
-function gotoHome(): void {
-	window.location.href = `/`;
-}
+	const routeHome = () => {
+		history.push('/');
+	}
 
-function Navbar() {
+	const routeMazer = () => {
+		history.push('/mazer');
+	}
+
+	const routeLogin = () => {
+		history.push('/login');
+	}
+
+	const routeRegister = () => {
+		history.push('/register');
+	}
+
+	const logout = () => {
+		setUserData({
+			token: "",
+			user: new User("", "", 0, 0)
+		});
+		localStorage.setItem("auth-token", "");
+	}
+
 	return (
 		<nav className="navbar navbar-dark sticky-top bg-primary">
 		<div className="logo">
 			<a href="/">
 				<img className="logo_image" src={logo} alt="logo"/>
 			</a>
-			<button className="btn btn-dark" onClick={gotoHome}>Home</button>
+			<button className="btn btn-dark" onClick={routeHome}>Home</button>
+			<button className="btn btn-dark" onClick={routeMazer}>Mazer</button>
 		</div>
 
 		<div className="login">
-			<div className="p-1"><button className="btn btn-dark">Login</button></div>
-			<div className="p-1"><button className="btn btn-dark" onClick={gotoAuthHTML}>Register</button></div>
+			{
+				userData.user.username !== "" ? 
+				<div className="p-1"><button className="btn btn-dark" onClick={logout}>Logout</button></div> :
+				<>
+				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>
+				<div className="p-1"><button className="btn btn-dark" onClick={routeRegister}>Register</button></div>
+				</>
+			}
+
 		</div>
 		</nav>
-
 	);
 }
 
 export default Navbar;
-
-
-
-
-
-
-/*
-<nav class="navbar navbar-dark sticky-top bg-primary">
-	<!-- Logo image + Stuff btn -->
-	<div class="logo">
-        <a href="/">
-            <img class="logo_image" src="imgs/maze.png" alt="Mazerlogo">
-		</a>
-		<button class="btn btn-dark button">Stuff...</button>
-    </div>
-
-    <!-- Login & Sign In -->
-    <div class="login">
-        <div class="p-1"><button class="btn btn-dark">Login</button></div>
-        <div class="p-1"><button class="btn btn-dark" onclick="gotoAuthHTML()">Sign Up</button></div>
-    </div>
-
-</nav>*/

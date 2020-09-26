@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import Square from './Square';
+import User from '../objects/User';
 import '../App.css';
 import CSS from 'csstype';
 import Icon from './Icon';
@@ -7,11 +8,12 @@ import IconComponent from './IconComponent';
 import axios from 'axios';
 
 import io from 'socket.io-client';
-const queryString = require('query-string');
+import UserContext from '../context/UserContext';
 
 let socket: any;
 let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';
 let iconNm = "blue-simple-icon";
+
 
 
 interface Board {
@@ -25,11 +27,12 @@ interface BoardState {
   icons: { [id: string] : Icon; };
   iconId: string;
   seed: number;
+  user: User
 }
 
 interface BoardProps {
+  user: User,
   onIconChange(v: string): void;
-  onUsernameChange(v: string): void;
 }
 
 
@@ -51,6 +54,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       icons: {},
       iconId: '',
       seed: 0,
+      user: this.props.user
     };
 
     this.keyHandler = this.keyHandler.bind(this);
@@ -64,9 +68,6 @@ class Board extends Component<BoardProps, BoardState, Board> {
     socket = io(ENDPOINT);
     socket.on('move', this.updateBoardAndSquares);
     this.updateBoardAndSquares();
-    const { username } = queryString.parse(window.location.search);
-    this.props.onUsernameChange(username);
-    this.props.onIconChange(iconNm);
   }
 
   /********************************************
@@ -220,9 +221,12 @@ class Board extends Component<BoardProps, BoardState, Board> {
       if(response.data.length > 0) {
         let icons: { [id: string] : Icon } = {};
         let users = response.data;
-        const { username } = queryString.parse(window.location.search);
+        const username = this.state.user.username;
         for(let i = 0; i < users.length; i++) {
-          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(), users[i].y, users[i].x, <IconComponent key={users[i]._id.toString()} size={16} iconName={iconNm}/>);
+          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(),
+                                                    users[i].y,
+                                                    users[i].x,
+                                                    <IconComponent key={users[i]._id.toString()} size={16} iconName={iconNm}/>);
         }
 
         let id: string = "";
