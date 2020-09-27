@@ -45,10 +45,6 @@ router.route("/register").post(async (req, res) => {
   const x = 0;
   const y = 0;
 
-  if(!email || !password || !passwordCheck || !username) {
-    return res.status(400)
-      .json({ msg : "Not all fields have been entered." });
-  }
   if(!validateEmail(email)) {
     return res.status(400)
       .json({ msg : "That email is invalid." });
@@ -91,15 +87,10 @@ function validateEmail(email) {
 router.route("/login").post(async (req, res) => {
   const { email, password } = req.body;
 
-  if(!email || !password) {
-    return res.status(400)
-      .json({ msg : "Not all fields have been entered." });
-  }
-
   const user = await User.findOne({ email: email });
   if(!user) {
     return res.status(400)
-      .json({ msg : "Invalid email." });
+      .json({ msg : "Invalid email. There is no account with that email." });
   }
 
   const isMatch = await bcrypt.compare(password, user.hashedPassword)
