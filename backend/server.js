@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
   console.log("User connected!");
 
   socket.on('move', ({ userId })  => {
-    console.log(userId);
+    console.log("The user: " + userId + " moved!");
     io.emit('move', userId);
   })
 

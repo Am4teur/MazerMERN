@@ -8,7 +8,6 @@ import IconComponent from './IconComponent';
 import axios from 'axios';
 
 import io from 'socket.io-client';
-import UserContext from '../context/UserContext';
 
 let socket: any;
 let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';
@@ -25,7 +24,6 @@ interface BoardState {
   squares: any[]; //matrix of Square
   board: any[][];
   icons: { [id: string] : Icon; };
-  iconId: string;
   seed: number;
   user: User
 }
@@ -52,7 +50,6 @@ class Board extends Component<BoardProps, BoardState, Board> {
       squares: [],
       board: [],
       icons: {},
-      iconId: '',
       seed: 0,
       user: this.props.user
     };
@@ -65,9 +62,16 @@ class Board extends Component<BoardProps, BoardState, Board> {
   }
 
   componentDidMount() {
+    this.setState((state) => ({
+      user: this.props.user
+    }));
     socket = io(ENDPOINT);
     socket.on('move', this.updateBoardAndSquares);
     this.updateBoardAndSquares();
+  }
+
+  componentWillUnmount() {
+    
   }
 
   /********************************************
@@ -221,24 +225,16 @@ class Board extends Component<BoardProps, BoardState, Board> {
       if(response.data.length > 0) {
         let icons: { [id: string] : Icon } = {};
         let users = response.data;
-        const username = this.state.user.username;
+
         for(let i = 0; i < users.length; i++) {
           icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(),
                                                     users[i].y,
                                                     users[i].x,
                                                     <IconComponent key={users[i]._id.toString()} size={16} iconName={iconNm}/>);
         }
-
-        let id: string = "";
-        users.forEach((element: any) => {
-          if(element.username === username) {
-            id = element._id;
-          }
-        });
         
-        if(username !== "") {
+        if(this.state.user.username !== "") {
           this.setState((state) => ({
-            iconId: id,
             squares: this.createSquares(icons)[0],
             board: this.createSquares(icons)[1],
             icons: icons,
@@ -305,25 +301,27 @@ class Board extends Component<BoardProps, BoardState, Board> {
     let oppx: { [id: string]: number; } = { "W": 0, "N": -1, "S": 1, "E": 0 };
     let oppy: { [id: string]: number; } = { "W": -1, "N": 0, "S": 0, "E": 1 };
     let newIcons = {...this.state.icons};
+    console.log("moved | id: " + this.state.user.id);
     
-    if(newIcons[this.state.iconId]) {
-      if (newIcons[this.state.iconId].x + oppx[type] >= 0 && 
-          newIcons[this.state.iconId].x + oppx[type] < this.state.board[0].length &&
-          this.state.board[newIcons[this.state.iconId].y][newIcons[this.state.iconId].x][type] === 1 &&
-          newIcons[this.state.iconId].y + oppy[type] >= 0 && 
-          newIcons[this.state.iconId].y + oppy[type] < this.state.board[0].length) {
+    
+    if(newIcons[this.state.user.id]) {
+      if (newIcons[this.state.user.id].x + oppx[type] >= 0 && 
+          newIcons[this.state.user.id].x + oppx[type] < this.state.board[0].length &&
+          this.state.board[newIcons[this.state.user.id].y][newIcons[this.state.user.id].x][type] === 1 &&
+          newIcons[this.state.user.id].y + oppy[type] >= 0 && 
+          newIcons[this.state.user.id].y + oppy[type] < this.state.board[0].length) {
 
-        newIcons[this.state.iconId].x = newIcons[this.state.iconId].x + oppx[type];
-        newIcons[this.state.iconId].y = newIcons[this.state.iconId].y + oppy[type];
+        newIcons[this.state.user.id].x = newIcons[this.state.user.id].x + oppx[type];
+        newIcons[this.state.user.id].y = newIcons[this.state.user.id].y + oppy[type];
       }
 
       let user: {y:number, x:number} = {
-        y: newIcons[this.state.iconId].x,
-        x: newIcons[this.state.iconId].y,
+        y: newIcons[this.state.user.id].x,
+        x: newIcons[this.state.user.id].y,
       }
 
       //check if won aka checkWinner()
-      if(newIcons[this.state.iconId].x === this.rows-1 && newIcons[this.state.iconId].y === this.cols-1) {
+      if(newIcons[this.state.user.id].x === this.rows-1 && newIcons[this.state.user.id].y === this.cols-1) {
         user = {
           y: 0,
           x: 0,
@@ -331,9 +329,9 @@ class Board extends Component<BoardProps, BoardState, Board> {
       }
 
       //update
-      axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.iconId].id, user)
+      axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.user.id].id, user)
         .then(response => {
-          socket.emit('move', { userId: this.state.iconId });
+          socket.emit('move', { userId: this.state.user.id });
 
           this.setState((state) => ({
             icons: newIcons,
