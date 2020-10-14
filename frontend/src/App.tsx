@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
 
@@ -43,7 +43,7 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
+    <BrowserRouter>
       <UserContext.Provider value={ { userData: userData, setUserData: setUserData } }>
         <Navbar />
 
@@ -56,6 +56,6 @@ export default function App() {
 
         <Footer />
       </UserContext.Provider>
-    </Router>
+    </BrowserRouter>
   );
 }

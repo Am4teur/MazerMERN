@@ -33,7 +33,7 @@ const server =http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-  console.log("User connected!");
+  console.log("User connected!" + socket.id);
 
   socket.on('move', ({ userId })  => {
     console.log("The user: " + userId + " moved!");
