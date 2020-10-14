@@ -7,9 +7,6 @@ import Icon from './Icon';
 import IconComponent from './IconComponent';
 import axios from 'axios';
 
-import io from 'socket.io-client';
-
-let socket: any;
 let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';
 let iconNm = "blue-simple-icon";
 
@@ -29,6 +26,7 @@ interface BoardState {
 }
 
 interface BoardProps {
+  socket: any,
   user: User,
   onIconChange(v: string): void;
 }
@@ -59,19 +57,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
     document.body.addEventListener("keydown", this.keyHandler);
-  }
 
-  componentDidMount() {
-    this.setState((state) => ({
-      user: this.props.user
-    }));
-    socket = io(ENDPOINT);
-    socket.on('move', this.updateBoardAndSquares);
     this.updateBoardAndSquares();
-  }
-
-  componentWillUnmount() {
-    
   }
 
   /********************************************
@@ -331,7 +318,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       //update
       axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.user.id].id, user)
         .then(response => {
-          socket.emit('move', { userId: this.state.user.id });
+          this.props.socket.emit('move', { userId: this.state.user.id });
 
           this.setState((state) => ({
             icons: newIcons,

@@ -32,7 +32,7 @@ const Navbar = () => {
 			user: new User("", "", 0, 0)
 		});
 		localStorage.setItem("auth-token", "");
-		//history.push('/')
+		history.push('/')
 	}
 
 	return (
