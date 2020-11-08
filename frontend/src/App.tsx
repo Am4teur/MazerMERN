@@ -43,8 +43,10 @@ export default function App() {
   }, []);
 
   return (
+    <div className="Site">
     <BrowserRouter>
       <UserContext.Provider value={ { userData: userData, setUserData: setUserData } }>
+        <div className="Site-content">
         <Navbar />
 
         <Switch>
@@ -53,9 +55,15 @@ export default function App() {
           <Route path="/register" component={Register} />
           <Route path="/mazer" component={Maze} />
         </Switch>
+        </div>
 
         <Footer />
       </UserContext.Provider>
     </BrowserRouter>
+    </div>
   );
+
+
+
+
 }
