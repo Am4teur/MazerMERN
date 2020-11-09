@@ -4,7 +4,7 @@ import User from "../objects/User";
 
 interface Context { 
   token: string;
-  user: User;
+  user: User
 };
 
 export default createContext({
@@ -13,5 +13,4 @@ export default createContext({
     user: new User("", "", 0, 0)
   },
   setUserData: (userdata: Context) => {},
-  loading: true,
 });
