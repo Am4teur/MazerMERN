@@ -6,11 +6,7 @@ import UserContext from '../context/UserContext';
 import User from '../objects/User';
 
 
-interface NavbarProps {
-	user: User,
-}
-
-const Navbar = (props: NavbarProps) => {
+const Navbar = () => {
 	const history = useHistory();
 	const { userData, setUserData } = useContext(UserContext);
 
@@ -33,7 +29,7 @@ const Navbar = (props: NavbarProps) => {
 	const logout = () => {
 		setUserData({
 			token: "",
-			user: new User("", "", 0, 0)
+			user: new User("", "", 0, 0),
 		});
 		localStorage.setItem("auth-token", "");
 		history.push('/')
@@ -55,7 +51,7 @@ const Navbar = (props: NavbarProps) => {
 
 		<div className="authentication">
 			{
-				props.user.username !== "" ? 
+				userData.user.username !== "" ? 
 				<div className="p-1"><button className="btn btn-dark" onClick={logout}>Logout</button></div> :
 				<>
 				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>
