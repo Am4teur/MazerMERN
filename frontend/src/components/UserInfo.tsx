@@ -13,7 +13,7 @@ const UserInfo = (props: UserInfoProps) => {
     <div className="userInfo">
       <label htmlFor="username" style={{color: "white"}}>Username: {props.username}</label>
       <br/>
-      <label htmlFor="icon" style={{color: "white"}}>Icon: <IconComponent iconName={props.icon} size= {16}/></label>
+      <label htmlFor="icon" style={{color: "white"}}>Icon: <IconComponent iconName={props.icon} size={16}/></label>
     </div>
   );
 }

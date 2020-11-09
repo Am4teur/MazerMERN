@@ -24,7 +24,7 @@ function Maze() {
   }, []);
 
   return (
-    <div className="Maze">
+    <div className="Maze mb-5 mt-3">
       <UserInfo username={userData.user.username} icon={icon}/>
       <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} socket={socket}/>
       {/* <IconMenu /> */}
