@@ -6,7 +6,11 @@ import UserContext from '../context/UserContext';
 import User from '../objects/User';
 
 
-const Navbar = () => {
+interface NavbarProps {
+	user: User,
+}
+
+const Navbar = (props: NavbarProps) => {
 	const history = useHistory();
 	const { userData, setUserData } = useContext(UserContext);
 
@@ -37,17 +41,21 @@ const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-dark sticky-top bg-primary">
-		<div className="logo">
-			<a href="/">
-				<img className="logo_image" src={logo} alt="logo"/>
-			</a>
-			<button className="btn btn-dark" onClick={routeHome}>Home</button>
-			<button className="btn btn-dark" onClick={routeMazer}>Mazer</button>
+		<div className="navbar-left">
+			<div className="logo_image pr-3">
+				<a href="/"><img className="logo" src={logo} alt="logo"/></a>
+			</div>
+			<div className="p-1">
+				<button className="btn btn-dark" onClick={routeHome}>Home</button>
+			</div>
+			<div className="p-1">
+				<button className="btn btn-dark" onClick={routeMazer}>Mazer</button>
+			</div>
 		</div>
 
-		<div className="login">
+		<div className="authentication">
 			{
-				userData.user.username !== "" ? 
+				props.user.username !== "" ? 
 				<div className="p-1"><button className="btn btn-dark" onClick={logout}>Logout</button></div> :
 				<>
 				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>

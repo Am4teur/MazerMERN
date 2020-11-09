@@ -47,7 +47,7 @@ export default function App() {
     <BrowserRouter>
       <UserContext.Provider value={ { userData: userData, setUserData: setUserData } }>
         <div className="Site-content">
-        <Navbar />
+        <Navbar user={userData.user}/>
 
         <Switch>
           <Route path="/" exact component={Home} /> {/*Home*/}

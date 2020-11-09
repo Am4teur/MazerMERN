@@ -1,10 +1,23 @@
-.logo_image {
-  width: 32px;
-  height: 32px;
-  margin: 5px 15px 5px 0px;
+.navbar-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
-.login {
+.logo_image {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+}
+
+.logo {
+  margin-top: 8px;
+  width: 32px;
+  height: 32px;
+}
+
+.authentication {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
