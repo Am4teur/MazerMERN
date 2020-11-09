@@ -47,7 +47,8 @@ const Register = (state: RegisterState) => {
 
       setUserData({
         token: loginRes.data.token,
-        user: loginRes.data.user
+        user: loginRes.data.user,
+        loading: true,
       })
       localStorage.setItem("auth-token", loginRes.data.token)
 
