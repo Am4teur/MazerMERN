@@ -1,5 +1,5 @@
 import React, { /*useState*/ } from 'react';
-import logo from '../imgs/maze.png';
+//import logo from '../imgs/maze.png';
 import './Footer.css';
 
 // https://dev.to/letsbsocial1/flexbox-sticky-footer-and-react-e1h

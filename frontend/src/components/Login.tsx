@@ -37,7 +37,7 @@ const Login = (state: LoginState) => {
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
-        loading: true,
+        loading: false,
       })
       localStorage.setItem("auth-token", loginRes.data.token)
 

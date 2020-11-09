@@ -49,7 +49,7 @@ export default function App() {
       }
       checkedLoggedIn();
     }
-  }, []);
+  }, [userData]);
 
   if(userData.loading) return null;
   return (

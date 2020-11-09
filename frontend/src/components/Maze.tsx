@@ -21,7 +21,7 @@ function Maze() {
 
       socket.off();
     }
-  }, [ENDPOINT]);
+  }, []);
 
   return (
     <div className="Maze">

@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import Square from './Square';
 import User from '../objects/User';
 import '../App.css';
