@@ -9,8 +9,9 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Maze from './components/Maze';
 import Footer from './components/Footer';
-import UserContext from './context/UserContext'
+import UserContext from './context/UserContext';
 import User from './objects/User';
+import UserInfo from './components/UserInfo';
 
 
 
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/mazer" component={Maze} />
+          <Route path="/userInfo" component={UserInfo} />
         </Switch>
         </div>
 
