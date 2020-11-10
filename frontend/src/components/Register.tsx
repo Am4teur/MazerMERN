@@ -25,7 +25,7 @@ const Register = (state: RegisterState) => {
   var { setUserData } = useContext(UserContext);
 
 
-  const onSubmit = async (e:  any): Promise<void> => {
+  const onSubmit = async (e: any): Promise<void> => {
     e.preventDefault();
 
     try{

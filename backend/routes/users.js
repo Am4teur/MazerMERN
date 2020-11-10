@@ -140,7 +140,8 @@ router.route("/get").post(auth, async (req, res) => {
     id: user.id,
     username: user.username,
     x: user.x,
-    y: user.y
+    y: user.y,
+    createdAt: user.createdAt,
   });
 });
 

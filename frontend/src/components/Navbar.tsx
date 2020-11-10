@@ -22,6 +22,10 @@ const Navbar = (props: NavbarProps) => {
 		history.push('/mazer');
 	}
 
+	const routeTemp = () => {
+		history.push('/temp');
+	}
+
 	const routeLogin = () => {
 		history.push('/login');
 	}
@@ -30,7 +34,7 @@ const Navbar = (props: NavbarProps) => {
 		history.push('/register');
 	}
 
-	const logout = () => {
+	const routeLogout = () => {
 		setUserData({
 			token: "",
 			user: new User("", "", 0, 0),
@@ -63,10 +67,11 @@ const Navbar = (props: NavbarProps) => {
 			userData.user.username !== "" ?
 			<>
 				<div className="p-1"><button className="btn btn-dark" onClick={userInfo}>{userData.user.username}</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={logout}>Logout</button></div>
+				<div className="p-1"><button className="btn btn-dark" onClick={routeLogout}>Logout</button></div>
 			</>
 			:
 			<>
+				<div className="p-1"><button className="btn btn-dark" onClick={routeTemp}>Temp User</button></div>
 				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>
 				<div className="p-1"><button className="btn btn-dark" onClick={routeRegister}>Register</button></div>
 			</>

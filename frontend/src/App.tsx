@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import UserContext from './context/UserContext';
 import User from './objects/User';
 import UserInfo from './components/UserInfo';
+import TempUser from './components/TempUser';
 
 
 
@@ -41,17 +42,27 @@ export default function App() {
         const tokenRes = await axios.post(ENDPOINT + "users/tokenIsValid", null, { headers: { "x-auth-token": token } });
         if(tokenRes.data) {
           const userRes = await axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } });
+          console.log(userRes.data.createdAt);
+          
           setUserData({
             token,
             user: new User(userRes.data.id, userRes.data.username, userRes.data.x, userRes.data.y),
             loading: false,
           });
         }
+        else {
+          setUserData({
+            token: "",
+            user: new User("", "", 0, 0),
+            loading: false
+          });
+        }
+
       }
-      checkedLoggedIn();
+      checkedLoggedIn();;
     }
   }, [userData]);
-
+  
   if(userData.loading) return null;
   return (
     <div className="Site">
@@ -62,6 +73,7 @@ export default function App() {
 
         <Switch>
           <Route path="/" exact component={Home} /> {/*Home*/}
+          <Route path="/temp" component={TempUser} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/mazer" component={Maze} />
@@ -74,8 +86,5 @@ export default function App() {
     </BrowserRouter>
     </div>
   );
-
-
-
 
 }
