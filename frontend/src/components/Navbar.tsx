@@ -40,6 +40,10 @@ const Navbar = (props: NavbarProps) => {
 		history.push('/')
 	}
 
+	const userInfo = () => {
+		history.push('/userInfo');
+	}
+
 	return (
 		<nav className="navbar navbar-dark sticky-top bg-primary">
 		<div className="navbar-left">
@@ -56,13 +60,17 @@ const Navbar = (props: NavbarProps) => {
 
 		<div className="authentication">
 			{
-				userData.user.username !== "" ? 
-				<div className="p-1"><button className="btn btn-dark" onClick={logout}>Logout</button></div> :
-				<>
+			userData.user.username !== "" ?
+			<>
+				<div className="p-1"><button className="btn btn-dark" onClick={userInfo}>{userData.user.username}</button></div>
+				<div className="p-1"><button className="btn btn-dark" onClick={logout}>Logout</button></div>
+			</>
+			:
+			<>
 				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>
 				<div className="p-1"><button className="btn btn-dark" onClick={routeRegister}>Register</button></div>
-				</>
-			}
+			</>
+		}
 
 		</div>
 		</nav>
