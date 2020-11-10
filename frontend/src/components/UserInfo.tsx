@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import UserContext from '../context/UserContext';
-import User from '../objects/User';
 import IconComponent from './IconComponent';
 
 
@@ -11,6 +10,7 @@ interface UserInfoProps {
 
 const UserInfo = (props: UserInfoProps) => {
   const { userData } = useContext(UserContext);
+  
   return (
     <div className="userInfo">
       <label htmlFor="username" style={{color: "white"}}>Username: {userData.user.username}</label>
