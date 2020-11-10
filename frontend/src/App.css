@@ -2,10 +2,6 @@ body {
 	background-color: #282c34;
 }
 
-.Maze {
-	text-align: center;
-}
-
 .info {
 	display: flex;
 	flex-direction: column;
