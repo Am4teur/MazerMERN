@@ -25,7 +25,9 @@ const IconComponent = ({size, iconName}: IconComponentProps) => {
   }
 
   return (
-    <img className="icon" src={icon[iconName]} alt="icon" style={iconComponentStyle}/>
+    <div className="m-1">
+      <img className="icon" src={icon[iconName]} alt="icon" style={iconComponentStyle}/>
+    </div>
   )
 }
 
