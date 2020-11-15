@@ -207,6 +207,19 @@ class Board extends Component<BoardProps, BoardState, Board> {
    * 
    ********************************************/
   updateBoardAndSquares() {
+  /*axios.get(ENDPOINT + 'user/:user_id/maze/:maze_id')
+    .then(res => {
+      const mazeData = res.data;
+      if(res.length > 0) {
+        let users = mazeData.users; // probably need another db call to get all the users in the maze
+        
+      }
+
+
+
+    });
+  */
+
     axios.get(ENDPOINT + 'users/')
     .then(response => {
       if(response.data.length > 0) {

@@ -31,14 +31,14 @@ const TempUser = () => {
         username: "temp"+rnd.substring(0, 8),
       }
 
-      await axios.post((ENDPOINT + 'users/register'), registerUser);
+      console.log(await axios.post((ENDPOINT + 'users/registertemp'), registerUser));
 
       const loginUser = {
         email: "temp"+rnd+"@temp.com",
         password: rnd,
       }
 
-      const loginRes = await axios.post((ENDPOINT + 'users/login'), loginUser);
+      const loginRes = await axios.post((ENDPOINT + 'users/logintemp'), loginUser);
 
       setUserData({
         token: loginRes.data.token,
