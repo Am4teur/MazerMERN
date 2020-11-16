@@ -5,7 +5,7 @@ import IconComponent from './IconComponent';
 
 
 interface UserInfoProps {
-  icon: any;
+  icon: string;
 }
 
 const UserInfo = (props: UserInfoProps) => {

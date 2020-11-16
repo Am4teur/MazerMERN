@@ -22,18 +22,17 @@ interface BoardState {
   board: any[][];
   icons: { [id: string] : Icon; };
   seed: number;
-  user: User
+  user: User;
 }
 
 interface BoardProps {
-  socket: any,
-  user: User,
+  socket: any;
+  user: User;
   onIconChange(v: string): void;
 }
 
 
 class Board extends Component<BoardProps, BoardState, Board> {
-
   /********************************************
    * @constructor
    * 
@@ -59,6 +58,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
     document.body.addEventListener("keydown", this.keyHandler);
 
     this.updateBoardAndSquares();
+
+    props.socket.on('move', this.updateBoardAndSquares);
   }
 
   /********************************************
@@ -212,7 +213,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       const mazeData = res.data;
       if(res.length > 0) {
         let users = mazeData.users; // probably need another db call to get all the users in the maze
-        
+
       }
 
 
@@ -332,6 +333,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.user.id].id, user)
         .then(response => {
           this.props.socket.emit('move', { userId: this.state.user.id });
+          //this.props.socket.broadcast.to(<maze_room>).emit('move', { userId: this.state.user.id });
 
           this.setState((state) => ({
             icons: newIcons,

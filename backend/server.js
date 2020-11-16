@@ -7,9 +7,8 @@ const socketio = require('socket.io');
 //Connect with dotenv to have variables in the file .env
 require('dotenv').config();
 
-const app = express();
-const port = process.env.PORT || 5000;
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
@@ -29,11 +28,11 @@ app.use('/users', usersRouter);
 
 
 // SOCKET.IO
-const server =http.createServer(app);
+const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-  console.log("User connected!" + socket.id);
+  console.log("User connected! socket id: " + socket.id);
 
   socket.on('move', ({ userId })  => {
     console.log("The user: " + userId + " moved!");
@@ -45,6 +44,9 @@ io.on('connection', (socket) => {
   });
 });
 
+
+
+const port = process.env.PORT || 5000;
 
 //Start the server
 server.listen(port, () => {
