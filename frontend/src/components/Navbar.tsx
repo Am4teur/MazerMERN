@@ -49,7 +49,7 @@ const Navbar = (props: NavbarProps) => {
 	}
 
 	return (
-		<nav className="navbar navbar-dark sticky-top bg-primary">
+		<nav className="navbar navbar-dark bg-primary">
 		<div className="navbar-left">
 			<div className="logo_image pr-3">
 				<a href="/"><img className="logo" src={logo} alt="logo"/></a>
