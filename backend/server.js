@@ -26,6 +26,9 @@ const usersRouter = require('./routes/users');
 //Add as Middleware
 app.use('/users', usersRouter);
 
+const mazesRouter = require('./routes/mazes');
+app.use('/mazes', mazesRouter);
+
 
 // SOCKET.IO
 const server = http.createServer(app);
