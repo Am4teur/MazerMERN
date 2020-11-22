@@ -11,6 +11,7 @@ import Maze from './components/Maze';
 import Footer from './components/Footer';
 import UserContext from './context/UserContext';
 import User from './objects/User';
+import { mazeType } from "./objects/User";
 import UserInfo from './components/UserInfo';
 import TempUser from './components/TempUser';
 
@@ -22,7 +23,7 @@ const ENDPOINT = 'http://localhost:5000/';
 export default function App() {
   const [userData, setUserData] = useState({
     token: "",
-    user: new User("", "", 0, 0),
+    user: new User(),
     loading: true,
   });
 
@@ -42,18 +43,24 @@ export default function App() {
         const tokenRes = await axios.post(ENDPOINT + "users/tokenIsValid", null, { headers: { "x-auth-token": token } });
         if(tokenRes.data) {
           const userRes = await axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } });
-          console.log(userRes.data.createdAt);
-          
+
+          //const mazesMap = createMazesMap(userRes.data.mazes);
+          let mazesDict: mazeType = {};
+          for(let i=0; i < userRes.data.mazes.length; i++) {
+            const mazeRes = await axios.post((ENDPOINT + "mazes/getById"), {id: userRes.data.mazes[i]});
+            mazesDict[userRes.data.mazes[i]] = mazeRes.data;
+          }
+
           setUserData({
             token,
-            user: new User(userRes.data.id, userRes.data.username, userRes.data.x, userRes.data.y),
+            user: new User(userRes.data.id, userRes.data.username, userRes.data.x, userRes.data.y, mazesDict),
             loading: false,
           });
         }
         else {
           setUserData({
             token: "",
-            user: new User("", "", 0, 0),
+            user: new User(),
             loading: false
           });
         }

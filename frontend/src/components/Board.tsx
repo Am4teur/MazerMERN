@@ -28,6 +28,7 @@ interface BoardState {
 interface BoardProps {
   socket: any;
   user: User;
+  mazeId: string;
   onIconChange(v: string): void;
 }
 
@@ -40,16 +41,21 @@ class Board extends Component<BoardProps, BoardState, Board> {
   constructor(props: any) {
     super(props);
 
-    this.rows = 10;
-    this.cols = 10;
+    let maze = this.props.user.mazes[this.props.mazeId];
+    
+    this.rows = maze.rows;
+    this.cols = maze.cols;
 
     this.state = {
       squares: [],
       board: [],
       icons: {},
-      seed: 0,
+      seed: maze.seed,
       user: this.props.user
     };
+
+    console.log(maze.users);
+    
 
     this.keyHandler = this.keyHandler.bind(this);
     this.move = this.move.bind(this);
@@ -60,6 +66,10 @@ class Board extends Component<BoardProps, BoardState, Board> {
     this.updateBoardAndSquares();
 
     props.socket.on('move', this.updateBoardAndSquares);
+  }
+
+  componentDidMount() {
+
   }
 
   /********************************************
@@ -302,6 +312,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
     let oppx: { [id: string]: number; } = { "W": 0, "N": -1, "S": 1, "E": 0 };
     let oppy: { [id: string]: number; } = { "W": -1, "N": 0, "S": 0, "E": 1 };
     let newIcons = {...this.state.icons};
+    console.log(newIcons);
+    
     console.log("moved | id: " + this.state.user.id);
     
     
@@ -330,6 +342,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       }
 
       //update
+      //await axios.post((ENDPOINT + "mazes/getById"), {id: userRes.data.mazes[i]});
       axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.user.id].id, user)
         .then(response => {
           this.props.socket.emit('move', { userId: this.state.user.id });

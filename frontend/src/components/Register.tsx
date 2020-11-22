@@ -6,6 +6,7 @@ import UserContext from '../context/UserContext';
 
 
 let ENDPOINT = 'http://localhost:5000/';
+const GLOBAL_ID = "5fb5a857fa924d4f0c61b7fe";
 
 interface RegisterState {
   email: string,
@@ -29,13 +30,16 @@ const Register = (state: RegisterState) => {
     e.preventDefault();
 
     try{
+      //const mazeRes = await axios.post((ENDPOINT + "mazes/getById"), {id: GLOBAL_ID});
+
       const registerUser = {
         email: email,
         password: password,
         passwordCheck: passwordCheck,
-        username: username
+        username: username,
+        //mazes: mazeRes
       }
-
+      
       await axios.post((ENDPOINT + 'users/register'), registerUser);
 
       const loginUser = {

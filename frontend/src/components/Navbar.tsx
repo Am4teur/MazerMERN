@@ -37,7 +37,7 @@ const Navbar = (props: NavbarProps) => {
 	const routeLogout = () => {
 		setUserData({
 			token: "",
-			user: new User("", "", 0, 0),
+			user: new User(),
 			loading: false,
 		});
 		localStorage.setItem("auth-token", "");

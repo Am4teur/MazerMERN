@@ -5,7 +5,7 @@ import maze_gif from '../imgs/v1_maze.gif';
 
 
 function Home() {
-  const { userData } = useContext(UserContext);
+  //const { userData } = useContext(UserContext);
 
   const routeOnline = () => {
 

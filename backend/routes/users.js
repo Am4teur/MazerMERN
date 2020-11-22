@@ -13,7 +13,7 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error on '/users/(empty)': " + err));
 });
 
-
+/* NOT USED */
 router.route("/add").post((req, res) => {
   const username = req.body.username;
   const x = req.body.x;
@@ -142,6 +142,7 @@ router.route("/get").post(auth, async (req, res) => {
     username: user.username,
     x: user.x,
     y: user.y,
+    mazes: user.mazes,
   });
 });
 

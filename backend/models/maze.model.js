@@ -7,8 +7,8 @@ const mazeSchema = new Schema({
   name: String,
   user_creater: Schema.Types.ObjectId,
   seed: Number,
-  length: Number,
-  width: Number,
+  rows: Number,
+  cols: Number,
   }, {
   timestamps: true,
 });

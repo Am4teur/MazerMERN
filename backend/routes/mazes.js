@@ -28,7 +28,7 @@ router.route("/add").post((req, res) => {
     .catch(err => res.status(400).json("Error on '/mazes/add': " + err));
 });
 
-router.route("/getById").get(async (req, res) => {
+router.route("/getById").post(async (req, res) => {
   const maze = await Maze.findById(req.body.id);
 
   return res.json(maze);
@@ -37,6 +37,19 @@ router.route("/getById").get(async (req, res) => {
   Maze.findById(req.body.id)
   .then(maze => res.json(maze))
   .catch(err => res.status(400).json("Error on '/mazes/(empty)': " + err));*/
+});
+
+router.route("/update").post((req, res) => {
+  Maze.findById(req.body.id)
+    .then(maze => {
+      maze.users[1] = req.body.x;
+      maze.users[2] = req.body.y;
+
+      maze.save()
+        .then(() => res.json("Maze Updated!"))
+        .catch(err => res.status(400).json("Error saving on '/mazes/update'" + err));
+    })
+    .catch(err => res.status(400).json("Error on '/mazes/update': " + err));
 });
 
 router.route("/delete").delete(auth, async (req, res) => {
