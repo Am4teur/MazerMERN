@@ -15,6 +15,7 @@ let iconNm = "blue-simple-icon";
 interface Board {
   rows: number;
   cols: number;
+  maze: any;
 }
 
 interface BoardState {
@@ -41,20 +42,25 @@ class Board extends Component<BoardProps, BoardState, Board> {
   constructor(props: any) {
     super(props);
 
-    let maze = this.props.user.mazes[this.props.mazeId];
+    /*for(let i=0; i < this.props.user.mazes.length; i++) {
+      if(this.props.user.mazes[0] === this.props.mazeId) {            
+        //this.maze = this.props.user.mazes[i];
+      }
+    }*/
+    this.maze = this.props.user.mazes[this.props.mazeId];
     
-    this.rows = maze.rows;
-    this.cols = maze.cols;
+    this.rows = this.maze.rows;
+    this.cols = this.maze.cols;
 
     this.state = {
       squares: [],
       board: [],
       icons: {},
-      seed: maze.seed,
+      seed: this.maze.seed,
       user: this.props.user
     };
 
-    console.log(maze.users);
+    //console.log(this.maze.users);
     
 
     this.keyHandler = this.keyHandler.bind(this);
@@ -62,14 +68,11 @@ class Board extends Component<BoardProps, BoardState, Board> {
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
     document.body.addEventListener("keydown", this.keyHandler);
-
-    this.updateBoardAndSquares();
-
-    props.socket.on('move', this.updateBoardAndSquares);
   }
 
   componentDidMount() {
-
+    this.props.socket.on('move', this.updateBoardAndSquares);
+    this.updateBoardAndSquares();
   }
 
   /********************************************
@@ -191,7 +194,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
       for (let j = 0; j < this.cols; j++) {
         for (var key in icons) {
           // check if the property/key is defined in the object itself, not in parent
-          if (icons.hasOwnProperty(key) && icons[key].x === i && icons[key].y === j) {
+          //icons.hasOwnProperty(key) &&
+          if (icons[key].x === i && icons[key].y === j) {
             iconsInSquare.push(icons[key]);
           }
         }
@@ -218,42 +222,27 @@ class Board extends Component<BoardProps, BoardState, Board> {
    * 
    ********************************************/
   updateBoardAndSquares() {
-  /*axios.get(ENDPOINT + 'user/:user_id/maze/:maze_id')
-    .then(res => {
-      const mazeData = res.data;
-      if(res.length > 0) {
-        let users = mazeData.users; // probably need another db call to get all the users in the maze
+    let icons: { [id: string] : Icon } = {};
+    let users = this.maze.users;
 
-      }
-
-
-
-    });
-  */
-
-    axios.get(ENDPOINT + 'users/')
-    .then(response => {
-      if(response.data.length > 0) {
-        let icons: { [id: string] : Icon } = {};
-        let users = response.data;
-
-        for(let i = 0; i < users.length; i++) {
-          icons[users[i]._id.toString()] = new Icon(users[i]._id.toString(),
-                                                    users[i].y,
-                                                    users[i].x,
-                                                    <IconComponent key={users[i]._id.toString()} size={16} iconName={iconNm}/>);
-        }
-        
-        if(this.state.user.username !== "") {
-          this.setState((state) => ({
-            squares: this.createSquares(icons)[0],
-            board: this.createSquares(icons)[1],
-            icons: icons,
-          }));
-        }
-        
-      }
-    });
+    //id     -> [0]
+    //x      -> [1]
+    //y      -> [2]
+    //option -> [3]
+    for(let i = 0; i < users.length; i++) {
+      icons[users[i][0].toString()] = new Icon(users[i][0].toString(),
+                                                users[i][1],
+                                                users[i][2],
+                                                <IconComponent key={users[i][0].toString()} size={16} iconName={iconNm}/>);
+    }
+    
+    if(this.state.user.username !== "") {
+      this.setState((state) => ({
+        squares: this.createSquares(icons)[0],
+        board: this.createSquares(icons)[1],
+        icons: icons,
+      }));
+    }
   }
 
   /********************************************
@@ -319,41 +308,52 @@ class Board extends Component<BoardProps, BoardState, Board> {
     
     if(newIcons[this.state.user.id]) {
       if (newIcons[this.state.user.id].x + oppx[type] >= 0 && 
-          newIcons[this.state.user.id].x + oppx[type] < this.state.board[0].length &&
+          newIcons[this.state.user.id].x + oppx[type] < this.rows &&
           this.state.board[newIcons[this.state.user.id].y][newIcons[this.state.user.id].x][type] === 1 &&
           newIcons[this.state.user.id].y + oppy[type] >= 0 && 
-          newIcons[this.state.user.id].y + oppy[type] < this.state.board[0].length) {
+          newIcons[this.state.user.id].y + oppy[type] < this.cols) { // if to test if it is able to move
 
+            
         newIcons[this.state.user.id].x = newIcons[this.state.user.id].x + oppx[type];
         newIcons[this.state.user.id].y = newIcons[this.state.user.id].y + oppy[type];
-      }
-
-      let user: {y:number, x:number} = {
-        y: newIcons[this.state.user.id].x,
-        x: newIcons[this.state.user.id].y,
-      }
-
-      //check if won aka checkWinner()
-      if(newIcons[this.state.user.id].x === this.rows-1 && newIcons[this.state.user.id].y === this.cols-1) {
-        user = {
-          y: 0,
-          x: 0,
+      
+        //check if won aka checkWinner()
+        if(newIcons[this.state.user.id].x === this.rows-1 && newIcons[this.state.user.id].y === this.cols-1) {
+          newIcons[this.state.user.id].x = 0;
+          newIcons[this.state.user.id].y = 0;
         }
+
+        const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
+          userId: this.state.user.id,
+          mazeId: this.maze._id,
+          y: newIcons[this.state.user.id].x,
+          x: newIcons[this.state.user.id].y,
+          option: "0",
+        }
+
+        //updating this.maze here instead of calling for db
+        console.log(this.maze.users);
+        
+        for(let i=0; i < this.maze.users.length; i++) {
+          if(this.maze.users[i][0] === this.state.user.id) {            
+            this.maze.users[i][1]=newIcons[this.state.user.id].x;
+            this.maze.users[i][2]=newIcons[this.state.user.id].y;
+          }
+        }
+
+        //update
+        axios.post(ENDPOINT + "mazes/updateCoord", user /* body */)
+          .then(response => {
+            this.props.socket.emit('move', { userId: this.state.user.id });
+            //this.props.socket.broadcast.to(<maze_room>).emit('move', { userId: this.state.user.id });
+
+            this.setState((state) => ({
+              icons: newIcons,
+              squares: this.createSquares(newIcons)[0],
+              board: this.createSquares(newIcons)[1],
+            }));
+          });
       }
-
-      //update
-      //await axios.post((ENDPOINT + "mazes/getById"), {id: userRes.data.mazes[i]});
-      axios.post(ENDPOINT + 'users/update/' + newIcons[this.state.user.id].id, user)
-        .then(response => {
-          this.props.socket.emit('move', { userId: this.state.user.id });
-          //this.props.socket.broadcast.to(<maze_room>).emit('move', { userId: this.state.user.id });
-
-          this.setState((state) => ({
-            icons: newIcons,
-            squares: this.createSquares(newIcons)[0],
-            board: this.createSquares(newIcons)[1],
-          }));
-        });
     }
   }
 

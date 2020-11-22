@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 let User = require("../models/user.model");
 let UserTemp = require("../models/userTemp.model");
+let Maze = require("../models/maze.model");
 const auth = require("../middleware/auth");
 
 
@@ -42,9 +43,7 @@ router.route("/update/:id").post((req, res) => {
 
 
 router.route("/register").post(async (req, res) => {
-  const { email, password, passwordCheck, username} = req.body;
-  const x = 0;
-  const y = 0;
+  const { email, password, passwordCheck, username, mazes} = req.body;
 
   if(!validateEmail(email)) {
     return res.status(400)
@@ -71,10 +70,10 @@ router.route("/register").post(async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const newUser = new User({ email, hashedPassword, username, x, y });
+  const newUser = new User({ email, hashedPassword, username, mazes });
 
   newUser.save()
-    .then(() => res.json("Registered new User : " + newUser))
+    .then(() => res.json(newUser))
     .catch(err => res.status(400).json("Error on '/users/register': " + err));
 });
 

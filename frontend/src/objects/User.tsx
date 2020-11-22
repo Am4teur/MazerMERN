@@ -1,8 +1,6 @@
 interface User {
   id: string,
   username: string,
-  x: number,
-  y: number,
   mazes: mazeType,
 }
 
@@ -23,11 +21,9 @@ export interface mazeType {
 }*/
 
 class User {
-  constructor(id: string="", username: string="", x: number=0, y: number=0, mazes: mazeType={}) {
+  constructor(id: string="", username: string="", mazes: mazeType={}) {
     this.id = id;
     this.username = username;
-    this.x = x;
-    this.y = y;
     this.mazes = mazes;
   }
 }

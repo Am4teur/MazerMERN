@@ -53,7 +53,7 @@ export default function App() {
 
           setUserData({
             token,
-            user: new User(userRes.data.id, userRes.data.username, userRes.data.x, userRes.data.y, mazesDict),
+            user: new User(userRes.data.id, userRes.data.username, mazesDict),
             loading: false,
           });
         }

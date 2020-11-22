@@ -39,11 +39,27 @@ router.route("/getById").post(async (req, res) => {
   .catch(err => res.status(400).json("Error on '/mazes/(empty)': " + err));*/
 });
 
-router.route("/update").post((req, res) => {
-  Maze.findById(req.body.id)
+router.route("/updateCoord").post((req, res) => {
+  Maze.findById(req.body.mazeId)
     .then(maze => {
-      maze.users[1] = req.body.x;
-      maze.users[2] = req.body.y;
+      for(let i=0; i < maze.users.length; i++) {
+        if(maze.users[i][0] === req.body.userId) {
+          maze.users[i][1] = req.body.x;
+          maze.users[i][2] = req.body.y;
+        }
+      }
+console.log(maze);
+      maze.save()
+        .then(() => res.json("Maze Updated!"))
+        .catch(err => res.status(400).json("Error saving on '/mazes/update'" + err));
+    })
+    .catch(err => res.status(400).json("Error on '/mazes/update': " + err));
+});
+
+router.route("/updateUsers").post((req, res) => {
+  Maze.findById(req.body.mazeId)
+    .then(maze => {
+      maze.users.push([req.body.userId, 0, 0, "0"]);
 
       maze.save()
         .then(() => res.json("Maze Updated!"))
