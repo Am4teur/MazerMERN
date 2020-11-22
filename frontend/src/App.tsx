@@ -47,7 +47,7 @@ export default function App() {
           //const mazesMap = createMazesMap(userRes.data.mazes);
           let mazesDict: mazeType = {};
           for(let i=0; i < userRes.data.mazes.length; i++) {
-            const mazeRes = await axios.post((ENDPOINT + "mazes/getById"), {id: userRes.data.mazes[i]});
+            const mazeRes = await axios.post((ENDPOINT + "mazes/getById"), {mazeId: userRes.data.mazes[i]});
             mazesDict[userRes.data.mazes[i]] = mazeRes.data;
           }
 
@@ -66,7 +66,7 @@ export default function App() {
         }
 
       }
-      checkedLoggedIn();;
+      checkedLoggedIn();
     }
   }, [userData]);
   

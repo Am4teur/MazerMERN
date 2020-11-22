@@ -7,6 +7,7 @@ import Board from './Board';
 import io from 'socket.io-client';
 let socket: any;
 let ENDPOINT = 'http://localhost:5000/';
+let mazeOption = "5fbac485d8017b593cf11df5";
 
 
 const Maze = () => {
@@ -29,7 +30,7 @@ const Maze = () => {
   return (
     <div className="Maze mb-5 mt-3" style={{textAlign: "center"}}>
       <UserInfo icon={icon}/>
-      <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={"5fb5a857fa924d4f0c61b7fe"} socket={socket}/>
+      <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeOption} socket={socket}/>
       {/* <IconMenu /> */}
     </div>
   );

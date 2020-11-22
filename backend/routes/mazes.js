@@ -18,10 +18,10 @@ router.route("/add").post((req, res) => {
   const name = req.body.name;
   const user_creater = req.body.user_creater;
   const seed = req.body.seed;
-  const length = req.body.length;
-  const width = req.body.width;
+  const rows = req.body.rows;
+  const cols = req.body.cols;
 
-  const newMaze = new Maze({users, name, user_creater, seed, length, width});
+  const newMaze = new Maze({users, name, user_creater, seed, rows, cols});
 
   newMaze.save()
     .then(() => res.json("Maze added!"))
@@ -29,7 +29,7 @@ router.route("/add").post((req, res) => {
 });
 
 router.route("/getById").post(async (req, res) => {
-  const maze = await Maze.findById(req.body.id);
+  const maze = await Maze.findById(req.body.mazeId);
 
   return res.json(maze);
 
@@ -39,27 +39,11 @@ router.route("/getById").post(async (req, res) => {
   .catch(err => res.status(400).json("Error on '/mazes/(empty)': " + err));*/
 });
 
-router.route("/updateCoord").post((req, res) => {
+router.route("/update").post((req, res) => {
   Maze.findById(req.body.mazeId)
     .then(maze => {
-      for(let i=0; i < maze.users.length; i++) {
-        if(maze.users[i][0] === req.body.userId) {
-          maze.users[i][1] = req.body.x;
-          maze.users[i][2] = req.body.y;
-        }
-      }
-console.log(maze);
-      maze.save()
-        .then(() => res.json("Maze Updated!"))
-        .catch(err => res.status(400).json("Error saving on '/mazes/update'" + err));
-    })
-    .catch(err => res.status(400).json("Error on '/mazes/update': " + err));
-});
 
-router.route("/updateUsers").post((req, res) => {
-  Maze.findById(req.body.mazeId)
-    .then(maze => {
-      maze.users.push([req.body.userId, 0, 0, "0"]);
+      maze.users.set(req.body.userId, {x: req.body.y, y: req.body.x, option: req.body.option});
 
       maze.save()
         .then(() => res.json("Maze Updated!"))

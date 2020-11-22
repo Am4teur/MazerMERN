@@ -6,7 +6,7 @@ import UserContext from '../context/UserContext';
 
 
 let ENDPOINT = 'http://localhost:5000/';
-const GLOBAL_MAZE_ID = "5fb5a857fa924d4f0c61b7fe";
+const GLOBAL_MAZE_ID = "5fbac485d8017b593cf11df5";
 
 interface RegisterState {
   email: string,
@@ -30,8 +30,7 @@ const Register = (state: RegisterState) => {
     e.preventDefault();
 
     try{
-      //const mazeRes = await axios.post((ENDPOINT + "mazes/getById"), {id: GLOBAL_ID});
-
+      //register user
       const registerUser = {
         email: email,
         password: password,
@@ -43,8 +42,16 @@ const Register = (state: RegisterState) => {
       const newUser = await axios.post((ENDPOINT + 'users/register'), registerUser);
 
       //update maze with the new user in users
-      axios.post(ENDPOINT + "mazes/updateUsers", { mazeId: GLOBAL_MAZE_ID, userId: newUser.data._id })
+      const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
+        userId: newUser.data._id,
+        mazeId: GLOBAL_MAZE_ID,
+        y: 0,
+        x: 0,
+        option: "0",
+      }
+      axios.post(ENDPOINT + "mazes/update", user);
 
+      //login user
       const loginUser = {
         email: email,
         password: password,
