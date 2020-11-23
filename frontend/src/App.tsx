@@ -11,7 +11,6 @@ import Maze from './components/Maze';
 import Footer from './components/Footer';
 import UserContext from './context/UserContext';
 import User from './objects/User';
-import { mazeType } from "./objects/User";
 import UserInfo from './components/UserInfo';
 import TempUser from './components/TempUser';
 
@@ -44,16 +43,9 @@ export default function App() {
         if(tokenRes.data) {
           const userRes = await axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } });
 
-          //const mazesMap = createMazesMap(userRes.data.mazes);
-          let mazesDict: mazeType = {};
-          for(let i=0; i < userRes.data.mazes.length; i++) {
-            const mazeRes = await axios.post((ENDPOINT + "mazes/getById"), {mazeId: userRes.data.mazes[i]});
-            mazesDict[userRes.data.mazes[i]] = mazeRes.data;
-          }
-
           setUserData({
             token,
-            user: new User(userRes.data.id, userRes.data.username, mazesDict),
+            user: new User(userRes.data.id, userRes.data.username),
             loading: false,
           });
         }
