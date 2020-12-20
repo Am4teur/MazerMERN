@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Square from './Square';
-import User from '../objects/User';
 
 import CSS from 'csstype';
+import Square from './Square';
+import User from '../objects/User';
 import Icon from './Icon';
 import IconComponent from './IconComponent';
+
 import axios from 'axios';
 
 let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';

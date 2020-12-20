@@ -7,9 +7,6 @@ import NoAuthBtns from './NoAuthBtns';
 
 const UserInfo = () => {
   const { userData } = useContext(UserContext);
-
-  console.log(userData);
-  
   
   return (
     <div className="userInfo my-4">
