@@ -43,18 +43,14 @@ function Home() {
 
         <div className="col mx-2" style={{border: "2px solid black"}}>
           <div className="my-2 text-center">
-            <button className="btn btn-primary" onClick={routeMazer}>
-            <i className="fas fa-play mr-2"></i>
-            Online
-            </button>
+            <button className="btn btn-primary" onClick={routeMazer}><i className="fas fa-play mr-2"></i> Online</button>
           </div>
           <img className="my-4" src={maze_gif} alt="Maze Gif" style={{height: "250px", width: "250px", border: "2px solid black", display: "block", marginLeft: "auto", marginRight: "auto"}}></img>
         </div>
 
         <div className="col mx-2" style={{border: "2px solid black"}}>
           <div className="my-2 text-center">
-            <button className="btn btn-primary" onClick={routeSolver}>
-            <img className="mr-2" style={{height: "25px", width: "25px"}} src={maze_logo}></img> Solver</button>
+            <button className="btn btn-primary" onClick={routeSolver}><img className="mr-2" style={{height: "25px", width: "25px"}} src={maze_logo}></img> Solver</button>
           </div>
           <h1 className="my-4">Not available yet!</h1>
         </div>

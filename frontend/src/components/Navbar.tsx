@@ -4,6 +4,7 @@ import logo from '../imgs/maze.png';
 import './Navbar.css';
 import UserContext from '../context/UserContext';
 import User from '../objects/User';
+import NoAuthBtns from './NoAuthBtns';
 
 
 interface NavbarProps {
@@ -20,18 +21,6 @@ const Navbar = (props: NavbarProps) => {
 
 	const routeMazer = () => {
 		history.push('/mazer');
-	}
-
-	const routeTemp = () => {
-		history.push('/temp');
-	}
-
-	const routeLogin = () => {
-		history.push('/login');
-	}
-
-	const routeRegister = () => {
-		history.push('/register');
 	}
 
 	const routeLogout = () => {
@@ -66,15 +55,12 @@ const Navbar = (props: NavbarProps) => {
 			{
 			userData.user.username !== "" ?
 			<>
-				<div className="p-1"><button className="btn btn-dark" onClick={userInfo}>{userData.user.username}</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeLogout}>Logout</button></div>
+
+				<div className="p-1"><button className="btn btn-labeled btn-dark" onClick={userInfo}><span className="btn-label"><i className="fas fa-user"></i></span>{userData.user.username}</button></div>
+				<div className="p-1"><button className="btn btn-labeled btn-dark" onClick={routeLogout}><span className="btn-label"><i className="fas fa-sign-out-alt"></i></span>Logout</button></div>
 			</>
 			:
-			<>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeTemp}>Temp User</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeRegister}>Register</button></div>
-			</>
+			<NoAuthBtns />
 		}
 
 		</div>

@@ -7,6 +7,7 @@ import UserContext from '../context/UserContext';
 
 let ENDPOINT = 'http://localhost:5000/';
 const GLOBAL_MAZE_ID = "5fbac485d8017b593cf11df5";
+const DEFAULT_ICON = "blue-simple-icon";
 
 interface RegisterState {
   email: string,
@@ -36,7 +37,8 @@ const Register = (state: RegisterState) => {
         password: password,
         passwordCheck: passwordCheck,
         username: username,
-        mazes: [GLOBAL_MAZE_ID]
+        mazes: [GLOBAL_MAZE_ID],
+        icon: DEFAULT_ICON,
       }
       
       const newUser = await axios.post((ENDPOINT + 'users/register'), registerUser);

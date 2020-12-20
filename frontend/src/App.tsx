@@ -44,7 +44,7 @@ export default function App() {
 
           setUserData({
             token,
-            user: new User(userRes.data.id, userRes.data.username),
+            user: new User(userRes.data.id, userRes.data.username, userRes.data.icon),
             loading: false,
           });
         }

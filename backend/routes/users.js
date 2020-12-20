@@ -43,7 +43,7 @@ router.route("/update/:id").post((req, res) => {
 
 
 router.route("/register").post(async (req, res) => {
-  const { email, password, passwordCheck, username, mazes} = req.body;
+  const { email, password, passwordCheck, username, mazes, icon} = req.body;
 
   if(!validateEmail(email)) {
     return res.status(400)
@@ -70,7 +70,7 @@ router.route("/register").post(async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const newUser = new User({ email, hashedPassword, username, mazes });
+  const newUser = new User({ email, hashedPassword, username, mazes, icon });
 
   newUser.save()
     .then(() => res.json(newUser))
@@ -142,6 +142,7 @@ router.route("/get").post(auth, async (req, res) => {
     x: user.x,
     y: user.y,
     mazes: user.mazes,
+    icon: user.icon
   });
 });
 

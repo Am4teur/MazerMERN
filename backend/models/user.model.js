@@ -29,6 +29,9 @@ const userSchema = new Schema({
   mazes: {
     type: [Schema.Types.ObjectId]
   },
+  icon: {
+    type: String
+  }
 }, {
   timestamps: true,
 });

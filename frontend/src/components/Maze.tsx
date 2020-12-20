@@ -32,8 +32,8 @@ const Maze = () => {
   
   return (
     <div className="Maze mb-4 mt-3" style={{textAlign: "center"}}>
-      <UserInfo icon={icon}/>
       <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeOption} socket={socket} iconName={icon}/>
+      <UserInfo/>
       {/* <IconMenu /> */}
     </div>
   );
