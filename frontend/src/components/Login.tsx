@@ -16,7 +16,7 @@ const Login = (state: LoginState) => {
   const history = useHistory();
   var [email, setEmail] = useState<string>("");
   var [password, setPassword] = useState<string>("");
-  var [error, setError] = useState<string>();
+  var [error, setError] = useState<string>("");
 
   var { setUserData } = useContext(UserContext);
 

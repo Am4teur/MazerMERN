@@ -17,7 +17,7 @@ interface IconComponentProps {
 
 const IconComponent = ({size, iconName}: IconComponentProps) => {
   /* const [id, setId] = useState<string>(''); */
-  const icon:  {[name:string] : any} = {"blue-simple-icon": iconBlue, "red-simple-icon": iconRed, "green-simple-icon": iconGreen};
+  const icon: {[name:string] : any} = {"blue-simple-icon": iconBlue, "red-simple-icon": iconRed, "green-simple-icon": iconGreen};
   
   const iconComponentStyle = {
     width: size === 32 ? "32px" : "16px",

@@ -12,18 +12,26 @@ const UserInfo = (props: UserInfoProps) => {
   const { userData } = useContext(UserContext);
   
   return (
-    <div className="userInfo">
-      <label htmlFor="username" style={{color: "white"}}>Username: {userData.user.username}</label>
-      <br/>
-      <label htmlFor="icon" style={{color: "white"}}>Icon: <IconComponent iconName={props.icon} size={16}/></label>
-      <br/>
-      <label htmlFor="id" style={{color: "white"}}>id: {userData.user.id}</label>
-      {/*
-      <br/>
-      <label htmlFor="x" style={{color: "white"}}>x: {userData.user.x}</label>
-      <br/>
-      <label htmlFor="y" style={{color: "white"}}>y: {userData.user.y}</label>
-      */}
+    <div className="userInfo my-4">
+
+      <div className="row">
+        <div className="col">
+          <h2 style={{color: "white"}}>Username -> {userData.user.username}</h2>
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-md-auto">
+          <h2 style={{color: "white"}}>Icon -> </h2>
+        </div>
+        <div className="col-md-auto my-2">
+          <IconComponent iconName={props.icon} size={16}/>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <h2 style={{color: "white"}}>id -> {userData.user.id}</h2>
+        </div>
+      </div>
     </div>
   );
 }

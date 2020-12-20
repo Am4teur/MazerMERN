@@ -15,7 +15,6 @@ import UserInfo from './components/UserInfo';
 import TempUser from './components/TempUser';
 
 
-
 const ENDPOINT = 'http://localhost:5000/';
 
 

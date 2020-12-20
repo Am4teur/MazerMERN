@@ -8,6 +8,7 @@ import io from 'socket.io-client';
 let socket: any;
 let ENDPOINT = 'http://localhost:5000/';
 let mazeOption = "5fbac485d8017b593cf11df5";
+//let icon = "blue-simple-icon";
 
 
 const Maze = () => {
@@ -20,6 +21,8 @@ const Maze = () => {
     //init socket here, only 1 socket is created because of the [ENDPOINT] is not updated
     //but <Board/> component doens't receive a socket
     //socket = io(ENDPOINT);
+
+    setIcon("blue-simple-icon");
     
     return () => {
       socket.emit('disconnect');
@@ -28,9 +31,9 @@ const Maze = () => {
   }, [ENDPOINT]);
   
   return (
-    <div className="Maze mb-5 mt-3" style={{textAlign: "center"}}>
+    <div className="Maze mb-4 mt-3" style={{textAlign: "center"}}>
       <UserInfo icon={icon}/>
-      <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeOption} socket={socket}/>
+      <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeOption} socket={socket} iconName={icon}/>
       {/* <IconMenu /> */}
     </div>
   );
