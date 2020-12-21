@@ -1,5 +1,6 @@
 import React, { /*useState*/ } from 'react';
-//import logo from '../imgs/maze.png';
+import typescripticon from '../imgs/typescript.svg';
+import socketicon from '../imgs/socketicon.png';
 import './Footer.css';
 
 // https://dev.to/letsbsocial1/flexbox-sticky-footer-and-react-e1h
@@ -26,9 +27,16 @@ const Footer = () => {
       </ul>
 
     </div>
+    
 
-  <div className="footer-copyright text-center pb-3">© 2020 Copyright: 
+  <div className="footer-copyright text-center">© 2020 Copyright: 
     <a className="text-white" style={{textDecoration: "none"}} href="https://github.com/Am4teur"> Daniel Castro</a>
+  </div>
+  <div className="footer-copyright text-center mb-3">Created with &nbsp;
+    <a href="https://reactjs.org/"><i className="fab fa-react" style={{color: "black"}}></i></a> &nbsp;
+    <a href="https://www.typescriptlang.org/"><img className="mb-1" src={typescripticon} style={{width: "12px", height: "12px"}}></img></a> &nbsp;
+    <a href="https://socket.io/"><img className="mb-1" src={socketicon} style={{width: "12px", height: "12px"}}></img></a> by
+    <a className="text-white" style={{textDecoration: "none"}} href="https://github.com/Am4teur"> Daniel Castro </a>
   </div>
 
 </div>  

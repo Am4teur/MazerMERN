@@ -52,7 +52,7 @@ function Home() {
           <div className="my-2 text-center">
             <button className="btn btn-primary" onClick={routeSolver}><img className="mr-2" style={{height: "25px", width: "25px"}} src={maze_logo}></img> Solver</button>
           </div>
-          <h1 className="my-4">Not available yet!</h1>
+          <h1 className="my-4">Available soon!</h1>
         </div>
 
       </div>
