@@ -6,6 +6,7 @@ import Board from './Board';
 import MazeInfo from './MazeInfo';
 
 import io from 'socket.io-client';
+import GameInfo from './GameInfo';
 let socket: any;
 
 require('dotenv').config();
@@ -33,9 +34,10 @@ const Maze = () => {
   
   return (
     <div className="Maze mb-4 mt-3" style={{textAlign: "center"}}>
-      <MazeInfo show={process.env.REACT_APP_DEVELOPMENT === 'dev'} mazeId={mazeOption}/>
+      <GameInfo/>
       <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeOption} socket={socket} iconName={icon}/>
-      <UserInfo/>
+      <MazeInfo mazeId={mazeOption}/>
+      <UserInfo />
       {/* <IconMenu /> */}
     </div>
   );

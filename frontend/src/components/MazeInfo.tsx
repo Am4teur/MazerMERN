@@ -5,16 +5,15 @@ require('dotenv').config();
 
 
 interface MazeInfoProps {
-	show: boolean,
   mazeId: string,
 }
 
-const MazeInfo = ({show, mazeId}: MazeInfoProps) => {
+const MazeInfo = (props: MazeInfoProps) => {
 	var [maze, setMaze] = useState<any>();
 	var [users, setUsers] = useState<any>([]);
 
 	useEffect(() => {
-    axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: mazeId}).
+    axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId}).
     then(maze => {
 			let users2 = [];
 			for (var userId in maze.data.users) {
@@ -27,16 +26,17 @@ const MazeInfo = ({show, mazeId}: MazeInfoProps) => {
 	}, []);
   
   return (
-    <div className="userInfo my-4">
+    <div className="mazeInfo my-4">
 
 
       {
-      show === true && maze
+      process.env.REACT_APP_DEVELOPMENT === 'dev' && maze
       ?
       <>
       <div className="row justify-content-center">
         <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Users: {users}</h2>
+          <h2 style={{color: "white"}}>Users:</h2>
+          {users}
         </div>
       </div>
       <div className="row justify-content-center">

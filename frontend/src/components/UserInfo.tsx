@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import UserContext from '../context/UserContext';
 import IconComponent from './IconComponent';
 import './Navbar.css'; // for button with icons and text separated
-import NoAuthBtns from './NoAuthBtns';
+
+require('dotenv').config();
 
 
 const UserInfo = () => {
@@ -12,7 +13,7 @@ const UserInfo = () => {
     <div className="userInfo my-4">
 
       {
-      userData.user.username !== ""
+      process.env.REACT_APP_DEVELOPMENT === 'dev' && userData.user.username !== ""
       ?
       <>
       <div className="row justify-content-center">
@@ -24,7 +25,7 @@ const UserInfo = () => {
         <div className="col-md-auto">
           <h2 style={{color: "white"}}>Icon: </h2>
         </div>
-        <div className="col-md-auto my-2">
+        <div className="col-md-auto my-1">
           <IconComponent iconName={userData.user.icon} size={32}/>
         </div>
       </div>
@@ -35,10 +36,7 @@ const UserInfo = () => {
       </div>
       </>
       :
-      <>
-        <h1 className="my-4">You need to login or register to play online.</h1>
-        <NoAuthBtns />
-      </>
+      null
     }
     </div>
   );
