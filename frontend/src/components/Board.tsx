@@ -51,7 +51,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
       board: [],
       icons: {},
       seed: 0,
-      user: new User()
+      user: props.user
     };
     
 
@@ -71,7 +71,6 @@ class Board extends Component<BoardProps, BoardState, Board> {
       this.cols = this.maze.cols;
       this.setState({
         seed: this.maze.seed,
-        user: this.props.user
       });
       this.props.socket.on('move', this.updateBoardAndSquares);
       this.updateBoardAndSquares();
