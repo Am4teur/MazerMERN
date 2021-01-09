@@ -56,20 +56,20 @@ const Login = (state: LoginState) => {
 
         {error ? <label className="form-text text-danger">{error}</label> : null}
 
-        <div className="form-row">
-          <div className="col">
+        <div className="row">
+          <div className="col mx-4">
             <label>Email</label>
             <input type="email" required className="form-control" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}/>
           </div>
 
-          <div className="col">
+          <div className="col mx-4">
             <label>Password</label>
             <input type="password" required className="form-control" placeholder="Enter password" onChange={(e) => setPassword(e.target.value)}/>
           </div>
         </div>
 
         <br/>
-        <input type="submit" value="Login" className='btn btn-primary'/>
+        <input type="submit" value="Login" className='btn btn-primary ml-4 mt-2'/>
 
       </form>
     </div>

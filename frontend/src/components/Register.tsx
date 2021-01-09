@@ -83,30 +83,28 @@ const Register = (state: RegisterState) => {
         
         {error ? <label className="form-text text-danger">{error}</label> : null}
 
-        <div className="form-row">
-          <div className="col">
+        <div className="row mt-2">
+          <div className="col mx-4">
             <label>Email</label>
             <input type="email" required className="form-control" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}/>
           </div>
-          <div className="col">
+          <div className="col mx-4">
             <label>Username</label>
             <input type="text" required className="form-control" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)}/>
           </div>
         </div>
-        <br/>
-        <div className="form-row">
-          <div className="col">
+        <div className="row my-4">
+          <div className="col mx-4">
             <label>Password</label>
             <input type="password" required className="form-control" placeholder="Enter password" onChange={(e) => setPassword(e.target.value)}/>
           </div>
-          <div className="col">
+          <div className="col mx-4">
             <label>Password Verification</label>
             <input type="password" required className="form-control" placeholder="Enter password verification" onChange={(e) => setPasswordCheck(e.target.value)}/>
           </div>
         </div>
 
-        <br/>
-        <input type="submit" value="Create User" className='btn btn-primary'/>
+        <input type="submit" value="Create User" className='btn btn-primary ml-4 mt-2'/>
 
       </form>
     </div>
