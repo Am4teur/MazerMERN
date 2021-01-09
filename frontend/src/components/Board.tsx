@@ -268,7 +268,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
           flexWrap: "wrap",
 
           border: "2px solid black",
-          background: "#ff9800",
+          background: "#ff9933", // bluedark#1895aa orange#ef9f35 lightblue#63c8cd orangeoriginal#ff9800
           width: "50px",
           height: "50px",
         });
@@ -325,6 +325,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
         if(newIcons[userId].x === this.rows-1 && newIcons[userId].y === this.cols-1) {
           newIcons[userId].x = 0;
           newIcons[userId].y = 0;
+          soundWinner();
         }
 
         const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
@@ -349,7 +350,12 @@ class Board extends Component<BoardProps, BoardState, Board> {
           }));
         });
 
+        soundMoved();
+
         //axios.post();
+      }
+      else {
+        soundNotMoved();
       }
     }
   }
@@ -477,4 +483,40 @@ function shuffle(array: any[], seed: number) {
 function random(seed: number) {
   var x = Math.sin(seed++) * 10000; 
   return x - Math.floor(x);
+}
+
+
+
+function soundWinner(): void {
+
+}
+
+function soundMoved(): void {
+  if(false) {
+    playFile('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/success.mp3');
+  }
+}
+
+function soundNotMoved(): void {
+  if(false) {
+    playFile('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/error.mp3');
+  }
+}
+
+const context = new window.AudioContext();
+
+function playFile(filepath:string) {
+  // see https://jakearchibald.com/2016/sounds-fun/
+  fetch(filepath)
+    // Read it into memory as an arrayBuffer
+    .then(response => response.arrayBuffer())
+    // Turn it from mp3/aac/whatever into raw audio data
+    .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+    .then(audioBuffer => {
+      // Now we're ready to play!
+      const soundSource = context.createBufferSource();
+      soundSource.buffer = audioBuffer;
+      soundSource.connect(context.destination);
+      soundSource.start();
+    });
 }
