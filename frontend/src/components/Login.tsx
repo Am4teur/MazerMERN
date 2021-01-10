@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import "../App.css";
 import UserContext from '../context/UserContext';
 
 
-let ENDPOINT = 'http://localhost:5000/';
+require('dotenv').config();
+let ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 interface LoginState {
   email: string,
@@ -33,7 +33,7 @@ const Login = (state: LoginState) => {
 
       const loginRes = await axios.post((ENDPOINT + 'users/login'), loginInfo);
 
-
+// TODO TEST IF THIS IS NECESSARY
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -69,7 +69,7 @@ const Login = (state: LoginState) => {
         </div>
 
         <br/>
-        <input type="submit" value="Login" className='btn btn-primary ml-4 mt-2'/>
+        <input type="submit" value="Login" className='btn btn-primary ml-4 my-2'/>
 
       </form>
     </div>

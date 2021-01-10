@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import "../App.css";
 import UserContext from '../context/UserContext';
 
 
-let ENDPOINT = 'http://localhost:5000/';
+require('dotenv').config();
+let ENDPOINT = process.env.REACT_APP_ENDPOINT
 const GLOBAL_MAZE_ID = "5fbac485d8017b593cf11df5";
 const DEFAULT_ICON = "blue-simple-icon";
 
@@ -61,6 +61,7 @@ const Register = (state: RegisterState) => {
 
       const loginRes = await axios.post((ENDPOINT + 'users/login'), loginUser);
 
+      // TODO TEST IF THIS IS NECESSARY
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -104,7 +105,7 @@ const Register = (state: RegisterState) => {
           </div>
         </div>
 
-        <input type="submit" value="Create User" className='btn btn-primary ml-4 mt-2'/>
+        <input type="submit" value="Create User" className='btn btn-primary ml-4 my-2'/>
 
       </form>
     </div>

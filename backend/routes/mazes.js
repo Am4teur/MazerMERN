@@ -12,20 +12,32 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error on '/mazes/(empty)': " + err));
 });
 
-router.route("/add").post((req, res) => {
-  console.log(req.body.name);
-  const users = req.body.users;
-  const name = req.body.name;
-  const user_creater = req.body.user_creater;
-  const seed = req.body.seed;
-  const rows = req.body.rows;
-  const cols = req.body.cols;
+router.route("/create").post((req, res) => {
+  const {name, user_creater, seed, rows, cols} = req.body;
+  console.log(req.body);
+
+  let users = new Map();
+  users.set(user_creater, {x: 0, y: 0, option: "0"})
+
+  //const users = req.body.userId; //{req.body.userId :{"x": 0, "y":0, "option": "0"}};
+  //const name = req.body.name;
+  //const user_creater = req.body.userId;
+  //const seed = parseInt(req.body.seed, 10);
+  //const rows = parseInt(req.body.rows, 10);
+  //const cols = parseInt(req.body.cols, 10);
+
+  //validations
 
   const newMaze = new Maze({users, name, user_creater, seed, rows, cols});
 
+  //add maze to the user
+
   newMaze.save()
-    .then(() => res.json("Maze added!"))
-    .catch(err => res.status(400).json("Error on '/mazes/add': " + err));
+    .then(() => res.json(newMaze))
+    .catch(err => res.status(400).json("Error on '/mazes/create': " + err));
+
+  console.log("newMaze");
+  console.log(newMaze);
 });
 
 router.route("/getById").post(async (req, res) => {
