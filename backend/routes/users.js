@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 let User = require("../models/user.model");
 let UserTemp = require("../models/userTemp.model");
-let Maze = require("../models/maze.model");
 const auth = require("../middleware/auth");
 
 
@@ -148,6 +147,21 @@ router.route("/get").post(auth, async (req, res) => {
 
 
 
+router.route("/addMaze").post(async (req, res) => {
+  User.findById(req.body.userId)
+    .then(user => {
+      user.mazes.push(req.body.mazeId);
+
+      user.save()
+        .then(() => res.json("Added maze to user!"))
+        .catch(err => res.status(400).json("Error saving on '/users/addMaze'" + err));
+    })
+    .catch(err => res.status(400).json("Error on '/users/addMaze': " + err));
+});
+
+
+
+
 router.route("/logintemp").post(async (req, res) => {
   const { email, password } = req.body;
 
@@ -208,8 +222,6 @@ router.route("/registertemp").post(async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   const newUser = new UserTemp({ email, hashedPassword, username, x, y });
-
-  console.log(newUser);
 
   newUser.save()
     .then(() => res.json("Registered new User : " + newUser))

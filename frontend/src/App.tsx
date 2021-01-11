@@ -14,6 +14,7 @@ import User from './objects/User';
 import UserInfo from './components/UserInfo';
 import TempUser from './components/TempUser';
 import MazeCreate from './components/MazeCreate';
+import MazeHome from './components/MazeHome';
 
 
 const ENDPOINT = 'http://localhost:5000/';
@@ -76,6 +77,7 @@ export default function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/mazer" component={Maze} />
+          <Route path="/mazeHome" component={MazeHome} />
           <Route path="/mazeCreate" component={MazeCreate} />
           <Route path="/userInfo" component={UserInfo} />
         </Switch>

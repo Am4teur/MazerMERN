@@ -51,7 +51,7 @@ const Register = (state: RegisterState) => {
         x: 0,
         option: "0",
       }
-      axios.post(ENDPOINT + "mazes/update", user);
+      axios.post(ENDPOINT + "mazes/addUser", user);
 
       //login user
       const loginUser = {

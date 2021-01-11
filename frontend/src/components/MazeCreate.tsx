@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import UserContext from '../context/UserContext';
@@ -6,7 +6,6 @@ import UserContext from '../context/UserContext';
 require('dotenv').config();
 let ENDPOINT = process.env.REACT_APP_ENDPOINT
 
-//create a mazer (name, seed (optional), rows and cols) [name, creator, see]
 const MazeCreate = () => {
     const { userData } = useContext(UserContext);
     const history = useHistory();
@@ -23,7 +22,7 @@ const MazeCreate = () => {
         
         try{
           //craete maze
-          const createMaze = {
+          const createMazeBody = {
             users: userData.user.id,
             user_creater: userData.user.id,
             name: name,
@@ -31,20 +30,14 @@ const MazeCreate = () => {
             rows: rows,
             cols: cols
           }
-          
-          const newMaze = await axios.post((ENDPOINT + 'mazes/create'), createMaze);
-    
-          //update maze with the new user in users
-          /*const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
-            userId: newUser.data._id,
-            mazeId: GLOBAL_MAZE_ID,
-            y: 0,
-            x: 0,
-            option: "0",
-          }
-          axios.post(ENDPOINT + "mazes/update", user);*/
+          const newMaze = await axios.post(ENDPOINT + 'mazes/create', createMazeBody);
 
-          //update user with the new maze in mazes
+          // added maze to user mazes
+          const addMazeBody = {
+            userId: userData.user.id,
+            mazeId: newMaze.data._id
+          }
+          await axios.post(ENDPOINT + 'users/addMaze', addMazeBody);
     
           history.push('/mazer');
           console.log("completed");
@@ -80,7 +73,7 @@ const MazeCreate = () => {
                 <small className="form-text text-muted">Optional, between 2 and 20</small>
               </div>
               <div className="col mx-4">
-                <label>Number of Cols</label>
+                <label>Number of Columns</label>
                 <input type="text" className="form-control" placeholder="2 - 20" onChange={(e) => setCols(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 2 and 20</small>
               </div>

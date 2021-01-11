@@ -337,7 +337,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
 
         //update
         //updateUserPosition();
-        axios.post(ENDPOINT + "mazes/update", user /* body */)
+        axios.post(ENDPOINT + "mazes/addUser", user /* body */)
         .then(response => {
           this.props.socket.emit('move', { userId: userId });
           //this.props.socket.broadcast.to(<maze_room>).emit('move', { userId: this.state.user.id });
