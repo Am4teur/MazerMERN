@@ -41,10 +41,6 @@ const Navbar = (props: NavbarProps) => {
 		history.push('/mazeHome');
 	}
 
-	const routeMazeCreate = () => {
-		history.push('/mazeCreate');
-	}
-
 	return (
 		<nav className="navbar navbar-dark bg-primary">
 		<div className="navbar-left">
@@ -59,9 +55,6 @@ const Navbar = (props: NavbarProps) => {
 			</div>
 			<div className="p-1">
 				<button className="btn btn-dark" onClick={routeMazeHome}>Maze Home</button>
-			</div>
-			<div className="p-1">
-				<button className="btn btn-dark" onClick={routeMazeCreate}>Maze Create</button>
 			</div>
 		</div>
 
