@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import UserContext from '../context/UserContext';
 
@@ -7,6 +8,7 @@ let ENDPOINT = process.env.REACT_APP_ENDPOINT
 
 const MazeList = () => {
     const { userData } = useContext(UserContext);
+    const history = useHistory();
     var [list, setList] = useState<any>([]);
 
     useEffect(() => {
@@ -17,21 +19,31 @@ const MazeList = () => {
 
           axios.post(ENDPOINT + "mazes/getManyById", ids).
             then(listMazes => {
-              let list:string[] = [];
-              listMazes.data.forEach((e: any) => {
-                list.push(e.name);
-              });
-              setList(list);
+              setList(listMazes.data);
             })
         });
     }, []);
     
+    const routeConnect = (e:any, mazeId:string) => {
+        history.push({
+          pathname: '/mazer',
+          state: {
+            mazeId: mazeId
+          }
+        });
+    }
+
     return (
-        <div className="mazeList ml-5 mr-5" style={{"color": "white"}}>
+        <div className="mazeList mx-5 my-2" style={{"color": "white"}}>
           <h3>List</h3>
-          {list.map(function(d :string, idx: number){
-            return (<li key={idx}>{d} <button className="btn btn-primary">Connect</button> </li>)
-          })}
+          {list.map((maze: any, idx: number) => {
+            return (
+              <li key={idx}>
+              {maze.name} <button className="btn btn-primary" onClick={(e:any) => routeConnect(e, maze._id)}>Connect</button>
+            </li>
+            )
+            })
+          }
         </div>
     );
 }

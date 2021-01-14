@@ -19,12 +19,19 @@ const MazeHome = () => {
 
   const routeMazeCreate = () => {
 		history.push('/mazeCreate');
+  }
+  
+  const routeMazeAdd = () => {
+		history.push('/mazeAdd');
 	}
   
   return (
     <div className="mazeHome mb-4 mt-3">
       <div className="ml-4">
-				<button className="btn btn-primary ml-4 my-3" onClick={routeMazeCreate}>+</button>
+				<button className="btn btn-primary ml-4 my-3" onClick={routeMazeCreate}>Create a new Maze</button>
+			</div>
+      <div className="ml-4">
+				<button className="btn btn-primary ml-4 my-3" onClick={routeMazeAdd}>Connect to existing Maze</button>
 			</div>
       <MazeList />
     </div>

@@ -20,7 +20,12 @@ const Navbar = (props: NavbarProps) => {
 	}
 
 	const routeMazer = () => {
-		history.push('/mazer');
+		history.push({
+			pathname: '/mazer',
+			state: {
+				mazeId: "5fbac485d8017b593cf11df5"
+			}
+		  });
 	}
 
 	const routeLogout = () => {

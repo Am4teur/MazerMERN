@@ -39,9 +39,13 @@ const MazeCreate = () => {
           }
           await axios.post(ENDPOINT + 'users/addMaze', addMazeBody);
     
-          history.push('/mazer');
-          console.log("completed");
-          
+          history.push({
+            pathname: '/mazer',
+            state: {
+              mazeId: newMaze.data._id
+            }
+          });
+
         } catch(err) {
           setError(err.response.data.msg);
         }
