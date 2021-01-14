@@ -13,7 +13,7 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error on '/users/(empty)': " + err));
 });
 
-
+/* NOT USED */
 router.route("/add").post((req, res) => {
   const username = req.body.username;
   const x = req.body.x;
@@ -42,9 +42,7 @@ router.route("/update/:id").post((req, res) => {
 
 
 router.route("/register").post(async (req, res) => {
-  const { email, password, passwordCheck, username} = req.body;
-  const x = 0;
-  const y = 0;
+  const { email, password, passwordCheck, username, mazes, icon} = req.body;
 
   if(!validateEmail(email)) {
     return res.status(400)
@@ -71,10 +69,10 @@ router.route("/register").post(async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const newUser = new User({ email, hashedPassword, username, x, y });
+  const newUser = new User({ email, hashedPassword, username, mazes, icon });
 
   newUser.save()
-    .then(() => res.json("Registered new User : " + newUser))
+    .then(() => res.json(newUser))
     .catch(err => res.status(400).json("Error on '/users/register': " + err));
 });
 
@@ -142,8 +140,25 @@ router.route("/get").post(auth, async (req, res) => {
     username: user.username,
     x: user.x,
     y: user.y,
+    mazes: user.mazes,
+    icon: user.icon
   });
 });
+
+
+
+router.route("/addMaze").post(async (req, res) => {
+  User.findById(req.body.userId)
+    .then(user => {
+      user.mazes.push(req.body.mazeId);
+
+      user.save()
+        .then(() => res.json("Added maze to user!"))
+        .catch(err => res.status(400).json("Error saving on '/users/addMaze'" + err));
+    })
+    .catch(err => res.status(400).json("Error on '/users/addMaze': " + err));
+});
+
 
 
 
@@ -207,8 +222,6 @@ router.route("/registertemp").post(async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   const newUser = new UserTemp({ email, hashedPassword, username, x, y });
-
-  console.log(newUser);
 
   newUser.save()
     .then(() => res.json("Registered new User : " + newUser))

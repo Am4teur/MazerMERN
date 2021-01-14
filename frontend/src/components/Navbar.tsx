@@ -4,6 +4,7 @@ import logo from '../imgs/maze.png';
 import './Navbar.css';
 import UserContext from '../context/UserContext';
 import User from '../objects/User';
+import NoAuthBtns from './NoAuthBtns';
 
 
 interface NavbarProps {
@@ -19,25 +20,18 @@ const Navbar = (props: NavbarProps) => {
 	}
 
 	const routeMazer = () => {
-		history.push('/mazer');
-	}
-
-	const routeTemp = () => {
-		history.push('/temp');
-	}
-
-	const routeLogin = () => {
-		history.push('/login');
-	}
-
-	const routeRegister = () => {
-		history.push('/register');
+		history.push({
+			pathname: '/mazer',
+			state: {
+				mazeId: "5fbac485d8017b593cf11df5"
+			}
+		  });
 	}
 
 	const routeLogout = () => {
 		setUserData({
 			token: "",
-			user: new User("", "", 0, 0),
+			user: new User(),
 			loading: false,
 		});
 		localStorage.setItem("auth-token", "");
@@ -48,8 +42,12 @@ const Navbar = (props: NavbarProps) => {
 		history.push('/userInfo');
 	}
 
+	const routeMazeHome = () => {
+		history.push('/mazeHome');
+	}
+
 	return (
-		<nav className="navbar navbar-dark sticky-top bg-primary">
+		<nav className="navbar navbar-dark bg-primary">
 		<div className="navbar-left">
 			<div className="logo_image pr-3">
 				<a href="/"><img className="logo" src={logo} alt="logo"/></a>
@@ -60,21 +58,21 @@ const Navbar = (props: NavbarProps) => {
 			<div className="p-1">
 				<button className="btn btn-dark" onClick={routeMazer}>Mazer</button>
 			</div>
+			<div className="p-1">
+				<button className="btn btn-dark" onClick={routeMazeHome}>Maze Home</button>
+			</div>
 		</div>
 
 		<div className="authentication">
 			{
 			userData.user.username !== "" ?
 			<>
-				<div className="p-1"><button className="btn btn-dark" onClick={userInfo}>{userData.user.username}</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeLogout}>Logout</button></div>
+
+				<div className="p-1"><button className="btn btn-labeled btn-dark" onClick={userInfo}><span className="btn-label"><i className="fas fa-user"></i></span>{userData.user.username}</button></div>
+				<div className="p-1"><button className="btn btn-labeled btn-dark" onClick={routeLogout}><span className="btn-label"><i className="fas fa-sign-out-alt"></i></span>Logout</button></div>
 			</>
 			:
-			<>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeTemp}>Temp User</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeLogin}>Login</button></div>
-				<div className="p-1"><button className="btn btn-dark" onClick={routeRegister}>Register</button></div>
-			</>
+			<NoAuthBtns />
 		}
 
 		</div>

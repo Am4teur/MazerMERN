@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import "../App.css";
 import UserContext from '../context/UserContext';
 
 
-let ENDPOINT = 'http://localhost:5000/';
+require('dotenv').config();
+let ENDPOINT = process.env.REACT_APP_ENDPOINT
+const GLOBAL_MAZE_ID = "5fbac485d8017b593cf11df5";
+const DEFAULT_ICON = "blue-simple-icon";
 
 interface RegisterState {
   email: string,
@@ -29,15 +31,29 @@ const Register = (state: RegisterState) => {
     e.preventDefault();
 
     try{
+      //register user
       const registerUser = {
         email: email,
         password: password,
         passwordCheck: passwordCheck,
-        username: username
+        username: username,
+        mazes: [GLOBAL_MAZE_ID],
+        icon: DEFAULT_ICON,
       }
+      
+      const newUser = await axios.post((ENDPOINT + 'users/register'), registerUser);
 
-      await axios.post((ENDPOINT + 'users/register'), registerUser);
+      //update maze with the new user in users
+      const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
+        userId: newUser.data._id,
+        mazeId: GLOBAL_MAZE_ID,
+        y: 0,
+        x: 0,
+        option: "0",
+      }
+      axios.post(ENDPOINT + "mazes/addUser", user);
 
+      //login user
       const loginUser = {
         email: email,
         password: password,
@@ -45,6 +61,7 @@ const Register = (state: RegisterState) => {
 
       const loginRes = await axios.post((ENDPOINT + 'users/login'), loginUser);
 
+      // TODO TEST IF THIS IS NECESSARY
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -67,30 +84,28 @@ const Register = (state: RegisterState) => {
         
         {error ? <label className="form-text text-danger">{error}</label> : null}
 
-        <div className="form-row">
-          <div className="col">
+        <div className="row mt-2">
+          <div className="col mx-4">
             <label>Email</label>
             <input type="email" required className="form-control" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}/>
           </div>
-          <div className="col">
+          <div className="col mx-4">
             <label>Username</label>
             <input type="text" required className="form-control" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)}/>
           </div>
         </div>
-        <br/>
-        <div className="form-row">
-          <div className="col">
+        <div className="row my-4">
+          <div className="col mx-4">
             <label>Password</label>
             <input type="password" required className="form-control" placeholder="Enter password" onChange={(e) => setPassword(e.target.value)}/>
           </div>
-          <div className="col">
+          <div className="col mx-4">
             <label>Password Verification</label>
             <input type="password" required className="form-control" placeholder="Enter password verification" onChange={(e) => setPasswordCheck(e.target.value)}/>
           </div>
         </div>
 
-        <br/>
-        <input type="submit" value="Create User" className='btn btn-primary'/>
+        <input type="submit" value="Create User" className='btn btn-primary ml-4 my-2'/>
 
       </form>
     </div>

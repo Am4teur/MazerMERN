@@ -11,7 +11,7 @@ interface Context {
 export default createContext({
   userData: {
     token: "",
-    user: new User("", "", 0, 0),
+    user: new User(),
     loading: true,
   },
   setUserData: (userdata: Context) => {},

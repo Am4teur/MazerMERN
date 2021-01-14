@@ -1,16 +1,14 @@
 interface User {
   id: string,
   username: string,
-  x: number,
-  y: number
+  icon: string,
 }
 
 class User {
-  constructor(id: string, username: string, x: number, y: number) {
+  constructor(id: string="", username: string="", icon: string="") {
     this.id = id;
     this.username = username;
-    this.x = x;
-    this.y = y;
+    this.icon = icon
   }
 }
 

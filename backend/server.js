@@ -26,6 +26,9 @@ const usersRouter = require('./routes/users');
 //Add as Middleware
 app.use('/users', usersRouter);
 
+const mazesRouter = require('./routes/mazes');
+app.use('/mazes', mazesRouter);
+
 
 // SOCKET.IO
 const server = http.createServer(app);
@@ -45,10 +48,9 @@ io.on('connection', (socket) => {
 });
 
 
-
+//Start the server
 const port = process.env.PORT || 5000;
 
-//Start the server
 server.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
