@@ -1,27 +1,25 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import UserContext from '../context/UserContext';
 
 require('dotenv').config();
 let ENDPOINT = process.env.REACT_APP_ENDPOINT
 
 const MazeList = () => {
-    const { userData } = useContext(UserContext);
     const history = useHistory();
     var [list, setList] = useState<any>([]);
 
     useEffect(() => {
       let token = localStorage.getItem("auth-token");
-      axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } }).
-        then(user => {
-          let ids = {"ids": user.data.mazes};
+      axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } })
+      .then(user => {
+        let ids = {"ids": user.data.mazes};
 
-          axios.post(ENDPOINT + "mazes/getManyById", ids).
-            then(listMazes => {
-              setList(listMazes.data);
-            })
-        });
+        axios.post(ENDPOINT + "mazes/getManyById", ids)
+        .then(listMazes => {
+            setList(listMazes.data);
+        })
+      });
     }, []);
     
     const routeConnect = (e:any, mazeId:string) => {

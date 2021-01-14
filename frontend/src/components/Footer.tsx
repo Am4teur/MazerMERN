@@ -33,8 +33,8 @@ const Footer = () => {
     <a className="text-white" style={{textDecoration: "none"}} href="https://github.com/Am4teur">Daniel Castro </a>
     with &nbsp;
     <a href="https://reactjs.org/"><i className="fab fa-react" style={{color: "black"}}></i></a> &nbsp;
-    <a href="https://www.typescriptlang.org/"><img className="mb-1" src={typescripticon} style={{width: "12px", height: "12px"}}></img></a> &nbsp;
-    <a href="https://socket.io/"><img className="mb-1" src={socketicon} style={{width: "12px", height: "12px"}}></img></a>
+    <a href="https://www.typescriptlang.org/"><img className="mb-1" src={typescripticon} alt="typescript" style={{width: "12px", height: "12px"}}></img></a> &nbsp;
+    <a href="https://socket.io/"><img className="mb-1" src={socketicon} alt="socket.io" style={{width: "12px", height: "12px"}}></img></a>
   </div>
 
 </div>  

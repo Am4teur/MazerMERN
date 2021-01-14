@@ -13,8 +13,8 @@ const MazeInfo = (props: MazeInfoProps) => {
 	var [users, setUsers] = useState<any>([]);
 
 	useEffect(() => {
-    axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId}).
-    then(maze => {
+    axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
+    .then(maze => {
 			let users2 = [];
 			for (var userId in maze.data.users) {
 				users2.push(userId+"|");
@@ -23,7 +23,7 @@ const MazeInfo = (props: MazeInfoProps) => {
 			setMaze(maze.data);
 
     });
-	}, []);
+	});
   
   return (
     <div className="mazeInfo my-4">

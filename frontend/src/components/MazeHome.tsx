@@ -4,11 +4,10 @@
     list of public mazers
     connect to mazer (private and public mazers)*/
 
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import UserContext from '../context/UserContext';
 
 import MazeList from './MazeList';
-import MazeCreate from './MazeCreate';
 import { useHistory } from 'react-router-dom';
 
 

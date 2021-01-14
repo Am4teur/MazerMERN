@@ -9,7 +9,6 @@ let ENDPOINT = process.env.REACT_APP_ENDPOINT
 const MazeAdd = () => {
     const { userData } = useContext(UserContext);
     const history = useHistory();
-    var [name, setName] = useState<string>("");
     var [mazeId, setMazeId] = useState<string>("");
     var [error, setError] = useState<string>();
 

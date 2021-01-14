@@ -63,8 +63,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
   }
 
   componentDidMount() {
-    axios.post(ENDPOINT + "mazes/getById", {mazeId: this.props.mazeId}).
-    then(maze => {
+    axios.post(ENDPOINT + "mazes/getById", {mazeId: this.props.mazeId})
+    .then(maze => {
       this.maze = maze.data;
 
       this.rows = this.maze.rows;
@@ -227,8 +227,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
    * 
    ********************************************/
   updateBoardAndSquares() {
-    axios.post(ENDPOINT + "mazes/getById", {mazeId: this.props.mazeId}).
-    then(maze => {
+    axios.post(ENDPOINT + "mazes/getById", {mazeId: this.props.mazeId})
+    .then(maze => {
       let icons: { [id: string] : Icon } = {};
       let users = maze.data.users;
 
