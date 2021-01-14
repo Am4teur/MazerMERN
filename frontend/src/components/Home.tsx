@@ -4,7 +4,7 @@ import UserContext from '../context/UserContext';
 import { useHistory } from "react-router-dom";
 
 import maze_gif from '../imgs/v1_maze.gif';
-import maze_logo from '../imgs/maze.png';
+//import maze_logo from '../imgs/maze.png';
 
 
 function Home() {
@@ -15,9 +15,9 @@ function Home() {
 		history.push('/mazer');
 	}
 
-  const routeSolver = () => {
+  /*const routeSolver = () => {
 
-  }
+  }*/
 
   return (
     <div className="Home">

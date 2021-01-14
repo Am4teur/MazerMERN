@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import CSS from 'csstype';
 import iconBlue from '../imgs/icons/icon-blue.png';
 import iconRed from '../imgs/icons/icon-red.png';
