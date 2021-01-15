@@ -53,15 +53,15 @@ router.route("/create").post(async (req, res) => {
     .catch(err => res.status(400).json("Error on '/mazes/create': " + err));
 });
 
-router.route("/getById").post(async (req, res) => {
+router.route("/getById").post((req, res) => {
+  Maze.findById(req.body.mazeId)
+  .then(maze => res.json(maze))
+  .catch(err => res.status(400).json("Error on '/mazes/(empty)': " + err));
+
+  /* Another way with async and await
   const maze = await Maze.findById(req.body.mazeId);
 
-  return res.json(maze);
-
-  /* Another way without async and await
-  Maze.findById(req.body.id)
-  .then(maze => res.json(maze))
-  .catch(err => res.status(400).json("Error on '/mazes/(empty)': " + err));*/
+  return res.json(maze);*/
 });
 
 router.route("/getManyById").post(async (req, res) => {

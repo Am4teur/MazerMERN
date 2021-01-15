@@ -17,10 +17,7 @@ const MazeAdd = () => {
         e.preventDefault();
         
         try{
-          //craete maze
-          /*const addMazeBody = {
-            name: name
-          }*/
+
 
           // added maze to user mazes
           const addMazeBody = {

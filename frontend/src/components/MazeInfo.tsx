@@ -10,20 +10,22 @@ interface MazeInfoProps {
 
 const MazeInfo = (props: MazeInfoProps) => {
 	var [maze, setMaze] = useState<any>();
-	var [users, setUsers] = useState<any>([]);
+	var [userIds, setUserIds] = useState<any>([]);
 
 	useEffect(() => {
+    if(props.mazeId !== "") {
     axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
     .then(maze => {
-			let users2 = [];
+      setMaze(maze.data);
+      
+      let userIds = [];
 			for (var userId in maze.data.users) {
-				users2.push(userId+"|");
+				userIds.push(userId+"|");
 			}
-			setUsers(users2);
-			setMaze(maze.data);
-
+			setUserIds(userIds);
     });
-	});
+    }
+	}, [props.mazeId]);
   
   return (
     <div className="mazeInfo my-4">
@@ -36,7 +38,7 @@ const MazeInfo = (props: MazeInfoProps) => {
       <div className="row justify-content-center">
         <div className="col-md-auto">
           <h2 style={{color: "white"}}>Users:</h2>
-          {users}
+          {userIds}
         </div>
       </div>
       <div className="row justify-content-center">

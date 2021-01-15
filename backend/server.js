@@ -37,10 +37,14 @@ const io = socketio(server);
 io.on('connection', (socket) => {
   console.log("User connected! socket id: " + socket.id);
 
+  socket.on('join', ({ userId, mazeId }) => {
+    console.log("User: " + userId + " has joined maze: " + mazeId + "!");
+  });
+
   socket.on('move', ({ userId })  => {
-    console.log("The user: " + userId + " moved!");
+    console.log("User: " + userId + " moved!");
     io.emit('move', userId);
-  })
+  });
 
   socket.on('disconnect', () => {
     console.log("User disconnected!");
