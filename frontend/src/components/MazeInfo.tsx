@@ -13,18 +13,16 @@ const MazeInfo = (props: MazeInfoProps) => {
 	var [userIds, setUserIds] = useState<any>([]);
 
 	useEffect(() => {
-    if(props.mazeId !== "") {
     axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
     .then(maze => {
       setMaze(maze.data);
-      
+
       let userIds = [];
 			for (var userId in maze.data.users) {
 				userIds.push(userId+"|");
 			}
 			setUserIds(userIds);
     });
-    }
 	}, [props.mazeId]);
   
   return (

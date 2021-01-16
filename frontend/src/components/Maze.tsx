@@ -33,7 +33,7 @@ const Maze = (props: MazeProps) => {
     setIcon(userData.user.icon);
     setMazeId(props.location.state.mazeId);
 
-    socket.emit('join', { userId: userData.user.id, mazeId: mazeId });
+    socket.emit('join', { userId: userData.user.id, mazeId: props.location.state.mazeId });
     
     return () => {
       socket.emit('disconnect');

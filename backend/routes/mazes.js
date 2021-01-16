@@ -68,7 +68,7 @@ router.route("/getManyById").post(async (req, res) => {
   const mazes = await Maze.find({
     '_id': { $in: req.body.ids}
   }, function(err, docs){
-     console.log(docs);
+     //console.log(docs);
   });
 
   return res.json(mazes);

@@ -59,7 +59,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
     this.move = this.move.bind(this);
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
-    document.body.addEventListener("keydown", this.keyHandler);
+    window.addEventListener("keydown", this.keyHandler);
   }
 
   componentDidMount() {
@@ -78,8 +78,9 @@ class Board extends Component<BoardProps, BoardState, Board> {
   }
 
   componentWillUnmount() {
-    //remove from maze room
-    //socket
+    window.removeEventListener("keydown", this.keyHandler);
+    //this.props.socket.emit('disconnect');
+    //this.props.socket.off();
   }
 
   /********************************************
@@ -316,7 +317,6 @@ class Board extends Component<BoardProps, BoardState, Board> {
           newIcons[userId].y + oppy[type] >= 0 && 
           newIcons[userId].y + oppy[type] < this.cols) { // if to test if it is able to move
 
-            
         newIcons[userId].x = newIcons[userId].x + oppx[type];
         newIcons[userId].y = newIcons[userId].y + oppy[type];
       
