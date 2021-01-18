@@ -31,7 +31,6 @@ interface BoardProps {
   user: User;
   mazeId: string;
   onIconChange(v: string): void;
-  iconName: string;
 }
 
 
@@ -237,7 +236,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
         icons[userId.toString()] = new Icon(userId.toString(),
                                             users[userId].x,
                                             users[userId].y,
-                                            <IconComponent key={userId.toString()} size={16} iconName={this.props.iconName}/>);
+                                            <IconComponent key={userId.toString()} size={16} iconName={this.state.user.icon}/>);
       }
       
       if(this.state.user.username !== "") {

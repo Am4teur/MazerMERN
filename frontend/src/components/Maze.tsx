@@ -22,7 +22,6 @@ interface MazeProps {
 
 const Maze = (props: MazeProps) => {
   const { userData } = useContext(UserContext);
-  var [icon, setIcon] = useState<string>("");
   var [mazeId, setMazeId] = useState<string>("");
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const Maze = (props: MazeProps) => {
     //but <Board/> component doens't receive a socket
     socket = io(ENDPOINT);
     
-    setIcon(userData.user.icon);
     setMazeId(props.location.state.mazeId);
 
     socket.emit('join', { userId: userData.user.id, mazeId: props.location.state.mazeId });
@@ -46,7 +44,9 @@ const Maze = (props: MazeProps) => {
       { mazeId !== "" ? 
       <>
       <GameInfo />
-      <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeId} socket={socket} iconName={icon}/>
+      {console.log(userData.user)
+      }
+      <Board onIconChange={(v: string): void => {console.log("Called onIconChange!")}} user={userData.user} mazeId={mazeId} socket={socket}/>
       <MazeInfo mazeId={mazeId}/>
       <UserInfo />
       {/* <IconMenu /> */}

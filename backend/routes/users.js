@@ -103,10 +103,9 @@ router.route("/login").post(async (req, res) => {
     token,
     user: {
       id: user._id,
-      email: user.email,
+      //email: user.email,
       username: user.username,
-      x: user.x,
-      y: user.y
+      icon: user.icon
     }
   });
 });
@@ -158,79 +157,6 @@ router.route("/addMaze").post(async (req, res) => {
     })
     .catch(err => res.status(400).json("Error on '/users/addMaze': " + err));
 });
-
-
-
-
-router.route("/logintemp").post(async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await UserTemp.findOne({ email: email });
-  if(!user) {
-    return res.status(400)
-      .json({ msg : "Invalid email. There is no account with that email." });
-  }
-
-  const isMatch = await bcrypt.compare(password, user.hashedPassword)
-  if(!isMatch) {
-    return res.status(400)
-      .json({ msg : "Invalid password." });
-  }
-
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_USER);
-  res.json({
-    token,
-    user: {
-      id: user._id,
-      email: user.email,
-      username: user.username,
-      x: user.x,
-      y: user.y,
-    }
-  });
-});
-
-
-router.route("/registertemp").post(async (req, res) => {
-  const { email, password, passwordCheck, username} = req.body;
-  const x = 0;
-  const y = 0;
-
-  if(!validateEmail(email)) {
-    return res.status(400)
-      .json({ msg : "That email is invalid." });
-  }
-  const emailUser = await User.findOne({ email: email });
-  if(emailUser) {
-    return res.status(400)
-    .json({ msg : "That email already exists." });
-  }
-  if(password.length < 5) {
-    return res.status(400)
-      .json({ msg : "Your password needs at least 5 characters." });
-  }
-  if(password != passwordCheck) {
-    return res.status(400)
-      .json({ msg : "Those passwords don't match." });
-  }
-  if(username.length < 3) {
-    return res.status(400)
-      .json({ msg : "Your username needs at least 3 characters." });
-  }
-
-  const salt = await bcrypt.genSalt();
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  const newUser = new UserTemp({ email, hashedPassword, username, x, y });
-
-  newUser.save()
-    .then(() => res.json("Registered new User : " + newUser))
-    .catch(err => res.status(400).json("Error on '/users/registertemp': " + err));
-});
-
-
-
-
 
 
 module.exports = router;
