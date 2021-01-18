@@ -35,19 +35,21 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-  console.log("User connected! socket id: " + socket.id);
+  console.log("User connected to socket id: " + socket.id);
 
   socket.on('join', ({ userId, mazeId }) => {
     console.log("User: " + userId + " has joined maze: " + mazeId + "!");
+    console.log(socket.rooms);
   });
 
-  socket.on('move', ({ userId })  => {
-    console.log("User: " + userId + " moved!");
+  socket.on('move', ({ userId, mazeId })  => {
+    console.log("User: " + userId + " moved on maze: " + mazeId + "!");
     io.emit('move', userId);
   });
 
   socket.on('disconnect', () => {
     console.log("User disconnected!");
+    console.log(socket.rooms);
   });
 });
 

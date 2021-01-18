@@ -8,7 +8,6 @@ import MazeInfo from './MazeInfo';
 
 import io from 'socket.io-client';
 import GameInfo from './GameInfo';
-let socket: any;
 
 require('dotenv').config();
 let ENDPOINT = process.env.REACT_APP_ENDPOINT ? process.env.REACT_APP_ENDPOINT : "";
@@ -25,19 +24,22 @@ const Maze = (props: MazeProps) => {
   const history = useHistory();
   const { userData } = useContext(UserContext);
   var [mazeId, setMazeId] = useState<string>("");
+  var [socket, setSocket] = useState<any>("");
 
   useEffect(() => {
+    setMazeId(props.location.state ? props.location.state.mazeId : "");
+
     socket = io(ENDPOINT);
 
-    setMazeId(props.location.state ? props.location.state.mazeId : "")
-
     socket.emit('join', { userId: userData.user.id, mazeId: mazeId });
+
+    setSocket(socket);
     
     return () => {
       socket.emit('disconnect');
       socket.off();
     }
-  }, [ENDPOINT]);
+  }, []);
 
   const routeMazeHome = () => {
 		history.push('/mazeHome');
@@ -45,7 +47,7 @@ const Maze = (props: MazeProps) => {
   
   return (
     <div className="Maze mb-4 mt-3" style={{textAlign: "center"}}>
-      { mazeId !== "" ? 
+      { mazeId !== "" && socket ? 
       <>
       <GameInfo />
       <Board onIconChange={(v: string): void => {console.log("Called onIconChange!")}} user={userData.user} mazeId={mazeId} socket={socket}/>

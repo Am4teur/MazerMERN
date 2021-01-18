@@ -14,7 +14,8 @@ router.route("/").get((req, res) => {
 router.route("/create").post(async (req, res) => {
   const {name, user_creater, seed, rows, cols} = req.body;
 
-  let users = {user_creater: {x: 0, y: 0, option: "0"}};
+  let users = new Map();
+  users.set(user_creater, {x: 0, y: 0, option: "0"});
 
   //validations
   if(name.length < 1 || name.length > 20) {
