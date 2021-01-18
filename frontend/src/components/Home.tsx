@@ -11,8 +11,8 @@ function Home() {
   const history = useHistory();
   const { userData } = useContext(UserContext);
 
-	const routeMazer = () => {
-		history.push('/mazer');
+	const routeMazeHome = () => {
+		history.push('/mazehome');
 	}
 
   /*const routeSolver = () => {
@@ -42,7 +42,7 @@ function Home() {
       <div className="d-flex justify-content-center m-4">
         <div className="align-items-center shadow rounded bg-dark px-4 mx-2" style={{border: "2px solid black"}}>
           <div className="m-3 text-center">
-            <button className="btn btn-primary" onClick={routeMazer}><i className="fas fa-play mr-2"></i> Mazer</button>
+            <button className="btn btn-primary" onClick={routeMazeHome}><i className="fas fa-play mr-2"></i> Mazer</button>
           </div>
           <img className="my-4" src={maze_gif} alt="Maze Gif" style={{height: "250px", width: "250px", border: "2px solid black", display: "block"}}></img>
         </div>
