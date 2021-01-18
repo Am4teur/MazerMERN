@@ -24,6 +24,8 @@ const MazeAdd = () => {
             userId: userData.user.id,
             mazeId: mazeId
           }
+          await axios.post(ENDPOINT + 'mazes/addUser', addMazeBody);
+          
           await axios.post(ENDPOINT + 'users/addMaze', addMazeBody);
     
           history.push({

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let Maze = require("../models/maze.model");
 const auth = require("../middleware/auth");
+const mongoose = require('mongoose');
 
 
 
@@ -75,17 +76,28 @@ router.route("/getManyById").post(async (req, res) => {
 });
 
 
-router.route("/addUser").post((req, res) => {
-  Maze.findById(req.body.mazeId)
-    .then(maze => {
+router.route("/addUser").post(async (req, res) => { 
+  let mazeId;
+  try {
+    mazeId = mongoose.Types.ObjectId(req.body.mazeId);
+  } catch (error) {
+    console.log("Wrong Maze ID!" + error);
+  }
+  if(!mazeId){
+    return res.status(400).json({ msg : "That is not a valid maze ID." });
+  }
 
-      maze.users.set(req.body.userId, {x: req.body.y, y: req.body.x, option: req.body.option});
+  const maze = await Maze.findById(req.body.mazeId);
 
-      maze.save()
-        .then(() => res.json("Added user to maze!"))
-        .catch(err => res.status(400).json("Error saving on '/mazes/addUser'" + err));
-    })
-    .catch(err => res.status(400).json("Error on '/mazes/addUser': " + err));
+  if(!maze) {
+    return res.status(400).json({ msg : "No maze with that ID." });
+  }
+  
+  maze.users.set(req.body.userId, {x: req.body.y, y: req.body.x, option: req.body.option});
+
+  maze.save()
+    .then(() => res.json("Added user to maze!"))
+    .catch(err => res.status(400).json("Error saving on '/mazes/addUser'" + err));
 });
 
 router.route("/delete").delete(auth, async (req, res) => {

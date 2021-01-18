@@ -48,8 +48,6 @@ const Maze = (props: MazeProps) => {
       { mazeId !== "" ? 
       <>
       <GameInfo />
-      {console.log(userData.user)
-      }
       <Board onIconChange={(v: string): void => {console.log("Called onIconChange!")}} user={userData.user} mazeId={mazeId} socket={socket}/>
       <MazeInfo mazeId={mazeId}/>
       <UserInfo />
