@@ -101,6 +101,10 @@ router.route("/addUser").post(async (req, res) => {
     .catch(err => res.status(400).json("Error saving on '/mazes/addUser'" + err));
 });
 
+
+// there should be an addUser and an updateUser but I managed to use only one function to both features
+//router.route("/updateUser").post(async (req, res) => { 
+
 router.route("/delete").delete(auth, async (req, res) => {
   const deleteMaze = await Maze.findByIdAndDelete(req.id);
   res.json(deleteMaze);

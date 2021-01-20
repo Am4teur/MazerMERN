@@ -22,7 +22,10 @@ const MazeAdd = () => {
           // added maze to user mazes
           const addMazeBody = {
             userId: userData.user.id,
-            mazeId: mazeId
+            mazeId: mazeId,
+            x: 0,
+            y: 0,
+            option: "0",
           }
           await axios.post(ENDPOINT + 'mazes/addUser', addMazeBody);
           

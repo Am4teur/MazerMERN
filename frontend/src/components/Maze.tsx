@@ -27,11 +27,11 @@ const Maze = (props: MazeProps) => {
   var [socket, setSocket] = useState<any>("");
 
   useEffect(() => {
-    setMazeId(props.location.state ? props.location.state.mazeId : "");
-
     socket = io(ENDPOINT);
 
-    socket.emit('join', { userId: userData.user.id, mazeId: mazeId });
+    setMazeId(props.location.state ? props.location.state.mazeId : "");
+
+    socket.emit('join', { userId: userData.user.id, mazeId: props.location.state.mazeId });
 
     setSocket(socket);
     
@@ -39,7 +39,7 @@ const Maze = (props: MazeProps) => {
       socket.emit('disconnect');
       socket.off();
     }
-  }, []);
+  }, [ENDPOINT]);
 
   const routeMazeHome = () => {
 		history.push('/mazeHome');

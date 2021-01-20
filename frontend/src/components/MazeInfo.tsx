@@ -35,8 +35,7 @@ const MazeInfo = (props: MazeInfoProps) => {
       <>
       <div className="row justify-content-center">
         <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Users:</h2>
-          {userIds}
+          <h2 style={{color: "white"}}>Users: {userIds}</h2>
         </div>
       </div>
       <div className="row justify-content-center">

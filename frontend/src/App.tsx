@@ -17,8 +17,9 @@ import MazeCreate from './components/MazeCreate';
 import MazeAdd from './components/MazeAdd';
 import MazeHome from './components/MazeHome';
 
+require('dotenv').config();
 
-const ENDPOINT = 'http://localhost:5000/';
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 
 export default function App() {
