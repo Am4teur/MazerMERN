@@ -37,6 +37,8 @@ const io = socketio(server);
 io.on('connection', (socket) => {
   console.log("User connected to socket id: " + socket.id);
 
+  //socket.join('global room');
+
   socket.on('join', ({ userId, mazeId }) => {
     console.log("User: " + userId + " has joined maze: " + mazeId + "!");
     console.log(socket.rooms);

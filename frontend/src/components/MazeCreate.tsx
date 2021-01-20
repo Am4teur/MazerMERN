@@ -28,7 +28,7 @@ const MazeCreate = () => {
             name: name,
             seed: seed,
             rows: rows,
-            cols: cols
+            cols: rows
           }
           const newMaze = await axios.post(ENDPOINT + 'mazes/create', createMazeBody);
 
@@ -64,23 +64,24 @@ const MazeCreate = () => {
                 <label>Name</label>
                 <input type="text" required className="form-control" placeholder="Enter name" onChange={(e) => setName(e.target.value)}/>
               </div>
-              <div className="col mx-4">
+            </div>
+            <div className="row my-4">
+            <div className="col mx-4">
                 <label>Seed number</label>
                 <input type="text" className="form-control" placeholder="1 - 1 000 000" onChange={(e) => setSeed(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 1 and 1 000 000</small>
               </div>
-            </div>
-            <div className="row my-4">
               <div className="col mx-4">
                 <label>Number of Rows</label>
                 <input type="text" className="form-control" placeholder="2 - 20" onChange={(e) => setRows(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 2 and 20</small>
               </div>
+              {/* need to fix this bug of non-square mazes
               <div className="col mx-4">
                 <label>Number of Columns</label>
                 <input type="text" className="form-control" placeholder="2 - 20" onChange={(e) => setCols(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 2 and 20</small>
-              </div>
+              </div>*/}
             </div>
     
             <input type="submit" value="Create Maze" className='btn btn-primary ml-4 my-2'/>
