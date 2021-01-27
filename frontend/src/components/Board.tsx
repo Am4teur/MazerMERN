@@ -8,8 +8,9 @@ import IconComponent from './IconComponent';
 
 import axios from 'axios';
 
-let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';
+require('dotenv').config();
 
+const ENDPOINT = process.env.REACT_APP_ENDPOINT; //'https://mazer-backend.herokuapp.com/';
 
 
 interface Board {
@@ -314,10 +315,8 @@ class Board extends Component<BoardProps, BoardState, Board> {
     let mazeId = this.props.mazeId;
 
     console.log("moved " + type + " | userId: " + userId + " | mazeId: " + mazeId);
-    
-    console.log(this.state.icons);
-    
 
+    
     if(newIcons[userId]) {
       if (newIcons[userId].x + oppx[type] >= 0 && 
           newIcons[userId].x + oppx[type] < this.rows &&
@@ -345,7 +344,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
 
         //update
         //updateUserPosition();
-        axios.post(ENDPOINT + "mazes/addUser", user /* body */)
+        axios.post(ENDPOINT + "mazes/updateUser", user /* body */)
         .then(response => {
           this.props.socket.emit('move', { userId: userId, mazeId: mazeId });
           //this.props.socket.broadcast.to(<maze_room>).emit('move', { userId: this.state.user.id });

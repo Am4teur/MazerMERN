@@ -5,7 +5,7 @@ import UserContext from '../context/UserContext';
 
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT;
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 interface LoginState {
   email: string,

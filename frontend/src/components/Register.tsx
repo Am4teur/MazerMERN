@@ -5,7 +5,7 @@ import UserContext from '../context/UserContext';
 
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 const GLOBAL_MAZE_ID = "5fbac485d8017b593cf11df5";
 const DEFAULT_ICON = "blue-simple-icon";
 

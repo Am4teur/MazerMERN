@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 const MazeList = () => {
     const history = useHistory();

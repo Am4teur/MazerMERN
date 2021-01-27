@@ -78,32 +78,44 @@ router.route("/getManyById").post(async (req, res) => {
 
 
 router.route("/addUser").post(async (req, res) => { 
-  let mazeId;
-  try {
-    mazeId = mongoose.Types.ObjectId(req.body.mazeId);
-  } catch (error) {
-    console.log("Wrong Maze ID!" + error);
-  }
-  if(!mazeId){
-    return res.status(400).json({ msg : "That is not a valid maze ID." });
-  }
-
-  const maze = await Maze.findById(req.body.mazeId);
+  const maze = await Maze.findOne({"name": req.body.mazeName});
 
   if(!maze) {
-    return res.status(400).json({ msg : "No maze with that ID." });
+    return res.status(400).json({ msg : "No maze with that name." });
   }
   
-  maze.users.set(req.body.userId, {x: req.body.y, y: req.body.x, option: req.body.option});
+  maze.users.set(req.body.userId, {x: 0, y: 0, option: "0"});
 
   maze.save()
-    .then(() => res.json("Added user to maze!"))
+    .then(() => res.json(maze))
     .catch(err => res.status(400).json("Error saving on '/mazes/addUser'" + err));
 });
 
 
-// there should be an addUser and an updateUser but I managed to use only one function to both features
-//router.route("/updateUser").post(async (req, res) => { 
+router.route("/updateUser").post(async (req, res) => {
+    let mazeId;
+    try {
+      mazeId = mongoose.Types.ObjectId(req.body.mazeId);
+    } catch (error) {
+      console.log("Wrong Maze ID!" + error);
+    }
+    if(!mazeId){
+      return res.status(400).json({ msg : "That is not a valid maze ID." });
+    }
+  
+    const maze = await Maze.findById(req.body.mazeId);
+  
+    if(!maze) {
+      return res.status(400).json({ msg : "No maze with that ID." });
+    }
+    
+    maze.users.set(req.body.userId, {x: req.body.y, y: req.body.x, option: req.body.option});
+  
+    maze.save()
+      .then(() => res.json("Updated user on maze: " + maze.name))
+      .catch(err => res.status(400).json("Error saving on '/mazes/updateUser'" + err));
+});
+
 
 router.route("/delete").delete(auth, async (req, res) => {
   const deleteMaze = await Maze.findByIdAndDelete(req.id);

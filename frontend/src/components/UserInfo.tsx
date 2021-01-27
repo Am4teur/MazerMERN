@@ -4,7 +4,9 @@ import IconComponent from './IconComponent';
 import './Navbar.css'; // for button with icons and text separated
 
 import axios from 'axios';
+
 require('dotenv').config();
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 
 const UserInfo = () => {
@@ -18,7 +20,7 @@ const UserInfo = () => {
       token = "";
     }
 
-    axios.post(process.env.REACT_APP_ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } })
+    axios.post(ENDPOINT + "users/get", null, { headers: { "x-auth-token": token } })
     .then(user => {
 			setMazeIds(user.data.mazes);
     });

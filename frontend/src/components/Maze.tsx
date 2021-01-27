@@ -10,7 +10,7 @@ import io from 'socket.io-client';
 import GameInfo from './GameInfo';
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT ? process.env.REACT_APP_ENDPOINT : "";
+const ENDPOINT = process.env.REACT_APP_ENDPOINT ? process.env.REACT_APP_ENDPOINT : "";
 //let mazeOption = "5fbac485d8017b593cf11df5";
 //let icon = "blue-simple-icon";
 

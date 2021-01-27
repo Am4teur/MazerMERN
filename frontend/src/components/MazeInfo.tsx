@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css'; // for button with icons and text separated
 import axios from 'axios';
+
 require('dotenv').config();
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 
 interface MazeInfoProps {
@@ -13,7 +15,7 @@ const MazeInfo = (props: MazeInfoProps) => {
 	var [userIds, setUserIds] = useState<any>([]);
 
 	useEffect(() => {
-    axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
+    axios.post(ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
     .then(maze => {
       setMaze(maze.data);
 
