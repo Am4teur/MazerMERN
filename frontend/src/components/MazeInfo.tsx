@@ -28,10 +28,11 @@ const MazeInfo = (props: MazeInfoProps) => {
 	}, [props.mazeId]);
   
   return (
-    <div className="mazeInfo d-flex flex-column justify-content-center my-4">
+    <>
+    {process.env.REACT_APP_DEVELOPMENT === 'dev' && maze
+    ?
+    <div className="mazeInfo d-flex flex-column justify-content-center align-items-center my-4">
       <h1>Maze Info</h1>
-      {process.env.REACT_APP_DEVELOPMENT === 'dev' && maze ?
-      <>
       <h2>Users: </h2>
       {userIds.map((user: any, idx: number) => {
         return (
@@ -53,11 +54,11 @@ const MazeInfo = (props: MazeInfoProps) => {
       <h2>cols: {maze.cols}</h2>
 
       <h2>id:  {maze._id}</h2>
-      </>
-      :
-      null
-    }
     </div>
+    :
+    null
+    }
+    </>
   );
 }
 

@@ -27,13 +27,14 @@ const UserInfo = () => {
   }, []);
   
   return (
-    <div className="userInfo d-flex flex-column justify-content-center my-4">
+    <>
+    {process.env.REACT_APP_DEVELOPMENT === 'dev' && userData.user.username !== ""
+    ?
+    <div className="userInfo d-flex flex-column justify-content-center align-items-center my-4">
       <h1>User Info</h1>
-      {process.env.REACT_APP_DEVELOPMENT === 'dev' && userData.user.username !== "" ?
-      <>
       <h2>Username: {userData.user.username}</h2>
 
-      <div className="row justify-content-center">
+      <div className="d-flex flex-row justify-content-center">
         <h2>Icon: </h2>
         <div className="mx-2 my-1">
           <IconComponent iconName={userData.user.icon} size={32}/>
@@ -51,11 +52,11 @@ const UserInfo = () => {
         )
         })
       }
-      </>
-      :
-      null
-    }
     </div>
+    :
+    null
+    }
+    </>
   );
 }
 

@@ -1,21 +1,11 @@
 body {
     font-family: 'Ubuntu', sans-serif;
     /*font-family: 'Roboto', sans-serif;*/
-	background-color: #12181b;
-}
-
-.info {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-	text-align: center;
+    background-color: #12181b;
+    color: #ffffff;
 }
 
 /* color: #61dafb; */
-
 
 /* For Footer */
 :root {
@@ -23,22 +13,23 @@ body {
     --space: 2em 0;
 }
 
-.Site {
+.App {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-.Site-content {
+.App-content {
     flex: 1 0 auto;
     padding: var(--space) var(--space) 0;
     width: 100%;
 }
 
-.Site-content:after {
+.App-content:after {
     content: '\00a0';
     display: block;
     margin-top: var(--space);
     height: 0;
     visibility: hidden;
 }
+/* end For Footer*/

@@ -16,6 +16,7 @@ import TempUser from './components/TempUser';
 import MazeCreate from './components/MazeCreate';
 import MazeAdd from './components/MazeAdd';
 import MazeHome from './components/MazeHome';
+import Sidebar from './components/Sidebar';
 
 require('dotenv').config();
 
@@ -67,11 +68,13 @@ export default function App() {
   
   if(userData.loading) return null;
   return (
-    <div className="Site">
+    <div className="App">
     <BrowserRouter>
       <UserContext.Provider value={providerData}>
-        <div className="Site-content">
-        <Navbar user={userData.user}/>
+        <Sidebar/>
+        <div className="App-content">
+        <Navbar/>
+        
 
         <Switch>
           <Route path="/" exact component={Home} /> {/*Home*/}

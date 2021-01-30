@@ -46,7 +46,7 @@ const Maze = (props: MazeProps) => {
 	}
   
   return (
-    <div className="Maze mb-4 mt-3" style={{textAlign: "center"}}>
+    <div className="Maze d-flex flex-column justify-content-center align-items-center mb-4 mt-3">
       { mazeId !== "" && socket ? 
       <>
       <GameInfo />
