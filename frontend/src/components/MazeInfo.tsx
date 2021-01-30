@@ -29,6 +29,7 @@ const MazeInfo = (props: MazeInfoProps) => {
   
   return (
     <div className="mazeInfo d-flex flex-column justify-content-center my-4">
+      <h1>Maze Info</h1>
       {process.env.REACT_APP_DEVELOPMENT === 'dev' && maze ?
       <>
       <h2>Users: </h2>

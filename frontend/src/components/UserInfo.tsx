@@ -28,13 +28,17 @@ const UserInfo = () => {
   
   return (
     <div className="userInfo d-flex flex-column justify-content-center my-4">
-
+      <h1>User Info</h1>
       {process.env.REACT_APP_DEVELOPMENT === 'dev' && userData.user.username !== "" ?
       <>
-      <h2 style={{color: "white"}}>Username: {userData.user.username}</h2>
+      <h2>Username: {userData.user.username}</h2>
 
-      <h2>Icon: </h2>
-      <IconComponent iconName={userData.user.icon} size={32}/>
+      <div className="row justify-content-center">
+        <h2>Icon: </h2>
+        <div className="mx-2 my-1">
+          <IconComponent iconName={userData.user.icon} size={32}/>
+        </div>
+      </div>
 
       <h2>id: {userData.user.id}</h2>
 
