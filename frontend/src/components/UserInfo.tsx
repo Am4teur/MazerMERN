@@ -27,42 +27,26 @@ const UserInfo = () => {
   }, []);
   
   return (
-    <div className="userInfo my-4">
+    <div className="userInfo d-flex flex-column justify-content-center my-4">
 
-      {
-      process.env.REACT_APP_DEVELOPMENT === 'dev' && userData.user.username !== ""
-      ?
+      {process.env.REACT_APP_DEVELOPMENT === 'dev' && userData.user.username !== "" ?
       <>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Username: {userData.user.username}</h2>
-        </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Icon: </h2>
-        </div>
-        <div className="col-md-auto my-1">
-          <IconComponent iconName={userData.user.icon} size={32}/>
-        </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>id: {userData.user.id}</h2>
-        </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-md-auto" style={{color: "white"}}>
-        {mazeIds.map((maze: any, idx: number) => {
-            return (
-              <li key={idx}>
-              {maze}
-            </li>
-            )
-            })
-          }
-        </div>
-      </div>
+      <h2 style={{color: "white"}}>Username: {userData.user.username}</h2>
+
+      <h2>Icon: </h2>
+      <IconComponent iconName={userData.user.icon} size={32}/>
+
+      <h2>id: {userData.user.id}</h2>
+
+      <h2>mazes: </h2>
+      {mazeIds.map((maze: any, idx: number) => {
+        return (
+          <li key={idx}>
+            {maze}
+          </li>
+        )
+        })
+      }
       </>
       :
       null

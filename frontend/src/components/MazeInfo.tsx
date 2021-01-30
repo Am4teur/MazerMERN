@@ -21,55 +21,37 @@ const MazeInfo = (props: MazeInfoProps) => {
 
       let userIds = [];
 			for (var userId in maze.data.users) {
-				userIds.push(userId+"|");
+				userIds.push(userId);
 			}
 			setUserIds(userIds);
     });
 	}, [props.mazeId]);
   
   return (
-    <div className="mazeInfo my-4">
-
-
-      {
-      process.env.REACT_APP_DEVELOPMENT === 'dev' && maze
-      ?
+    <div className="mazeInfo d-flex flex-column justify-content-center my-4">
+      {process.env.REACT_APP_DEVELOPMENT === 'dev' && maze ?
       <>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Users: {userIds}</h2>
-        </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-					<h2 style={{color: "white"}}>Name: {maze.name}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Creator: {maze.user_creater}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>seed: {maze.seed}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>rows: {maze.rows}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>cols: {maze.cols}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>id:  {maze._id}</h2>
-        </div>
-      </div>
+      <h2>Users: </h2>
+      {userIds.map((user: any, idx: number) => {
+        return (
+          <li key={idx}>
+            {user}
+          </li>
+        )
+        })
+      }
+
+      <h2>Name: {maze.name}</h2>
+
+      <h2>Creator: {maze.user_creater}</h2>
+
+      <h2>seed: {maze.seed}</h2>
+
+      <h2>rows: {maze.rows}</h2>
+
+      <h2>cols: {maze.cols}</h2>
+
+      <h2>id:  {maze._id}</h2>
       </>
       :
       null
