@@ -1,0 +1,13 @@
+.sidebar {
+  margin-top: 10vh;
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+  max-height: 120vh;
+  position: absolute; 
+}
+
+.wrap {
+  min-height: 100vh;
+  max-height: 120vh;
+}

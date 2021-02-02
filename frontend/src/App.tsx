@@ -71,25 +71,26 @@ export default function App() {
     <div className="App">
     <BrowserRouter>
       <UserContext.Provider value={providerData}>
+
         <Sidebar/>
         <div className="App-content">
-        <Navbar/>
-        
+          <Navbar/>
 
-        <Switch>
-          <Route path="/" exact component={Home} /> {/*Home*/}
-          <Route path="/temp" component={TempUser} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/mazer" component={Maze} />
-          <Route path="/mazeHome" component={MazeHome} />
-          <Route path="/mazeCreate" component={MazeCreate} />
-          <Route path="/mazeAdd" component={MazeAdd} />
-          <Route path="/userInfo" component={UserInfo} />
-        </Switch>
+          <Switch>
+            <Route path="/" exact component={Home} /> {/*Home*/}
+            <Route path="/temp" component={TempUser} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/mazer" component={Maze} />
+            <Route path="/mazeHome" component={MazeHome} />
+            <Route path="/mazeCreate" component={MazeCreate} />
+            <Route path="/mazeAdd" component={MazeAdd} />
+            <Route path="/userInfo" component={UserInfo} />
+          </Switch>
         </div>
 
         <Footer />
+        
       </UserContext.Provider>
     </BrowserRouter>
     </div>
