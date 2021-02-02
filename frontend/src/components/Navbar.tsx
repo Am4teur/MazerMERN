@@ -46,8 +46,8 @@ const Navbar = () => {
 		<nav className="navbar navbar-dark bg-primary">
 		<div className="navbar-left d-flex flex-row flex-start justify-content-start">
 			<div className="logo_image mt-2 pr-2">
-        <a className="d-flex flex-row flex-start justify-content-start" href="/" style={{color: "white", fontSize: "1rem", textDecoration: "none" }}>
-					<img className="mr-2 d-inline-block align-center" src={logo} alt="logo" style={{width: "32px", height: "32px"}}/>
+        <a className="d-flex flex-row flex-start justify-content-start" href="/" style={{color: "white", fontSize: "1rem", textDecoration: "none"}}>
+					<img className="mr-2 d-inline-block align-center" src={logo} alt="logo" width="32px" height="32px"/>
 					<h3>Mazer</h3>
 				</a>
 			</div>

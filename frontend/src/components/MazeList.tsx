@@ -32,7 +32,7 @@ const MazeList = () => {
     }
 
     return (
-        <div className="mazeList mx-5 my-2" style={{"color": "white"}}>
+        <div className="mazeList mx-5 my-2">
           <h3>List</h3>
           {list.map((maze: any, idx: number) => {
             return (

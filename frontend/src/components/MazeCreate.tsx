@@ -52,7 +52,7 @@ const MazeCreate = () => {
     }
     
     return (
-        <div className="mazeCreate ml-5 mr-5" style={{"color": "white"}}>
+        <div className="mazeCreate ml-5 mr-5">
           <br/>
           <h3>Create a new Maze</h3>
           <form onSubmit={onSubmit}>

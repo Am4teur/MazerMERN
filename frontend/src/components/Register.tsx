@@ -77,7 +77,7 @@ const Register = (state: RegisterState) => {
 
 
   return (
-    <div className="registerForm ml-5 mr-5" style={{"color": "white"}}>
+    <div className="registerForm ml-5 mr-5">
       <br/>
       <h3>Register an account</h3>
       <form onSubmit={onSubmit}>
