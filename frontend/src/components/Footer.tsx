@@ -1,13 +1,12 @@
 import React, { /*useState*/ } from 'react';
 import typescripticon from '../imgs/typescript.svg';
 import socketicon from '../imgs/socketicon.png';
-import './Footer.css';
 
 // https://dev.to/letsbsocial1/flexbox-sticky-footer-and-react-e1h
 const Footer = () => {
   return (
 
-  <div className="footer bg-primary pt-4">
+  <div className="footer bg-secondary pt-4">
 
     <div className="footer-icons">
 

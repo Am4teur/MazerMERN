@@ -1,35 +1,56 @@
 body {
-    font-family: 'Ubuntu', sans-serif;
-    /*font-family: 'Roboto', sans-serif;*/
-    background-color: #12181b;
-    color: #ffffff;
+  font-family: "Ubuntu", sans-serif;
+  /*font-family: 'Roboto', sans-serif;*/
+  background-color: #272522;
+  color: #ffffff;
 }
 
 /* color: #61dafb; */
 
-/* For Footer */
-:root {
-    --space: 1.5em 0;
-    --space: 2em 0;
-}
-
 .App {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  height: 100vh; /*this may not work for android and ios*/
 }
 
 .App-content {
-    flex: 1 0 auto;
-    padding: var(--space) var(--space) 0;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  /*dont add height because of footer*/
+  width: 100%;
 }
 
-.App-content:after {
-    content: '\00a0';
-    display: block;
-    margin-top: var(--space);
-    height: 0;
-    visibility: hidden;
+.Content {
+  flex: 1 0 auto;
 }
-/* end For Footer*/
+
+.footer-icons a {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 2px;
+
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 35px;
+
+  margin-right: 5px;
+}
+
+.sidebar {
+  min-width: 250px;
+}
+
+.sidebar.hidden {
+  margin-left: -250px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin-left: -250px;
+  }
+  .sidebar.hidden {
+    margin-left: 0;
+  }
+}
