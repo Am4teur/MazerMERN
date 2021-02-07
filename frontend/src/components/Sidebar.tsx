@@ -45,23 +45,9 @@ const Sidebar = (props:SidebarProps) => {
 		history.push('/mazeHome');
 	}
 
-/*<div class="wrapper">
-
-    <!-- Sidebar -->
-    <nav id="sidebar">
-        ...
-    </nav>
-
-    <!-- Page Content -->
-    <div id="content">
-        <!-- We'll fill this with dummy content -->
-    </div>
-
-</div>  */
-
 	return (
 		<nav className={"sidebar navbar-dark bg-primary d-flex flex-column flex-start justify-content-start "+props.isHidden}>
-			<div className="sidebar-header d-flex justify-content-center mt-2 pr-2">
+			<div className="sidebar-header d-flex justify-content-center m-3 pr-2">
         <a className="d-flex flex-row flex-start justify-content-start" href="/" style={{color: "white", fontSize: "1rem", textDecoration: "none" }}>
 					<img className="d-inline-block align-center mr-2" src={logo} alt="logo" style={{width: "32px", height: "32px"}}/>
 					<h3>Mazer</h3>
@@ -86,58 +72,6 @@ const Sidebar = (props:SidebarProps) => {
     	</div>
 		</nav>
   );
-  
-  /*return (
-    <nav id="sidebar">
-      <div className="sidebar-header">
-          <h3>Bootstrap Sidebar</h3>
-          <strong>BS</strong>
-      </div>
-
-      <ul className="list-unstyled components">
-          <li className="active">
-              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">
-                  <i className="fas fa-home"></i>
-                  Home
-              </a>
-              <ul className="collapse list-unstyled" id="homeSubmenu">
-                  <li>
-                      <a href="#">Home 1</a>
-                  </li>
-                  <li>
-                      <a href="#">Home 2</a>
-                  </li>
-                  <li>
-                      <a href="#">Home 3</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-              <a href="#">
-                  <i className="fas fa-briefcase"></i>
-                  About
-              </a>
-              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">
-                  <i className="fas fa-copy"></i>
-                  Pages
-              </a>
-              <ul className="collapse list-unstyled" id="pageSubmenu">
-                  <li>
-                      <a href="#">Page 1</a>
-                  </li>
-                  <li>
-                      <a href="#">Page 2</a>
-                  </li>
-                  <li>
-                      <a href="#">Page 3</a>
-                  </li>
-              </ul>
-          </li>
-      </ul>
-
-    </nav>
-
-  );*/
 }
 
 export default Sidebar;

@@ -68,29 +68,11 @@ export default function App() {
   }, [userData]);
 
   const toggleSidebar = ():void => {
-    isHidden === "" ? setIsHidden("hidden") : setIsHidden(""); 
+    isHidden === "" ? setIsHidden("hidden") : setIsHidden("");
   };
   
   if(userData.loading) return null;
-  /*return (
-    <div className="App d-flex flex-column" style={{height: "100vh", width: "100vw", backgroundColor: "black"}}>
-      <nav className="Navbar" style={{backgroundColor: "gray", height: "10vh"}}>
-      <button className="btn btn-dark m-2" onClick={toggleSidebar}>Toggle Sidebar</button>
-      <button className="btn btn-dark m-2" onClick={toggleSidebar}>Toggle Sidebar</button>
-      </nav>
-      <div className="App-content d-flex flex-row" style={{backgroundColor: "yellow", height: "100vh"}}>
-        <nav className="Sidebar" style={{backgroundColor: "red", width: "250px", minHeight: "100%"}}>
 
-        </nav>
-        <div className="Content d-flex flex-column-reverse" style={{backgroundColor: "blue", width: "100%", minHeight: "100%"}}>
-          <div className="Footer" style={{backgroundColor: "green", width: "100%", minHeight: "20px"}}>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );*/
   return (
     <div className="App">
     <BrowserRouter>

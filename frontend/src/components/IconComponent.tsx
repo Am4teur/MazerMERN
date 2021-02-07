@@ -1,8 +1,8 @@
 import React, {  } from 'react';
 import CSS from 'csstype';
-import iconBlue from '../imgs/icons/icon-blue.png';
-import iconRed from '../imgs/icons/icon-red.png';
-import iconGreen from '../imgs/icons/icon-green.png';
+import iconBlue from '../imgs/icons/icon-blue-512.png';
+import iconRed from '../imgs/icons/icon-red-512.png';
+import iconGreen from '../imgs/icons/icon-green-512.png';
 
 
 interface IconComponent {

@@ -6,17 +6,22 @@ body {
 }
 
 /* color: #61dafb; */
+:root {
+  --sidebar-width: 158px;
+}
 
 .App {
   display: flex;
-  height: 100vh; /*this may not work for android and ios*/
+  min-height: 100vh; /* this may not work for android and ios because of vh (and vw) */
+  max-height: 100%;
 }
 
 .App-content {
   display: flex;
   flex-direction: column;
-  /*dont add height because of footer*/
+  /* dont add height because of footer */
   width: 100%;
+  margin-left: var(--sidebar-width);
 }
 
 .Content {
@@ -39,16 +44,18 @@ body {
 }
 
 .sidebar {
-  min-width: 250px;
+  position: fixed;
+  height: 100vh;
+  min-width: var(--sidebar-width);
 }
 
 .sidebar.hidden {
-  margin-left: -250px;
+  margin-left: calc(var(--sidebar-width)*-1);
 }
 
 @media (max-width: 768px) {
   .sidebar {
-    margin-left: -250px;
+    margin-left: calc(var(--sidebar-width)*-1);
   }
   .sidebar.hidden {
     margin-left: 0;
