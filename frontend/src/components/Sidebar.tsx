@@ -46,6 +46,7 @@ const Sidebar = (props:SidebarProps) => {
 	}
 
 	return (
+    <>
 		<nav className={"sidebar navbar-dark bg-primary d-flex flex-column flex-start justify-content-start "+props.isHidden}>
 			<div className="sidebar-header d-flex justify-content-center m-3 pr-2">
         <a className="d-flex flex-row flex-start justify-content-start" href="/" style={{color: "white", fontSize: "1rem", textDecoration: "none" }}>
@@ -54,23 +55,27 @@ const Sidebar = (props:SidebarProps) => {
 				</a>
 			</div>
 
-			<button className="btn btn-primary" onClick={routeHome}>Home</button>
+			<a className="btn btn-primary" href="/">Home</a>
 
 			<button className="btn btn-primary" onClick={routeMazer}>Mazer</button>
 
 			<button className="btn btn-primary" onClick={routeMazeHome}>Maze Home</button>
 
-      <div className="auth mt-auto">
+      <div className="my-4" style={{borderBottom: "1px solid black"}}></div>
+
+      <div className="auth d-flex flex-column align-items-start"> {/*className="auth mt-auto" to stick it at bottom of sidebar*/}
         {userData.user.username !== "" ?
         <>
-          <div className="p-1"><button className="btn btn-labeled btn-primary" onClick={userInfo}><span className="btn-label"><i className="fas fa-user"></i></span>{userData.user.username}</button></div>
-          <div className="p-1"><button className="btn btn-labeled btn-primary" onClick={routeLogout}><span className="btn-label"><i className="fas fa-sign-out-alt"></i></span>Logout</button></div>
+          <button className="btn btn-labeled btn-dark ml-2 mb-2" onClick={userInfo}><span className="btn-label"><i className="fas fa-user"></i></span>{userData.user.username}</button>
+          <button className="btn btn-labeled btn-dark ml-2" onClick={routeLogout}><span className="btn-label"><i className="fas fa-sign-out-alt"></i></span>Logout</button>
         </>
         :
         <NoAuthBtns />
       }
     	</div>
 		</nav>
+    <nav className={"sb-filler " + props.isHidden}></nav>
+    </>
   );
 }
 

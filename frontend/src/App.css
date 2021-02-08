@@ -21,11 +21,10 @@ body {
   flex-direction: column;
   /* dont add height because of footer */
   width: 100%;
-  margin-left: var(--sidebar-width);
 }
 
 .Content {
-  flex: 1 0 auto;
+  flex: 1 0 auto; /* stick at the bottom, auto gives the max amount of space between flex-items*/
 }
 
 .footer-icons a {
@@ -44,7 +43,7 @@ body {
 }
 
 .sidebar {
-  position: fixed;
+  position: fixed; /*sb-filler is because of this*/
   height: 100vh;
   min-width: var(--sidebar-width);
 }
@@ -53,11 +52,30 @@ body {
   margin-left: calc(var(--sidebar-width)*-1);
 }
 
-@media (max-width: 768px) {
+.sb-filler { /*sb-filler because of .sidebar {postion: fixed;}*/
+  visibility: hidden;
+  min-width: var(--sidebar-width);
+}
+
+.sb-filler.hidden {
+  visibility: hidden;
+  margin-left: calc(var(--sidebar-width)*-1);
+}
+
+@media (max-width: 768px) { /*bug when sb is untoggle and we go for a small page window*/
   .sidebar {
     margin-left: calc(var(--sidebar-width)*-1);
   }
   .sidebar.hidden {
     margin-left: 0;
+  }
+
+  .sb-filler {
+    visibility: hidden;
+    margin-left: calc(var(--sidebar-width)*-1);
+  }
+  .sb-filler.hidden {
+    visibility: hidden;
+    min-width: var(--sidebar-width);
   }
 }
