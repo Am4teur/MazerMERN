@@ -16,7 +16,7 @@ import GamesIcon from '@material-ui/icons/Games';
 
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const drawerWidth = 200;
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		authIcon: {
 			color: 'white',
-			padding: theme.spacing(0, 1.5),
+			padding: theme.spacing(0, 1.25),
 		},
 		logo: {
 			width: "32px",
@@ -194,20 +194,20 @@ const Sidebar = () => {
 				{userData.user.username === "" ?
         <List>
 					<ListItem button key={"Login"} className={classes.listItem} onClick={routeLogin}>
-						<ListItemIcon className={classes.authIcon}>{<i className="fas fa-sign-in-alt"></i>}</ListItemIcon>
+						<ListItemIcon className={classes.authIcon}>{<i className="fas fa-sign-in-alt fa-lg"></i>}</ListItemIcon>
 						<ListItemText primary={"Login"} />
 					</ListItem>
 					<ListItem button key={"Register"} className={classes.listItem} onClick={routeRegister}>
-						<ListItemIcon className={classes.authIcon}>{<i className="fas fa-user-edit"></i>}</ListItemIcon>
+						<ListItemIcon className={classes.authIcon}>{<i className="fas fa-user-edit fa-lg"></i>}</ListItemIcon>
 						<ListItemText primary={"Register"} />
 					</ListItem>
         </List>
 				:
 				<List>
-				<ListItem button key={"Logout"} className={classes.listItem} onClick={routeLogout}>
-					<ListItemIcon className={classes.authIcon}>{<i className="fas fa-sign-out-alt"></i>}</ListItemIcon>
-					<ListItemText primary={"Logout"} />
-				</ListItem>
+					<ListItem button key={"Logout"} className={classes.listItem} onClick={routeLogout}>
+						<ListItemIcon className={classes.authIcon}>{<i className="fas fa-sign-out-alt fa-lg"></i>}</ListItemIcon>
+						<ListItemText primary={"Logout"} />
+					</ListItem>
 				</List>
 				}
       </Drawer>
