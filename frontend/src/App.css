@@ -1,7 +1,7 @@
 body {
   font-family: "Ubuntu", sans-serif;
   /*font-family: 'Roboto', sans-serif;*/
-  background-color: #272522;
+  background-color: #12181b;
   color: #ffffff;
 }
 
@@ -14,6 +14,8 @@ body {
   display: flex;
   min-height: 100vh; /* this may not work for android and ios because of vh (and vw) */
   max-height: 100%;
+  background-color: #12181b;
+  color: #ffffff;
 }
 
 .App-content {
@@ -62,7 +64,7 @@ body {
   margin-left: calc(var(--sidebar-width)*-1);
 }
 
-@media (max-width: 768px) { /*bug when sb is untoggle and we go for a small page window*/
+@media (max-width: 768px) {
   .sidebar {
     margin-left: calc(var(--sidebar-width)*-1);
   }

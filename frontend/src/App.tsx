@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
 
+import { IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -23,8 +26,7 @@ require('dotenv').config();
 const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 
-export default function App() {
-  const [isHidden, setIsHidden] = useState<string>("");
+const App = () => {
   const [userData, setUserData] = useState({
     token: "",
     user: new User(),
@@ -66,10 +68,6 @@ export default function App() {
       checkedLoggedIn();
     }
   }, [userData]);
-
-  const toggleSidebar = ():void => {
-    isHidden === "" ? setIsHidden("hidden") : setIsHidden("");
-  };
   
   if(userData.loading) return null;
 
@@ -79,11 +77,9 @@ export default function App() {
       <UserContext.Provider value={providerData}>
 
         {/*<Navbar/>*/}
-        <Sidebar isHidden={isHidden}/>
+        <Sidebar/>
         <div className="App-content">
-        <div className="Content">
-            <button className="btn btn-dark" onClick={toggleSidebar}>Toggle Sidebar</button>
-
+          <div className="Content">
             <Switch>
               <Route path="/" exact component={Home} /> {/*Home*/}
               <Route path="/temp" component={TempUser} />
@@ -97,10 +93,16 @@ export default function App() {
             </Switch>
           </div>
           <Footer/>
-          </div>
+        </div>
       </UserContext.Provider>
     </BrowserRouter>
     </div>
   );
 
 }
+
+export default App;
+
+/*
+export default function App() {}
+*/
