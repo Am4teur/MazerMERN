@@ -3,25 +3,75 @@ import UserContext from '../context/UserContext';
 import { useHistory } from "react-router-dom";
 
 import maze_gif from '../imgs/v1_maze.gif';
-import { Height } from '@material-ui/icons';
 //import maze_logo from '../imgs/maze.png';
 
+import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 
-function Home() {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    home: {
+      display: 'flex',
+      height: '100%',
+      width: '100%',
+    },
+    primaryColumn: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: theme.spacing(3),
+      width: '75%',
+      backgroundColor: 'blue',
+    },
+    secondaryColumn: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'start',
+      alignItems: 'center',
+      margin: theme.spacing(3, 3, 3, 0),
+      width: '25%',
+      backgroundColor: 'green',
+    },
+    userInfo: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'start',
+      alignItems: 'center',
+      width: '100%',
+      backgroundColor: '#343a40',
+      borderRadius: theme.spacing(0.75),
+      marginBottom: theme.spacing(3),
+      //rounded shadow
+    },
+    userInfoText: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexGrow: 1,
+    },
+  }),
+);
+
+const Home = () => {
   const history = useHistory();
   const { userData } = useContext(UserContext);
+
+  const classes = useStyles();
+  const theme = useTheme();
 
 	const routeMazeHome = () => {
 		history.push('/mazehome');
 	}
 
-  /*const routeSolver = () => {
-
-  }*/
+  /*const routeSolver = () => {}*/
 
   return (
-    <div className="Home d-flex" style={{height: "100%", width: "100%"}}>
-      <div className="Primary-home-column bg-primary d-flex flex-column justify-content-center align-items-center m-4" style={{width: "70%"}}>
+    <div className={classes.home}>
+      <div className={classes.primaryColumn}>
         { userData.user.username !== "" ?
           <div className="greeting">
             <h1>Welcome {userData.user.username}</h1>
@@ -43,17 +93,25 @@ function Home() {
           <h1 className="my-4">Available soon!</h1>
         </div>*/}
       </div>
-      <div className="Secondary-home-column bg-success my-4 mr-4" style={{width: "30%"}}>
-        <div className="bg-dark rounded shadow">DATAdasddddddddddd</div>
+      <div className={classes.secondaryColumn}>
+        <div className={classes.userInfo}>
+          <img className="m-2" src={maze_gif} alt="Maze Gif" style={{height: "50px", width: "50px", border: "2px solid black"}}></img>
+          <div className={classes.userInfoText}>
+            <span>text</span>
+            <span>text</span>
+            <span>text</span>
+          </div>
+        </div>
+        <div className={classes.userInfo}>
+          <img className="m-2" src={maze_gif} alt="Maze Gif" style={{height: "50px", width: "50px", border: "2px solid black"}}></img>
+          <div className={classes.userInfoText}>
+            <span>text</span>
+            <span>text</span>
+            <span>text</span>
+          </div>
+        </div>
       </div>
     </div>
-  );
-
-  return (
-    <div className="Home container bg-danger mb-2" style={{width: "100%", height: "80%"}}>
-      <div className="d-flex flex-column justify-content-center align-items-center m-4">
-        </div>
-        </div>
   );
 }
 
