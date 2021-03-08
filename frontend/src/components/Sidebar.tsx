@@ -3,18 +3,13 @@ import { useHistory } from "react-router-dom";
 import logo from '../imgs/maze.png';
 import UserContext from '../context/UserContext';
 import User from '../objects/User';
-import NoAuthBtns from './NoAuthBtns';
 
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, 
-	ListItem, ListItemIcon, ListItemText, } from '@material-ui/core';
+import { Drawer, List, CssBaseline, Divider, IconButton, ListItem, ListItemIcon, ListItemText, } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import GamesIcon from '@material-ui/icons/Games';
-
-
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const drawerWidth = 210;
 
