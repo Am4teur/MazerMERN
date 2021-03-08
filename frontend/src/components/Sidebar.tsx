@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import logo from '../imgs/maze.png';
 import UserContext from '../context/UserContext';
@@ -10,6 +10,9 @@ import { Drawer, List, CssBaseline, Divider, IconButton, ListItem, ListItemIcon,
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import GamesIcon from '@material-ui/icons/Games';
+import PersonIcon from '@material-ui/icons/Person';
+
+import withWidth, { isWidthDown, isWidthUp } from '@material-ui/core/withWidth';
 
 const drawerWidth = 210;
 
@@ -97,17 +100,26 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Sidebar = () => {
+const Sidebar = (props:any) => {
   const history = useHistory();
 	const { userData, setUserData } = useContext(UserContext);
 
 	const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(isWidthDown('sm', props.width) ? false : true);
+
+	useEffect(() => {
+		if (isWidthDown('sm', props.width)) {
+			setOpen(false);
+		}
+		if (isWidthUp('sm', props.width)) {
+			setOpen(true);
+		}
+	}, [props.width]);
+
 
   const handleDrawerSwitch = () => {
-		const o = !open;
-    setOpen(o);
+    setOpen(!open);
   };
 
 	const routeHome = () => {
@@ -199,6 +211,10 @@ const Sidebar = () => {
         </List>
 				:
 				<List>
+					<ListItem button key={"User Info"} className={classes.listItem} onClick={userInfo}>
+						<ListItemIcon className={classes.listItemIcon}>{<PersonIcon />}</ListItemIcon>
+						<ListItemText primary={"User Info"} />
+					</ListItem>
 					<ListItem button key={"Logout"} className={classes.listItem} onClick={routeLogout}>
 						<ListItemIcon className={classes.authIcon}>{<i className="fas fa-sign-out-alt fa-lg"></i>}</ListItemIcon>
 						<ListItemText primary={"Logout"} />
@@ -210,4 +226,4 @@ const Sidebar = () => {
   );
 }
 
-export default Sidebar;
+export default withWidth()(Sidebar);
