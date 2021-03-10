@@ -1,11 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import { useHistory } from "react-router-dom";
 
 import maze_gif from '../imgs/v1_maze.gif';
-//import maze_logo from '../imgs/maze.png';
+import avatar from '../imgs/icons/icon-blue-512.png';
 
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import PersonIcon from '@material-ui/icons/Person';
+
+import NoAuthBtns from './NoAuthBtns';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       margin: theme.spacing(3),
       width: '75%',
-      backgroundColor: 'blue',
     },
     secondaryColumn: {
       display: 'flex',
@@ -33,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       margin: theme.spacing(3, 3, 3, 0),
       width: '25%',
-      backgroundColor: 'green',
     },
     userInfo: {
       display: 'flex',
@@ -49,10 +51,21 @@ const useStyles = makeStyles((theme: Theme) =>
     userInfoText: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
       flexGrow: 1,
     },
+    note: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      backgroundColor: '#343a40',
+      borderRadius: theme.spacing(0.75),
+      marginBottom: theme.spacing(3),
+      //rounded shadow
+    }
   }),
 );
 
@@ -65,7 +78,7 @@ const Home = () => {
 
 	const routeMazeHome = () => {
 		history.push('/mazehome');
-	}
+	};
 
   /*const routeSolver = () => {}*/
 
@@ -86,30 +99,29 @@ const Home = () => {
           <img className="m-4 " src={maze_gif} alt="Maze Gif" style={{height: "250px", width: "250px", border: "2px solid black", display: "block"}}></img>
         </div>
 
-        {/*<div className="col mx-2" style={{border: "2px solid black"}}>
-          <div className="my-2 text-center">
-            <button className="btn btn-primary" onClick={routeSolver}><img className="mr-2" style={{height: "20px", width: "20px", marginTop: "-2px"}} src={maze_logo}></img> Solver</button>
-          </div>
-          <h1 className="my-4">Available soon!</h1>
-        </div>*/}
       </div>
       <div className={classes.secondaryColumn}>
+        {userData.user.username !== ""
+        ?
         <div className={classes.userInfo}>
-          <img className="m-2" src={maze_gif} alt="Maze Gif" style={{height: "50px", width: "50px", border: "2px solid black"}}></img>
+          <img className="m-2 mr-3" src={avatar} alt="Avatar" style={{height: "64px", width: "64px", borderRadius: theme.spacing(0.75),}}></img>
           <div className={classes.userInfoText}>
-            <span>text</span>
-            <span>text</span>
-            <span>text</span>
+              <Typography variant="h4">{userData.user.username}</Typography>
+              <a className="d-flex" href="/userInfo" style={{ color: 'white', textDecoration: 'none' }}>
+                <PersonIcon />
+                <Typography>User Info</Typography>
+              </a>
           </div>
         </div>
-        <div className={classes.userInfo}>
-          <img className="m-2" src={maze_gif} alt="Maze Gif" style={{height: "50px", width: "50px", border: "2px solid black"}}></img>
-          <div className={classes.userInfoText}>
-            <span>text</span>
-            <span>text</span>
-            <span>text</span>
+        :
+        <div className={classes.note}>
+          <Typography className="m-2" variant="h4">Please note</Typography>
+          <Typography className="m-2" variant="body1">Register or login to play Mazer</Typography>
+          <div className="mb-2">
+            <NoAuthBtns />
           </div>
         </div>
+        }
       </div>
     </div>
   );
