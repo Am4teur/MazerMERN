@@ -106,7 +106,7 @@ const Home = () => {
         <div className={classes.userInfo}>
           <img className="m-2 mr-3" src={avatar} alt="Avatar" style={{height: "64px", width: "64px", borderRadius: theme.spacing(0.75),}}></img>
           <div className={classes.userInfoText}>
-              <Typography variant="h4">{userData.user.username}</Typography>
+              <Typography noWrap variant="h4">{userData.user.username}</Typography>
               <a className="d-flex" href="/userInfo" style={{ color: 'white', textDecoration: 'none' }}>
                 <PersonIcon />
                 <Typography>User Info</Typography>
@@ -116,7 +116,7 @@ const Home = () => {
         :
         <div className={classes.note}>
           <Typography className="m-2" variant="h4">Please note</Typography>
-          <Typography className="m-2" variant="body1">Register or login to play Mazer</Typography>
+          <Typography className="m-2" variant="body1">Register or Login to play Mazer</Typography>
           <div className="mb-2">
             <NoAuthBtns />
           </div>
