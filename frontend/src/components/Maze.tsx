@@ -57,7 +57,7 @@ const Maze = (props: MazeProps) => {
       </>
       :
       <div className="mx-5 my-2">
-      <h3>Go to Maze Home to recconnet to the maze</h3>
+      <h3>Go to Maze Home to reconnect to the maze</h3>
       <div className="p-1">
         <button className="btn btn-dark" onClick={routeMazeHome}>Maze Home</button>
       </div>
