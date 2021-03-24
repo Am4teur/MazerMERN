@@ -4,7 +4,7 @@ import axios from 'axios';
 import UserContext from '../context/UserContext';
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 const MazeCreate = () => {
     const { userData } = useContext(UserContext);
@@ -28,7 +28,7 @@ const MazeCreate = () => {
             name: name,
             seed: seed,
             rows: rows,
-            cols: cols
+            cols: rows
           }
           const newMaze = await axios.post(ENDPOINT + 'mazes/create', createMazeBody);
 
@@ -52,7 +52,7 @@ const MazeCreate = () => {
     }
     
     return (
-        <div className="mazeCreate ml-5 mr-5" style={{"color": "white"}}>
+        <div className="mazeCreate ml-5 mr-5">
           <br/>
           <h3>Create a new Maze</h3>
           <form onSubmit={onSubmit}>
@@ -64,23 +64,24 @@ const MazeCreate = () => {
                 <label>Name</label>
                 <input type="text" required className="form-control" placeholder="Enter name" onChange={(e) => setName(e.target.value)}/>
               </div>
-              <div className="col mx-4">
+            </div>
+            <div className="row my-4">
+            <div className="col mx-4">
                 <label>Seed number</label>
                 <input type="text" className="form-control" placeholder="1 - 1 000 000" onChange={(e) => setSeed(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 1 and 1 000 000</small>
               </div>
-            </div>
-            <div className="row my-4">
               <div className="col mx-4">
                 <label>Number of Rows</label>
                 <input type="text" className="form-control" placeholder="2 - 20" onChange={(e) => setRows(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 2 and 20</small>
               </div>
+              {/* need to fix this bug of non-square mazes
               <div className="col mx-4">
                 <label>Number of Columns</label>
                 <input type="text" className="form-control" placeholder="2 - 20" onChange={(e) => setCols(e.target.value)}/>
                 <small className="form-text text-muted">Optional, between 2 and 20</small>
-              </div>
+              </div>*/}
             </div>
     
             <input type="submit" value="Create Maze" className='btn btn-primary ml-4 my-2'/>

@@ -1,44 +1,83 @@
 body {
-    font-family: 'Ubuntu', sans-serif;
-    /*font-family: 'Roboto', sans-serif;*/
-	background-color: #12181b;
-}
-
-.info {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-	text-align: center;
+  font-family: "Ubuntu", sans-serif;
+  /*font-family: 'Roboto', sans-serif;*/
+  background-color: #12181b;
+  color: #ffffff;
 }
 
 /* color: #61dafb; */
-
-
-/* For Footer */
 :root {
-    --space: 1.5em 0;
-    --space: 2em 0;
+  --sidebar-width: 158px;
 }
 
-.Site {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.App {
+  display: flex;
+  min-height: 100vh; /* this may not work for android and ios because of vh (and vw) */
+  max-height: 100%;
+  background-color: #12181b;
+  color: #ffffff;
 }
 
-.Site-content {
-    flex: 1 0 auto;
-    padding: var(--space) var(--space) 0;
-    width: 100%;
+.App-content {
+  display: flex;
+  flex-direction: column;
+  /* dont add height because of footer */
+  width: 100%;
 }
 
-.Site-content:after {
-    content: '\00a0';
-    display: block;
-    margin-top: var(--space);
-    height: 0;
+.Content {
+  flex: 1 0 auto; /* stick at the bottom, auto gives the max amount of space between flex-items*/
+}
+
+.footer-icons a {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 2px;
+
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 35px;
+
+  margin-right: 5px;
+}
+
+.sidebar {
+  position: fixed; /*sb-filler is because of this*/
+  height: 100vh;
+  min-width: var(--sidebar-width);
+}
+
+.sidebar.hidden {
+  margin-left: calc(var(--sidebar-width)*-1);
+}
+
+.sb-filler { /*sb-filler because of .sidebar {postion: fixed;}*/
+  visibility: hidden;
+  min-width: var(--sidebar-width);
+}
+
+.sb-filler.hidden {
+  visibility: hidden;
+  margin-left: calc(var(--sidebar-width)*-1);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin-left: calc(var(--sidebar-width)*-1);
+  }
+  .sidebar.hidden {
+    margin-left: 0;
+  }
+
+  .sb-filler {
     visibility: hidden;
+    margin-left: calc(var(--sidebar-width)*-1);
+  }
+  .sb-filler.hidden {
+    visibility: hidden;
+    min-width: var(--sidebar-width);
+  }
 }

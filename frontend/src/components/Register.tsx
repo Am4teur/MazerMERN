@@ -5,8 +5,9 @@ import UserContext from '../context/UserContext';
 
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 const GLOBAL_MAZE_ID = "5fbac485d8017b593cf11df5";
+const GLOBAL_MAZE_NAME = "global";
 const DEFAULT_ICON = "blue-simple-icon";
 
 interface RegisterState {
@@ -46,7 +47,7 @@ const Register = (state: RegisterState) => {
       //update maze with the new user in users
       const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
         userId: newUser.data._id,
-        mazeId: GLOBAL_MAZE_ID,
+        mazeId: GLOBAL_MAZE_NAME,
         y: 0,
         x: 0,
         option: "0",
@@ -77,7 +78,7 @@ const Register = (state: RegisterState) => {
 
 
   return (
-    <div className="registerForm ml-5 mr-5" style={{"color": "white"}}>
+    <div className="registerForm ml-5 mr-5">
       <br/>
       <h3>Register an account</h3>
       <form onSubmit={onSubmit}>

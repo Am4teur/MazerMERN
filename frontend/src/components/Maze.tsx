@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
 import UserInfo from './UserInfo';
@@ -7,10 +8,9 @@ import MazeInfo from './MazeInfo';
 
 import io from 'socket.io-client';
 import GameInfo from './GameInfo';
-let socket: any;
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT ? process.env.REACT_APP_ENDPOINT : "";
+const ENDPOINT = process.env.REACT_APP_ENDPOINT ? process.env.REACT_APP_ENDPOINT : "";
 //let mazeOption = "5fbac485d8017b593cf11df5";
 //let icon = "blue-simple-icon";
 
@@ -21,31 +21,48 @@ interface MazeProps {
 
 
 const Maze = (props: MazeProps) => {
+  const history = useHistory();
   const { userData } = useContext(UserContext);
-  var [icon, setIcon] = useState<string>("");
-  socket = io(ENDPOINT);
-
-  let mazeId :string = props.location.state.mazeId;
+  var [mazeId, setMazeId] = useState<string>("");
+  var [socket, setSocket] = useState<any>("");
 
   useEffect(() => {
-    //init socket here, only 1 socket is created because of the [ENDPOINT] is not updated
-    //but <Board/> component doens't receive a socket
-    //socket = io(ENDPOINT);
-    setIcon(userData.user.icon);
+    socket = io(ENDPOINT);
+
+    setMazeId(props.location.state ? props.location.state.mazeId : "");
+
+    socket.emit('join', { userId: userData.user.id, mazeId: props.location.state.mazeId });
+
+    setSocket(socket);
     
     return () => {
       socket.emit('disconnect');
       socket.off();
     }
   }, [ENDPOINT]);
+
+  const routeMazeHome = () => {
+		history.push('/mazeHome');
+	}
   
   return (
-    <div className="Maze mb-4 mt-3" style={{textAlign: "center"}}>
+    <div className="Maze d-flex flex-column justify-content-center align-items-center mb-4 mt-3">
+      { mazeId !== "" && socket ? 
+      <>
       <GameInfo />
-      <Board onIconChange={(v: string): void => {setIcon(v)}} user={userData.user} mazeId={mazeId} socket={socket} iconName={icon}/>
+      <Board onIconChange={(v: string): void => {console.log("Called onIconChange!")}} user={userData.user} mazeId={mazeId} socket={socket}/>
       <MazeInfo mazeId={mazeId}/>
       <UserInfo />
       {/* <IconMenu /> */}
+      </>
+      :
+      <div className="mx-5 my-2">
+      <h3>Go to Maze Home to recconnet to the maze</h3>
+      <div className="p-1">
+        <button className="btn btn-dark" onClick={routeMazeHome}>Maze Home</button>
+      </div>
+      </div>
+      }
     </div>
   );
 }

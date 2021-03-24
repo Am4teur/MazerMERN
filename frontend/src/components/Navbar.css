@@ -1,28 +1,3 @@
-.navbar-left {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-
-.logo_image {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-
-}
-
-.logo {
-  margin-top: 8px;
-  width: 32px;
-  height: 32px;
-}
-
-.authentication {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
 /* for buttons with seperation between icon and text */
 .btn-label {
   position: relative;

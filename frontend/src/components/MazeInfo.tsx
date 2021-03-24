@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css'; // for button with icons and text separated
 import axios from 'axios';
+
 require('dotenv').config();
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 
 interface MazeInfoProps {
@@ -10,70 +12,53 @@ interface MazeInfoProps {
 
 const MazeInfo = (props: MazeInfoProps) => {
 	var [maze, setMaze] = useState<any>();
-	var [users, setUsers] = useState<any>([]);
+	var [userIds, setUserIds] = useState<any>([]);
 
 	useEffect(() => {
-    axios.post(process.env.REACT_APP_ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
+    axios.post(ENDPOINT + "mazes/getById", {mazeId: props.mazeId})
     .then(maze => {
-			let users2 = [];
-			for (var userId in maze.data.users) {
-				users2.push(userId+"|");
-			}
-			setUsers(users2);
-			setMaze(maze.data);
+      setMaze(maze.data);
 
+      let userIds = [];
+			for (var userId in maze.data.users) {
+				userIds.push(userId);
+			}
+			setUserIds(userIds);
     });
-	});
+	}, [props.mazeId]);
   
   return (
-    <div className="mazeInfo my-4">
+    <>
+    {process.env.REACT_APP_DEVELOPMENT === 'dev' && maze
+    ?
+    <div className="mazeInfo d-flex flex-column justify-content-center align-items-center my-4">
+      <h1>Maze Info</h1>
+      <h2>Users: </h2>
+      {userIds.map((user: any, idx: number) => {
+        return (
+          <li key={idx}>
+            {user}
+          </li>
+        )
+        })
+      }
 
+      <h2>Name: {maze.name}</h2>
 
-      {
-      process.env.REACT_APP_DEVELOPMENT === 'dev' && maze
-      ?
-      <>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Users:</h2>
-          {users}
-        </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-md-auto">
-					<h2 style={{color: "white"}}>Name: {maze.name}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>Creator: {maze.user_creater}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>seed: {maze.seed}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>rows: {maze.rows}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>cols: {maze.cols}</h2>
-        </div>
-      </div>
-			<div className="row justify-content-center">
-        <div className="col-md-auto">
-          <h2 style={{color: "white"}}>id:  {maze._id}</h2>
-        </div>
-      </div>
-      </>
-      :
-      null
-    }
+      <h2>Creator: {maze.user_creater}</h2>
+
+      <h2>seed: {maze.seed}</h2>
+
+      <h2>rows: {maze.rows}</h2>
+
+      <h2>cols: {maze.cols}</h2>
+
+      <h2>id:  {maze._id}</h2>
     </div>
+    :
+    null
+    }
+    </>
   );
 }
 

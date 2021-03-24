@@ -8,7 +8,7 @@ const GameInfo = () => {
   const { userData } = useContext(UserContext);
 
   return (
-    <div className="info my-4">
+    <div className="info d-flex flex-column justify-content-center align-items-center my-4">
       {userData.user.username !== ""
       ?
       <>

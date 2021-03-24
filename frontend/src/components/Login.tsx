@@ -5,7 +5,7 @@ import UserContext from '../context/UserContext';
 
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT;
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 interface LoginState {
   email: string,
@@ -49,7 +49,7 @@ const Login = (state: LoginState) => {
 
 
   return (
-    <div className="LoginForm ml-5 mr-5" style={{"color": "white"}}>
+    <div className="LoginForm ml-5 mr-5">
       <br/>
       <h3>Login to an account</h3>
       <form  onSubmit={onSubmit}>

@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
 
+import { IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -16,12 +19,14 @@ import TempUser from './components/TempUser';
 import MazeCreate from './components/MazeCreate';
 import MazeAdd from './components/MazeAdd';
 import MazeHome from './components/MazeHome';
+import Sidebar from './components/Sidebar';
+
+require('dotenv').config();
+
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 
-const ENDPOINT = 'http://localhost:5000/';
-
-
-export default function App() {
+const App = () => {
   const [userData, setUserData] = useState({
     token: "",
     user: new User(),
@@ -65,30 +70,39 @@ export default function App() {
   }, [userData]);
   
   if(userData.loading) return null;
+
   return (
-    <div className="Site">
+    <div className="App">
     <BrowserRouter>
       <UserContext.Provider value={providerData}>
-        <div className="Site-content">
-        <Navbar user={userData.user}/>
 
-        <Switch>
-          <Route path="/" exact component={Home} /> {/*Home*/}
-          <Route path="/temp" component={TempUser} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/mazer" component={Maze} />
-          <Route path="/mazeHome" component={MazeHome} />
-          <Route path="/mazeCreate" component={MazeCreate} />
-          <Route path="/mazeAdd" component={MazeAdd} />
-          <Route path="/userInfo" component={UserInfo} />
-        </Switch>
+        {/*<Navbar/>*/}
+        <Sidebar/>
+        <div className="App-content">
+          <div className="Content">
+            <Switch>
+              <Route path="/" exact component={Home} /> {/*Home*/}
+              <Route path="/temp" component={TempUser} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/mazer" component={Maze} />
+              <Route path="/mazeHome" component={MazeHome} />
+              <Route path="/mazeCreate" component={MazeCreate} />
+              <Route path="/mazeAdd" component={MazeAdd} />
+              <Route path="/userInfo" component={UserInfo} />
+            </Switch>
+          </div>
+          <Footer/>
         </div>
-
-        <Footer />
       </UserContext.Provider>
     </BrowserRouter>
     </div>
   );
 
 }
+
+export default App;
+
+/*
+export default function App() {}
+*/

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 require('dotenv').config();
-let ENDPOINT = process.env.REACT_APP_ENDPOINT
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 const MazeList = () => {
     const history = useHistory();
@@ -32,7 +32,7 @@ const MazeList = () => {
     }
 
     return (
-        <div className="mazeList mx-5 my-2" style={{"color": "white"}}>
+        <div className="mazeList mx-5 my-2">
           <h3>List</h3>
           {list.map((maze: any, idx: number) => {
             return (

@@ -8,8 +8,9 @@ import IconComponent from './IconComponent';
 
 import axios from 'axios';
 
-let ENDPOINT = 'http://localhost:5000/'; //'https://mazer-backend.herokuapp.com/';
+require('dotenv').config();
 
+const ENDPOINT = process.env.REACT_APP_ENDPOINT; //'https://mazer-backend.herokuapp.com/';
 
 
 interface Board {
@@ -31,7 +32,6 @@ interface BoardProps {
   user: User;
   mazeId: string;
   onIconChange(v: string): void;
-  iconName: string;
 }
 
 
@@ -59,7 +59,6 @@ class Board extends Component<BoardProps, BoardState, Board> {
     this.move = this.move.bind(this);
     this.createSquares = this.createSquares.bind(this);
     this.updateBoardAndSquares = this.updateBoardAndSquares.bind(this);
-    document.body.addEventListener("keydown", this.keyHandler);
   }
 
   componentDidMount() {
@@ -72,14 +71,17 @@ class Board extends Component<BoardProps, BoardState, Board> {
       this.setState({
         seed: this.maze.seed,
       });
+
+      window.addEventListener("keydown", this.keyHandler);
       this.props.socket.on('move', this.updateBoardAndSquares);
       this.updateBoardAndSquares();
     });
   }
 
   componentWillUnmount() {
-    //remove from maze room
-    //socket
+    window.removeEventListener("keydown", this.keyHandler);
+    //this.props.socket.emit('disconnect');
+    this.props.socket.off('move', this.updateBoardAndSquares);
   }
 
   /********************************************
@@ -236,7 +238,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
         icons[userId.toString()] = new Icon(userId.toString(),
                                             users[userId].x,
                                             users[userId].y,
-                                            <IconComponent key={userId.toString()} size={16} iconName={this.props.iconName}/>);
+                                            <IconComponent key={userId.toString()} size={16} iconName={this.state.user.icon}/>);
       }
       
       if(this.state.user.username !== "") {
@@ -256,9 +258,9 @@ class Board extends Component<BoardProps, BoardState, Board> {
   removeSides(positions: any[]): any[][] {
     let squareStyles: CSS.Properties[][] = [];
 
-    for (let i = 0; i < positions.length; i++) {
+    for (let i = 0; i < this.rows; i++) {
       squareStyles.push([]);
-      for (let j = 0; j < positions[i].length; j++) {
+      for (let j = 0; j < this.cols; j++) {
 
         squareStyles[i].push({
           display: "flex",
@@ -286,11 +288,14 @@ class Board extends Component<BoardProps, BoardState, Board> {
         }
       }
     }
-
-    for (let i = 0; i < positions.length; i++) {
+    
+    for (let i = 0; i < this.rows; i++) {
       squareStyles[i][0]["borderTop"] = "4px solid black";
-      squareStyles[0][i]["borderLeft"] = "4px solid black";
       squareStyles[i][squareStyles[i].length-1]["borderBottom"] = "4px solid black";
+    }
+
+    for (let i = 0; i < this.cols; i++) {
+      squareStyles[0][i]["borderLeft"] = "4px solid black";
       squareStyles[squareStyles.length-1][i]["borderRight"] = "4px solid black";
     }
 
@@ -306,8 +311,11 @@ class Board extends Component<BoardProps, BoardState, Board> {
     let oppy: { [id: string]: number; } = { "W": -1, "N": 0, "S": 0, "E": 1 };
     let newIcons = {...this.state.icons};
     
-    console.log("moved | id: " + this.state.user.id);
     let userId = this.state.user.id;
+    let mazeId = this.props.mazeId;
+
+    console.log("moved " + type + " | userId: " + userId + " | mazeId: " + mazeId);
+
     
     if(newIcons[userId]) {
       if (newIcons[userId].x + oppx[type] >= 0 && 
@@ -316,7 +324,6 @@ class Board extends Component<BoardProps, BoardState, Board> {
           newIcons[userId].y + oppy[type] >= 0 && 
           newIcons[userId].y + oppy[type] < this.cols) { // if to test if it is able to move
 
-            
         newIcons[userId].x = newIcons[userId].x + oppx[type];
         newIcons[userId].y = newIcons[userId].y + oppy[type];
       
@@ -329,7 +336,7 @@ class Board extends Component<BoardProps, BoardState, Board> {
 
         const user: {userId:string, mazeId:string, y:number, x:number, option:string} = {
           userId: userId,
-          mazeId: this.maze._id,
+          mazeId: mazeId,
           y: newIcons[userId].x,
           x: newIcons[userId].y,
           option: "0",
@@ -337,9 +344,9 @@ class Board extends Component<BoardProps, BoardState, Board> {
 
         //update
         //updateUserPosition();
-        axios.post(ENDPOINT + "mazes/addUser", user /* body */)
+        axios.post(ENDPOINT + "mazes/updateUser", user /* body */)
         .then(response => {
-          this.props.socket.emit('move', { userId: userId });
+          this.props.socket.emit('move', { userId: userId, mazeId: mazeId });
           //this.props.socket.broadcast.to(<maze_room>).emit('move', { userId: this.state.user.id });
 
           this.setState((state) => ({

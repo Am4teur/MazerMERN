@@ -1,15 +1,14 @@
 import React, { /*useState*/ } from 'react';
 import typescripticon from '../imgs/typescript.svg';
 import socketicon from '../imgs/socketicon.png';
-import './Footer.css';
 
 // https://dev.to/letsbsocial1/flexbox-sticky-footer-and-react-e1h
 const Footer = () => {
   return (
 
-  <div className="footer bg-primary pt-4">
+  <div className="footer bg-secondary">
 
-    <div className="footer-icons">
+    <div className="footer-icons mt-3">
 
       <ul className="list-unstyled list-inline text-center">
         <li className="list-inline-item">
@@ -29,7 +28,7 @@ const Footer = () => {
     </div>
     
 
-  <div className="footer-copyright text-center mb-3">© 2020 Copyright and Created by&nbsp;
+  <div className="footer-copyright text-center mb-2">© 2020 Copyright and Created by&nbsp;
     <a className="text-white" style={{textDecoration: "none"}} href="https://github.com/Am4teur">Daniel Castro </a>
     with &nbsp;
     <a href="https://reactjs.org/"><i className="fab fa-react" style={{color: "black"}}></i></a> &nbsp;

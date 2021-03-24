@@ -1,5 +1,8 @@
 # Mazer
 
+A working test on: https://mazer.netlify.app/
+With the backend hosted on: https://mighty-chamber-24797.herokuapp.com/
+
 Mazer is a web application game developed using the MERN stack + socket.io for real time updates. MERN stack stands for MongoDB, Express, React and Node.js.
 
 ## How to run locally/dev
